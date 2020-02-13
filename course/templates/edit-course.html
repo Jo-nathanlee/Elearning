@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    .form-control { margin-bottom: 10px; }
+
+    .shadow {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<body class="contact-page">
+{% endblock %}
+
+{% block content %}
+        <div class="page-header-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <header class="entry-header">
+                            <h1>Edit</h1>
+                        </header><!-- .entry-header -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="container">
+        <div class="row">
+            <div class="m-auto p-4 col-xs-12 col-sm-12 col-md-10 well well-sm card shadow" style="margin-top: 5vh!important;">
+                <legend class="text-left">課程編輯</legend>
+                <form action="#" method="post" class="form" role="form">
+                    課程名稱
+                    <input class="form-control" name="course_name" placeholder="輸入您的課程名稱" type="text" required autofocus />
+                    程式種類
+                    <select name="course-category" class="form-control">
+                        　<option value="Python">Python</option>
+                        　<option value="Java">Java</option>
+                        　<option value="PHP">PHP</option>
+                        　<option value="Javascript">Javascript</option>
+                    </select>
+                    課程圖片
+                    <input type="file" class="filepond input_homework"  name="filepond"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>     
+                    課程介紹
+                    <textarea rows="4" class="form-control" name="course_description" placeholder="輸入您的課程介紹"></textarea>
+                </form>
+
+                <div class="single-course-accordion-cont mt-3">
+                    <div class="row mt-2  no-gutters">
+                        <div class="col-lg-8">
+                            <legend>教材內容編輯</legend>
+                        </div>
+                        <div class="col-lg-4 text-right align-self-center">
+                            <button type="button" class="btn-sm btn  btn-new" ><i class="fas fa-plus"></i>&nbsp新增</button>
+                        </div>
+                    </div>
+                    <!--  -->
+            
+                    <div class="entry-contents">
+                        <div class="accordion-wrap">
+                            <div class="entry-title row no-gutters">
+                                <div class="col-md-10 text-left align-self-center">
+                                    <h3 class="font-black">
+                                        Lesson 1:Introduction to Front End Development
+                                    </h3>                                
+                                </div>
+                                <div class="col-md-2 text-right ">
+                                    <button type="button" class="btn btn-edit ">編輯</button> 
+                                </div>
+                            </div>
+                            <div class="entry-title row no-gutters">
+                                <div class="col-md-10 text-left align-self-center">
+                                    <h3 class="font-black">
+                                        Lesson 2:Introduction to Front End Development
+                                    </h3>                                
+                                </div>
+                                <div class="col-md-2 text-right ">
+                                    <button type="button" class="btn btn-edit ">編輯</button> 
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .entry-contents -->
+                </div><!-- .single-course-accordion-cont  -->
+            </div>
+        </div>
+    </div><!-- .container -->
+{% endblock %}
+
+{% block footer %}
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    
+    <script>
+    FilePond.registerPlugin(
+        // encodes the file as base64 data
+        FilePondPluginFileEncode,
+        
+        // validates files based on input type
+        FilePondPluginFileValidateType,
+
+        // validates the size of the file
+        FilePondPluginFileValidateSize,
+        
+        // corrects mobile image orientation
+        FilePondPluginImageExifOrientation,
+        
+        // previews dropped images
+        FilePondPluginImagePreview,
+
+        // crops the image to a certain aspect ratio
+        FilePondPluginImageCrop,
+
+        // resizes the image to fit a certain size
+        FilePondPluginImageResize,
+
+        // applies crop and resize information on the client
+        FilePondPluginImageTransform
+    );
+    
+    // Select the file input and use create() to turn it into a pond
+    FilePond.create(
+        document.querySelector('.filepond'),
+        {
+            labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+        //     imagePreviewHeight: 170,
+        //     imageCropAspectRatio: '1:1',
+        //     imageResizeTargetWidth: 200,
+        //     imageResizeTargetHeight: 200,
+        //     stylePanelLayout: 'compact circle',
+        //     styleLoadIndicatorPosition: 'center bottom',
+        //     styleButtonRemoveItemPosition: 'center bottom'
+        }
+    );
+    </script>
+{% endblock %}

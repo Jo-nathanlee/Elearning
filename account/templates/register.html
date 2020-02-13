@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    .form-control { margin-bottom: 10px; }
+
+    .gj-datepicker.gj-datepicker-bootstrap.gj-unselectable.input-group{
+        margin-top: 0;
+    }
+    .shadow {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+<body class="contact-page">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="entry-header">
+                        <h1>Welcome</h1>
+                    </header><!-- .entry-header -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header-overlay -->
+</div><!-- .page-header -->
+
+<div class="container">
+    <div class="row">
+        <div class="m-auto p-4 col-xs-12 col-sm-12 col-md-4 well well-sm card shadow" style="margin-top: 5vh!important;">
+            <legend class="text-center">Sign Up</legend>
+            <form action="/user/register/" method="post" class="form" role="form">
+                {% csrf_token %}
+            姓名
+            <input class="form-control" name="name" placeholder="Name" type="text" required autofocus />
+            Email
+            <input class="form-control" name="email" placeholder="Email" type="email" required/>
+            密碼
+            <input class="form-control" name="password" placeholder="Password" type="password" required/>
+            <!-- 確認密碼
+            <input class="form-control" name="user_password_check" placeholder="Check Password" type="password" /> -->
+            生日
+            <input id="birthday" type="date" class="form-control" name="birthday" placeholder="Birthday">
+            性別
+            <br/>
+            <label class="radio-inline ">
+                <input type="radio" name="sex" id="inlineCheckbox1" value="male" checked="checked"/>
+                男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="inlineCheckbox2" value="female" />
+                女
+            </label>
+            <br/>
+            以前是否接觸過程式語言
+            <br/>
+            <div class="form-inline">
+                <label class="radio-inline pb-2 pr-1">
+                    <input type="radio" name="learnt_before" class="mr-1" id="inlineCheckbox1" value="false" checked="checked"/>
+                    否
+                </label>
+                <label class="radio-inline pb-2 pr-1">
+                    <input type="radio" name="learnt_before" class="mr-1" id="inlineCheckbox2" value="true" />
+                    是
+                </label>
+                <input class="form-control form-control-sm input_language" type="text" name="language_learnt" placeholder="程式語言" value="">
+            </div>
+            <input type="submit" class="register-submit" value="註冊">
+            <span style="color:red">{{message}}</span>
+            </form>
+        </div>
+    </div><!-- .row -->
+</div><!-- .container -->
+
+{% endblock %}

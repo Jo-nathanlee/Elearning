@@ -1,0 +1,195 @@
+{% extends "base_index.html" %}
+
+{% block body %}
+<body>
+{% endblock %}
+{% block navbar %}
+<div class="hero-content">
+    <header class="site-header">
+        <div class="top-header-bar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                        <div class="header-bar-email d-flex align-items-center">
+                            <div class="btn-group" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-category " type="button" >
+                                    程式語言
+                                    <button type="button" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
+                                        <span class="sr-only">Toggle Dropright</span>
+                                    </button>
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#">Python</a>
+                                </div>
+                            </div>
+                        </div><!-- .header-bar-email -->
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                        <div class="header-bar-search">
+                            <form class="flex align-items-stretch">
+                                <input type="search" placeholder="What would you like to learn?">
+                                <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div><!-- .header-bar-search -->
+                        
+                        {% if user.is_authenticated %}
+                        <div class="header-bar-profile">
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" style="font-weight: 400;">{{ user.username }}</a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="{% url 'account' %}" class="dropdown-item">個人資料</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{% url 'logout' %}"class="dropdown-item">Logout</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <div class="header-bar-menu">
+                            <ul class="flex justify-content-center align-items-center py-2 pt-md-0">
+                                <li><a href="{% url 'register' %}" style="font-weight: 400;">註冊</a></li>
+                                <li><a href="{% url 'login' %}" style="font-weight: 400;">登入</a></li>
+                            </ul>
+                        </div><!-- .header-bar-menu -->
+                        {% endif %}
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container-fluid -->
+        </div><!-- .top-header-bar -->
+
+        <div class="nav-bar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-9 col-lg-5 flex">
+                        <div class="site-branding">
+                            <p class="site-title"><a href="/index/" rel="home"><span>E</span>-Learning</a></p>
+                        </div><!-- .site-branding -->
+                    </div><!-- .col -->
+
+                    <div  class="col-3 col-lg-7 flex justify-content-end align-content-center" >
+                        <nav class="site-navigation flex justify-content-end align-items-center">
+                            <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="current-menu-item"><a href="/index/">Home</a></li>
+                                <li><a href="#">講師</a></li>
+                                <li><a href="#">我的課程</a></li>
+                            </ul> 
+                        </nav><!-- .site-navigation -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+{% endblock %}
+{% block content %}
+        <div class="hero-content-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
+                            <header class="entry-header">
+                                <h4>Get started with online programming courses</h4>
+                                <h1>online<br/>Learning system</h1>
+                            </header><!-- .entry-header -->
+
+                            <div class="entry-content">
+                                <p>In learning you will teach, and in teaching you will learn.</p>
+                            </div><!-- .entry-content -->
+
+                            <footer class="entry-footer read-more">
+                                <a href="#">Get Started</a>
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .hero-content-wrap -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .hero-content-hero-content-overlay -->
+    </div><!-- .hero-content -->
+
+    <section class="featured-courses horizontal-column courses-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="heading flex justify-content-between align-items-center">
+                        <h2 class="entry-title">Featured Courses</h2>
+
+                        <a class="btn mt-4 mt-sm-0" href="#">view all</a>
+                    </header><!-- .heading -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6">
+                    <div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">
+                        <figure class="course-thumbnail">
+                            <a href="#"><img src="images/1.jpg" alt=""></a>
+                        </figure><!-- .course-thumbnail -->
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <div class="course-ratings flex align-items-center">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star-o"></span>
+
+                                    <span class="course-ratings-count">(4 votes)</span>
+                                </div><!-- .course-ratings -->
+
+                                <h2 class="entry-title"><a href="#">The Complete Android Developer Course</a></h2>
+
+                                <div class="entry-meta flex flex-wrap align-items-center">
+                                    <div class="course-author"><a href="#">Ms. Lara Croft </a></div>
+
+                                    <div class="course-date">July 21, 2018</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    <span class="free-cost">Free</span>
+                                </div><!-- .course-cost -->
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6">
+                    <div class="course-content flex flex-wrap justify-content-between align-content-lg-stretch">
+                        <figure class="course-thumbnail">
+                            <a href="#"><img src="images/2.jpg" alt=""></a>
+                        </figure><!-- .course-thumbnail -->
+
+                        <div class="course-content-wrap">
+                            <header class="entry-header">
+                                <div class="course-ratings flex align-items-center">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star-o"></span>
+
+                                    <span class="course-ratings-count">(4 votes)</span>
+                                </div><!-- .course-ratings -->
+
+                                <h2 class="entry-title"><a href="#">Learn Photoshop, Web Design & Profitable</a></h2>
+
+                                <div class="entry-meta flex flex-wrap align-items-center">
+                                    <div class="course-author"><a href="#">Mr. John Wick</a></div>
+
+                                    <div class="course-date">Aug 21, 2018</div>
+                                </div><!-- .course-date -->
+                            </header><!-- .entry-header -->
+
+                            <footer class="entry-footer flex justify-content-between align-items-center">
+                                <div class="course-cost">
+                                    $32 <span class="price-drop">$59</span>
+                                </div><!-- .course-cost -->
+                            </footer><!-- .entry-footer -->
+                        </div><!-- .course-content-wrap -->
+                    </div><!-- .course-content -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section><!-- .courses-wrap -->
+    {% endblock %}

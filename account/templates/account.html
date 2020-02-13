@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+    .filepond--root {
+        width:170px;
+        margin: 0 auto;
+    }
+
+    .gj-datepicker.gj-datepicker-bootstrap.gj-unselectable.input-group{
+        margin-top: 0;
+    }
+</style>
+<script>
+$(document).ready(function(){
+    var content = $("#{{tab}}").html();
+    $("#{{tab}}").html("<span>"+content+"</span>");
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<body>
+<div class="single-courses-page">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="entry-header">
+                        <h1 class="entry-title">個人檔案</h1>
+                    </header><!-- .entry-header -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header-overlay -->
+</div><!-- .page-header -->
+
+<div class="lesson-content">
+    <div class="container-fluid">
+        <div class="row justify-content-start">
+            <div class="col-12 col-lg-12 "> 
+                <ul class="flex justify-content-start align-items-center py-2 ">
+                    <li><a href="/user/account/" style="font-weight: 400;" id="index">個人資料</a></li>
+                    <li><a href="/user/account/pic/" style="font-weight: 400;" id="pic">個人照片</a></li>
+                    <li><a href="/user/account/history/" style="font-weight: 400;" id="history">修課歷史</a></li>
+                    <li><a href="/user/account/homework/" style="font-weight: 400;" id="homework">已繳作業</a></li>
+                </ul>
+                <hr width="100%" style="margin-top: 0px;">          
+            </div><!-- .col -->
+        </div><!--.row -->
+        {% if tab == "pic" %}
+        <!-- 圖片上傳 -->
+        {% comment %} <img src="{{ image.url }}"> {% endcomment %}
+        <form action="/user/account/pic/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <input type="file" class="filepond input_homework"  name="picture"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>   
+            <input type="hidden" name="picture_base64">
+            <input type="submit" class="account-submit" value="儲存">  
+        </form>
+        <!-- 圖片上傳end -->
+        {% endif %}
+        {% if tab == "index" %}
+        <!-- 個人資料 -->
+        <div class="row justify-content-start">
+            <div class="ml-1 p-4 col-xs-8 col-sm-8 col-md-8 well well-sm " >
+                <form action="{% url 'account' %}" method="post" class="form" role="form">
+                {% csrf_token %}
+                    <div class="flex">
+                        <div class="form-block" >
+                            姓名
+                            <input class="form-control" name="name" placeholder="Name" type="text" value="{{ User.name }}" required autofocus />
+                            生日
+                            <input id="birthday" type="date" class="form-control" name="birthday" placeholder="Birthday" value="{{ User.birthday|date:'Y-m-d' }}">                           
+                            自我介紹<br>
+                            <textarea name="self_introduction" class="form-control" rows="5" value="">
+            
+                            </textarea>          
+
+                        </div>
+                        <div class="form-block" >
+                             <div class="form-group">
+                                性別
+                                <br/>
+                                <label class="radio-inline ">
+                                    {% if User.sex == 'male' %}
+                                        <input type="radio" name="sex" id="inlineCheckbox1" value="male" checked="checked"/>
+                                    {% else %}
+                                        <input type="radio" name="sex" id="inlineCheckbox1" value="male"/>
+                                    {% endif %}
+                                    男
+                                </label>
+                                <label class="radio-inline">
+                                    {% if User.sex == 'female' %}
+                                        <input type="radio" name="sex" id="inlineCheckbox1" value="female" checked="checked"/>
+                                    {% else %}
+                                        <input type="radio" name="sex" id="inlineCheckbox1" value="female"/>
+                                    {% endif %}
+                                    女
+                                </label>                            
+                            </div> 
+                            <div class="form-group">
+                                以前是否接觸過程式語言
+                                <div class="form-inline">
+                                    <label class="radio-inline pb-2 pr-1">
+                                        {% if User.language_learnt == '' %}
+                                            <input type="radio" name="learnt_before" class="mr-1" id="inlineCheckbox1" value="no" checked="checked"/>
+                                        {% else %}
+                                            <input type="radio" name="learnt_before" class="mr-1" id="inlineCheckbox1" value="no"/>
+                                        {% endif %}
+                                        否
+                                    </label>
+                                    <label class="radio-inline pb-2 pr-1">
+                                        {% if User.language_learnt == '' %}
+                                            <input type="radio" name="learnt_before" class="mr-1" id="inlineCheckbox2" value="yes"/>
+                                        {% else %}
+                                            <input type="radio" name="learnt_before" class="mr-1" id="inlineCheckbox2" value="yes" checked="checked"/>
+                                        {% endif %}
+                                        是
+                                    </label>
+                                    <input class="form-control form-control-sm" type="text" name="language_learnt" placeholder="程式語言" value="{{ User.language_learnt }}">
+                                </div>           
+                            </div> 
+                        </div>   
+                    </div>
+                    <input type="submit" class="account-submit" value="儲存">
+                </form>
+            </div><!-- .col --> 
+        </div><!--.row -->
+        <!-- 個人資料end -->
+        {% endif %}
+        {% if tab == "history" %}
+        <!-- 修課歷史 -->
+        <div class="row mt-2 justify-content-center">
+            <div class="col-9  col-lg-9">
+                <div class="card card-2">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="sq align-self-center "> <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="images/django.jpg" width="135" height="135" /> </div>
+                            <div class="media-body my-auto text-right">
+                                <div class="row my-auto flex-column flex-md-row">
+                                    <div class="col my-auto text-left">
+                                        <h5 class="mb-0">Django</h5>
+                                    </div>
+                                    <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
+                                    <div class="col my-auto"> <small>Size : M</small></div>
+                                    <div class="col my-auto"> <small>Qty : 1</small></div> -->
+                                    <div class="col my-auto">
+                                        <button type="button" class="btn btn-edit">進入課程</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- 修課歷史end -->
+        {% endif %}
+        {% if tab == "homework" %}
+        <!-- 已繳作業 -->
+        <div class="row justify-content-center">
+            <div class="col-11 col-lg-11"> 
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">日期</th>
+                        <th scope="col">題目</th>
+                        <th scope="col">說明</th>
+                        <th scope="col">檔案</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        <!-- 已繳作業end --> 
+        {% endif %}  
+    </div><!-- .container -->
+</div><!--.lesson-content -->
+{% endblock %}
+
+{% block footer %}
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    
+    
+    <script>
+    FilePond.registerPlugin(
+        // encodes the file as base64 data
+        FilePondPluginFileEncode,
+        
+        // validates files based on input type
+        FilePondPluginFileValidateType,
+
+        // validates the size of the file
+        FilePondPluginFileValidateSize,
+        
+        // corrects mobile image orientation
+        FilePondPluginImageExifOrientation,
+        
+        // previews dropped images
+        FilePondPluginImagePreview,
+
+        // crops the image to a certain aspect ratio
+        FilePondPluginImageCrop,
+
+        // resizes the image to fit a certain size
+        FilePondPluginImageResize,
+
+        // applies crop and resize information on the client
+        FilePondPluginImageTransform
+    );
+    
+    // Select the file input and use create() to turn it into a pond
+    FilePond.create(
+        document.querySelector('.filepond'),
+        {
+            labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleButtonRemoveItemPosition: 'center bottom'
+        }
+    );
+
+    </script>
+{% endblock %}

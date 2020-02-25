@@ -18,7 +18,6 @@ from .models import User
 @admin.register(User)
 class UserAdmin(UserAdmin):
     """Define admin model for custom User model with no email field."""
-
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (('Personal info'), {'fields': ('name', 'birthday','sex','language_learnt','pic')}),
@@ -26,12 +25,13 @@ class UserAdmin(UserAdmin):
                                        'groups', 'user_permissions')}),
         (('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
-    # add_fieldsets = (
-    #     (None, {
-    #         'classes': ('wide',),
-    #         'fields': ('email', 'password1', 'password2'),
-    #     }),
-    # )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
     list_display = ['id','name','email','password','birthday','sex','language_learnt','pic','is_staff', 'is_active', 'is_superuser']
     search_fields = ('email','name')
     ordering = ('email',)

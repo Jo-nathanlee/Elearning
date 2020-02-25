@@ -45,15 +45,12 @@ def account_tab(request,tab):
             arr_json = json.loads(pic)
             json_data = arr_json['data']
             file_name = arr_json['name']
-            pic_base64 = "data:"+arr_json['type']+":base64,"+json_data
-            imgstr = pic_base64.split(';base64,')
 
 
             data = ContentFile(base64.b64decode(json_data))  
             user = models.User.objects.get(email=email)
             user.pic.save(file_name, data, save=True) # image is User's model field
-            
-            image = models.User.objects.filter(email=email).update(pic=data)
+            user.save()
     
     user = models.User.objects.get(email=email)       
     image = user.pic

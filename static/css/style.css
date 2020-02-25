@@ -33,7 +33,7 @@ a {
 }
 
 a:visited {
-    color: #757686;
+    color: #383749;
 }
 
 a:hover, a:focus, a:active {
@@ -1589,7 +1589,7 @@ a.btn:hover {
     z-index: 10;
 }
 
-.lesson-content ul {
+.lesson-ul{
     margin: 0;
     list-style: none;
     position: relative;
@@ -1614,6 +1614,10 @@ a.btn:hover {
     text-transform: uppercase;
 }
 
+.footer-bar ul li a {
+    color:white;
+}
+
 .lesson-content ul li a:hover {
     color:#19c880;
 }
@@ -1632,7 +1636,7 @@ a.btn:hover {
 }
 
 @media screen and (min-width: 992px) {
-    .lesson-content ul {
+    .lesson-ul {
         position: relative;
         top: auto;
         left: auto;
@@ -1653,7 +1657,7 @@ a.btn:hover {
 
 
 .video-col {
-    height: 100%;
+    height: 540px;
     background-color: #ffffff;
     border: #c0c1cd solid 1px;
     color:#383749;
@@ -2614,6 +2618,13 @@ ul.author-social-profile li:hover .fa {
     color: #19c880;
 }
 
+.post-comments-wrap .comment-author .comment-meta span {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #19c880;
+}
+
 .post-comments-wrap p {
     margin-top: 5px;
     color: #757686;
@@ -2701,6 +2712,46 @@ ul.author-social-profile li:hover .fa {
 .comment-form input[type="submit"] {
     padding: 16px 32px;
     margin-top: 35px;
+    margin-bottom: 10px;
+    border: 0;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.1rem;
+    outline: none;
+    cursor: pointer;
+    background: #19c880;
+}
+
+#comment_submit {
+    padding: 16px 32px;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    border: 0;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.1rem;
+    outline: none;
+    cursor: pointer;
+    background: #19c880;
+}
+
+.reply-comment{
+    margin-top: 10px;
+}
+
+.reply_submit {
+    padding: 10px 32px;
+    margin-top: 5px;
     margin-bottom: 10px;
     border: 0;
     border-radius: 2px;
@@ -2966,7 +3017,14 @@ p.footer-copyright {
 }
 
 .icon-follow{
-    color: #fff;
+    color: white;
+}
+.icon-follow:hover{
+    color: #34d986;
+}
+
+.icon-social{
+    color: white;
 }
 
 .footer-widgets .follow-me .fa-facebook {
@@ -3118,6 +3176,8 @@ p.footer-copyright {
     cursor: pointer;
     background: #19c880;
 }
+
+
 
 
 .lesson-href:hover{

@@ -1,5 +1,28 @@
 {% extends "base.html" %}
-
+{% block head %}
+<script>
+$(document).ready(function(){
+    $(".btn-register").click(function() { 
+        $.ajax({
+            url: "{% url 'register' %}",
+            type: 'POST',
+            data: { course_id:{{course_id}} },
+            dataType: 'json',
+            success: function(data) {
+                if(data.success){
+                    alert("註冊成功！");
+                }else{
+                    alert("註冊失敗！");
+                }
+            },
+            error: function(XMLHttpRequest, status, error) {
+                console.log(XMLHttpRequest.responseText);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
 {% block body %}
 <body>
 <div class="single-courses-page">
@@ -11,14 +34,13 @@
                 <div class="row">
                     <div class="col-12">
                         <header class="entry-header">
-                            <h1 class="entry-title">Django</h1>
+                            <h1 class="entry-title">{{course.course_name}}</h1>
 
                             <div class="ratings flex justify-content-center align-items-center">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
-                                <span>(4 votes)</span>
                             </div><!-- .ratings -->
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
@@ -31,7 +53,7 @@
         <div class="row">
             <div class="col-12 offset-lg-1 col-lg-10">
                 <div class="featured-image">
-                    <img src="images/django.jpg" alt="">
+                    <img src="{{course.course_pic.url}}" alt="">
                 </div>
             </div><!-- .col -->
         </div><!-- .row -->
@@ -46,17 +68,17 @@
                 <div class="single-course-wrap">
                     <div class="course-info flex flex-wrap align-items-center">
                         <div class="course-author flex flex-wrap align-items-center mt-3">
-                            <img src="images/course-author.jpg" alt="">
+                            <img src="{{teacher.pic.url}}" alt="">
 
                             <div class="author-wrap">
                                 <label class="m-0">Teacher</label>
-                                <div class="author-name"><a href="#">Ms. Lara Croft</a></div>
+                                <div class="author-name">{{teacher.name}}</div>
                             </div><!-- .author-wrap -->
                         </div><!-- .course-author -->
 
                         <div class="course-cats mt-3">
                             <label class="m-0">Categories</label>
-                            <div class="author-name"><a href="#">Web design</a></div>
+                            <div class="author-name"><a href="#">{{course.category}}</a></div>
                         </div><!-- .course-cats -->
 
                         <div class="course-students mt-3">
@@ -65,15 +87,15 @@
                         </div><!-- .course-students -->
 
                         <div class="buy-course mt-3">
-                            <a class="btn" href="#">登記</a>
+                            <a class="btn btn-register" href="#">註冊</a>
                         </div><!-- .buy-course -->
                     </div><!-- .course-info -->
 
                     <div class="single-course-cont-section">
-                        <h2>Description</h2>
+                        <h2>Introduction</h2>
 
                        
-                        <p>Whereas this course is already huge, we can't possibly cover everything in that time. Here are some things we will not be covering...</p>
+                        <p>{{course.course_introduction}}</p>
                     </div>
 
                     <div class="single-course-accordion-cont mt-3">
@@ -83,12 +105,11 @@
 
                         <div class="entry-contents">
                             <div class="accordion-wrap">
+                            {% for l in lesson %}
                                 <h3 class="entry-title flex flex-wrap align-items-lg-center ">
-                                    Lesson 1:<a href="#" class="lecture-group-title lesson-href">Introduction to this Course</a>
+                                    Lesson {{ forloop.counter }}:<a href="/course/lesson/{{ l.lesson_id }}/{{ forloop.counter }}/" class="lecture-group-title lesson-href">{{ l.lesson_name }}</a>
                                 </h3>
-                                <h3 class="entry-title flex flex-wrap align-items-lg-center">
-                                    Lesson 2:<a href="#" class="lecture-group-title lesson-href">Introduction to Front End Development</a>
-                                </h3>
+                            {% endfor %}
                             </div>
                         </div><!-- .entry-contents -->
                     </div><!-- .single-course-accordion-cont  -->
@@ -100,13 +121,13 @@
 
                         <div class="instructor-short-info flex flex-wrap">
                             <div class="instructors-stats">
-                                <img src="images/instructor.jpg" alt="">
+                                <img src="{{teacher.pic.url}}" alt="">
 
                                 <ul class="p-0 m-0 mt-3" style="color: #383749;">
-                                   <li><i class="fa fa-star"></i> 4.7 .7 Average rating</li>
+                                   <li><i class="fa fa-star"></i> 4.7 Average rating</li>
                                     <li><i class="fa fa-comment"></i> 25,182 Reviews</li>
                                     <li><i class="fa fa-user"></i> 11,085 Students</li>
-                                    <li><i class="fa fa-play-circle"></i> 2 Courses</li>
+                                    <li><i class="fa fa-play-circle"></i> {{teacher_course_count}}</li>
                                 </ul>
                             </div><!-- .instructors-stats -->
 
@@ -116,18 +137,16 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <span> (4 votes)</span>
                                 </div><!-- .ratings -->
 
-                                <h2 class="entry-title mt-3">The Unreal Engine Developer Course Learn C++ & Make Games</h2>
+                                <h2 class="entry-title mt-3">{{course.course_name}}</h2>
 
                                 <div class="course-teacher mt-3">
-                                    Teacher: <a href="#">Ms. Lara Croft</a>
+                                    Teacher: <a href="#">{{teacher.name}}</a>
                                 </div><!-- .course-teacher -->
 
                                 <div class="entry-content mt-3">
-                                    <p>Hi! I'm Colt. I'm a developer with a serious love for teaching. I've spent the last few years teaching people to program at 2 different immersive bootcamps where I've helped hundreds of people become web developers and change their lives. My graduates work at companies like Google, Salesforce, and Square.</p>
+                                    <p>{{teacher.self_introduction}}</p>
                                 </div><!-- .entry-content -->
                             </div><!-- .instructors-details -->
                         </div><!-- .instructor-short-info -->
@@ -138,5 +157,3 @@
     </div><!-- .container -->
 </div><!-- single-courses-page -->
 {% endblock %}
-
-{% block footer %}

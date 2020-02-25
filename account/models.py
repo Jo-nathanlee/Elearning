@@ -36,7 +36,7 @@ class User(AbstractUser):
     email = models.EmailField(unique = True)
     birthday = models.DateField(blank=True,null=True )
     sex = models.CharField(max_length=5)
-    language_learnt = models.CharField(max_length=100)
+    language_learnt = models.CharField(max_length=100,default='')
     pic = models.ImageField(upload_to='images/',null=True)
     self_introduction = models.TextField(default='')
 

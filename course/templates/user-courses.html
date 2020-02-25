@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block body %}
+<body class="contact-page">
+{% endblock %}
+
+{% block content %}
+        <div class="page-header-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <header class="entry-header">
+                            <h1>My Courses</h1>
+                        </header><!-- .entry-header -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumbs">
+                    <ul class="flex flex-wrap justify-content-center align-items-center p-0 m-0">
+                        <li><a href="{% url 'courses' %}">全部課程</a></li>
+                        <li><a href="{% url 'my_course' %}">我的課程</a></li>
+                    </ul>
+                </div><!-- .breadcrumbs -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="featured-courses courses-wrap">
+                    <div class="row mx-m-25">
+                    {% for c in courses %}
+                        <div class="col-12 col-md-6 px-25">
+                            <div class="course-content">
+                                <figure class="course-thumbnail">
+                                    <a href="/course/{{ c.course.course_id }}"><img src="{{ c.course.course_pic.url }}" alt=""></a>
+                                </figure><!-- .course-thumbnail -->
+
+                                <div class="course-content-wrap">
+                                    <header class="entry-header">
+                                        <h2 class="entry-title"><a href="/course/{{ c.course.course_id }}">{{ c.course.course_name }}</a></h2>
+
+                                        <div class="entry-meta flex flex-wrap align-items-center">
+                                            <div class="course-author">{{ c.course.teacher.name }} 老師</div>
+                                        </div><!-- .course-date -->
+                                    </header><!-- .entry-header -->
+
+                                    <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
+
+                                        <div class="course-ratings flex justify-content-end align-items-center">
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+
+                                            <span class="course-ratings-count">(4 votes)</span>
+                                        </div><!-- .course-ratings -->
+                                    </footer><!-- .entry-footer -->
+                                </div><!-- .course-content-wrap -->
+                            </div><!-- .course-content -->
+                        </div><!-- .col -->
+                    {% endfor %}
+                    </div><!-- .row -->
+                </div><!-- .featured-courses -->
+
+                <div class="pagination flex flex-wrap justify-content-between align-items-center">
+                    <div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">
+                        <ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
+                        {% if courses.has_previous %}
+                            <li><a href="?page={{ courses.previous_page_number }}"><i class="fa fa-angle-left"></i></a></li>
+                        {% endif %}
+                        {% for page_num in page_range %}
+                            {% if current_page == page_num %}
+                                <li class="active"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if courses.has_next %}
+                            <li><a href="?page={{ courses.next_page_number }}"><i class="fa fa-angle-right"></i></a></li>
+                        {% endif %}
+                        </ul>
+                    </div>
+
+                    <div class="col-12 flex justify-content-start justify-content-lg-end col-lg-8 order-1 order-lg-2">
+                        <div class="pagination-results flex flex-wrap align-items-center">
+                            <p class="m-0">共 {{ course_count }} 個結果</p>
+                        </div><!-- .pagination-results -->
+                    </div>
+                </div><!-- .pagination -->
+            </div><!-- .col -->
+
+            <div class="col-12 col-lg-4">
+                <div class="sidebar">
+                    <div class="search-widget">
+                        <form class="flex flex-wrap align-items-center">
+                            <input type="search" placeholder="Search...">
+                            <button type="submit" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
+                        </form><!-- .flex -->
+                    </div><!-- .search-widget -->
+
+                    <div class="cat-links">
+                        <h2>Categories</h2>
+
+                        <ul class="p-0 m-0">
+                            {% for c in category %}
+                                <li><a href="/course/category/{{c.category_name}}/">{{c.category_name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div><!-- .cat-links -->
+
+                    <div class="latest-courses">
+                        <h2>Latest Courses</h2>
+
+                        <ul class="p-0 m-0">
+                            {% for c in latest_course %}
+                            {% if forloop.counter < 4 %}
+                            <li class="flex flex-wrap justify-content-between align-items-center">
+                                <img src="{{ c.course.course_pic.url }}" alt="">
+
+                                <div class="content-wrap">
+                                    <h3><a href="/course/{{ c.course.course_id }}">{{ c.course.course_name }}</a></h3>
+
+                                    <a href="/course/{{ c.course.course_id }}"><div class="course-cost free-cost">查看詳情</div></a>
+                                </div><!-- .content-wrap -->
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                        </ul>
+                    </div><!-- .latest-courses -->
+
+                    <div class="popular-tags">
+                        <h2>Popular Tags</h2>
+
+                        <ul class="flex flex-wrap align-items-center p-0 m-0">
+                            <li><a href="#">Web</a></li>
+                            <li><a href="#">Back End</a></li>
+                            <li><a href="#">Python</a></li>
+                            <li><a href="#">Django</a></li>
+                            <li><a href="#">Heroku</a></li>
+                        </ul>
+                    </div><!-- .popular-tags -->
+                </div><!-- .sidebar -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+{% endblock %}

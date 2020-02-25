@@ -13,13 +13,13 @@
                         <div class="instructors-info">
                             <div class="instructor-short-info flex flex-wrap">
                                 <div class="instructors-stats">
-                                    <img src="images/M10809202.jpg" class="img-fluid" alt="">
-                                    <p>Teacher:李夏瑋</p>
+                                    <img src="{{teacher.pic.url}}" class="img-fluid" alt="">
+                                    <p>Teacher:{{teacher.name}}</p>
                                     <ul class="p-0 m-0 mt-3">
-                                       <li><i class="fa fa-star"></i> 4.7 .7 Average rating</li>
+                                       <li><i class="fa fa-star"></i> 4.7  Average rating</li>
                                         <li><i class="fa fa-comment"></i> 25,182 Reviews</li>
                                         <li><i class="fa fa-user"></i> 11,085 Students</li>
-                                        <li><i class="fa fa-play-circle"></i> 2 Courses</li>
+                                        <li><i class="fa fa-play-circle"></i> {{mycourse.count}}</li>
                                     </ul>
                                 </div><!-- .instructors-stats -->
                             </div>
@@ -43,35 +43,41 @@
                 </div>
                 <div class="col-lg-2 text-left">
                     <div class="dropdown show">
-                        <a class=" dropdown-toggle btn-sort" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          最新
+                        <a class=" dropdown-toggle btn-sort" href="?sort=newest" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% if sort == 'newest' %}
+                                最新
+                            {% else %}
+                                最舊
+                            {% endif %}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <a class="dropdown-item" href="#">最舊</a>
+                          <a class="dropdown-item" href="?sort=oldest">最舊</a>
+                          <a class="dropdown-item" href="?sort=newest">最新</a>
                         </div>
                     </div>
                 </div>
                 <div class="offset-lg-4 col-lg-2 text-right">
-                    <button type="button" class="btn  btn-new">新課程</button>
+                    <a href="/course/new/"><button type="button" class="btn  btn-new">新課程</button></a>
                 </div>
             </div>
+            {% for c in mycourse %}
             <div class="row mt-5">
                 <div class="col-10 offset-lg-1 col-lg-10">
                     <div class="card card-2">
                         <div class="card-body">
                             <div class="media">
-                                <div class="sq align-self-center "> <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="images/django.jpg"" width="135" height="135" /> </div>
+                                <div class="sq align-self-center "> <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{c.course_pic.url}}" width="135" height="135" /> </div>
                                 <div class="media-body my-auto text-right">
                                     <div class="row my-auto flex-column flex-md-row">
                                         <div class="col my-auto text-left">
-                                            <h5 class="mb-0">Django</h5>
+                                            <h5 class="mb-0">{{c.course_name}}</h5>
                                         </div>
                                         <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
                                         <div class="col my-auto"> <small>Size : M</small></div>
                                         <div class="col my-auto"> <small>Qty : 1</small></div> -->
                                         <div class="col my-auto">
-                                            <button type="button" class="btn btn-edit">編輯</button>
-                                            <button type="button" class="btn btn-dark">刪除</button>
+                                            <a href="/course/edit/{{ c.course_id }}"><button type="button" class="btn btn-edit">編輯</button></a>
+                                            <a href="/course/delete/{{ c.course_id }}"><button type="button" class="btn btn-dark">刪除</button></a>
                                         </div>
                                     </div>
                                 </div>
@@ -80,34 +86,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
-                <div class="col-10 offset-lg-1 col-lg-10">
-                    <div class="card card-2">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="sq align-self-center "> <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="images/django.jpg"" width="135" height="135" /> </div>
-                                <div class="media-body my-auto text-right">
-                                    <div class="row my-auto flex-column flex-md-row">
-                                        <div class="col my-auto text-left">
-                                            <h5 class="mb-0">Django</h5>
-                                        </div>
-                                        <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
-                                        <div class="col my-auto"> <small>Size : M</small></div>
-                                        <div class="col my-auto"> <small>Qty : 1</small></div> -->
-                                        <div class="col my-auto">
-                                            <button type="button" class="btn btn-edit">編輯</button>
-                                            <button type="button" class="btn btn-dark">刪除</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
-</div><!-- single-courses-page -->
+</div>
 {% endblock %}
-
-{% block footer %}

@@ -42,7 +42,7 @@ $(document).ready(function(){
     <div class="container-fluid">
         <div class="row justify-content-start">
             <div class="col-12 col-lg-12 "> 
-                <ul class="flex justify-content-start align-items-center py-2 ">
+                <ul class="flex justify-content-start align-items-center py-2 lesson-ul">
                     <li><a href="/user/account/" style="font-weight: 400;" id="index">個人資料</a></li>
                     <li><a href="/user/account/pic/" style="font-weight: 400;" id="pic">個人照片</a></li>
                     <li><a href="/user/account/history/" style="font-weight: 400;" id="history">修課歷史</a></li>
@@ -76,7 +76,7 @@ $(document).ready(function(){
                             <input id="birthday" type="date" class="form-control" name="birthday" placeholder="Birthday" value="{{ User.birthday|date:'Y-m-d' }}">                           
                             自我介紹<br>
                             <textarea name="self_introduction" class="form-control" rows="5" value="">
-            
+                                {{ User.self_introduction }}
                             </textarea>          
 
                         </div>

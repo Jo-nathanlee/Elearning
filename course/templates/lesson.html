@@ -1,5 +1,221 @@
 {% extends "base.html" %}
+{% block head %}
+{% load i18n %}
+<script>
+function DateFormat(strdate){
+    const time = Date.parse(strdate);
+    const date = new Date(time); 
+    const formattedDate = date.toLocaleDateString('en-GB', {
+        day: 'numeric', month: 'short', year: 'numeric'
+    }).replace(/ /g, '-');
 
+    return formattedDate;
+}
+$(document).ready(function(){
+    $("#input_tab").val('index');
+
+    $(".a_href").click(function() {
+        $(".a_href").each(function(){
+            var temp = $(this).html();
+            temp = temp.replace("<span>", "");
+            temp = temp.replace("/<span>", "");
+            $(this).html(temp); 
+        });
+        var content = $(this).html();
+        $(this).html("<span>"+content+"</span>");
+        var current_tab = $("#input_tab").val();
+        var clicked_tab = $(this).attr("id");
+        $.ajax({
+            url: "{% url 'tab' %}",
+            type: 'POST',
+            data: { tab:clicked_tab,lesson_id:{{ lesson_id }}  },
+            dataType: 'json',
+            success: function(data) {
+                $(".tab_"+current_tab).addClass("d-none");
+                $(".tab_"+clicked_tab).removeClass("d-none");
+
+                $("#input_tab").val(clicked_tab);
+            },
+            error: function(XMLHttpRequest, status, error) {
+                console.log(XMLHttpRequest.responseText);
+            }
+        });
+    });
+
+    $("#comment_submit").click(function() { 
+        var question = $("textarea#comment_question").val();
+        if(question != "")
+        {
+            $.ajax({
+                url: "{% url 'comment' %}",
+                type: 'POST',
+                data: { question:question,lesson_id:{{ lesson_id }}  },
+                dataType: 'json',
+                success: function(data) {
+                    
+                    $("#comment_question").val("");
+                    
+                    $(".comments-number").html("此課程有"+data.length+"個問題");
+
+                    $(".comment-list").empty();
+                    $.each(data, function(index) {
+                        $(".comment-list").append('<li class="comment">\
+                                                        <article class="comment-body">\
+                                                            <figure class="comment-author-avatar">\
+                                                                <img src="/media/'+data[index].questioner__pic+'" alt="">\
+                                                            </figure>\
+                                                            <div class="comment-wrap">\
+                                                                <div class="comment-author">\
+                                                                    <span class="comment-meta d-block">\
+                                                                        <span>'+DateFormat(data[index].created_at)+'</span>\
+                                                                    </span>\
+                                                                    <span class="fn">\
+                                                                        <span>'+data[index].questioner__name+'</span>\
+                                                                    </span>\
+                                                                </div>\
+                                                                <p>'+data[index].question_content+'</p>\
+                                                                <div class="reply">\
+                                                                    <a class="btn_reply" href="javascript:void(0);">reply</a>\
+                                                                </div>\
+                                                            </div>\
+                                                            <div class="clearfix"></div>\
+                                                        </article>');
+                         const answer = data[index].answer;
+                         $.each(answer, function(index) {
+                                $(".comment-list").append(' <ol class="children">\
+                                                                <li class="comment">\
+                                                                    <article class="comment-body">\
+                                                                        <figure class="comment-author-avatar">\
+                                                                            <img src="/media/'+answer[index].answerer__pic+'" alt="">\
+                                                                        </figure>\
+                                                                        <div class="comment-wrap">\
+                                                                            <div class="comment-author">\
+                                                                                <span class="comment-meta d-block">'+DateFormat(answer[index].created_at)+  
+                                                                                '</span>\
+                                                                                <span class="fn">'+answer[index].answerer__name+'</span>\
+                                                                            </div>\
+                                                                            <p>'+answer[index].answer_content+'</p>\
+                                                                        </div>\
+                                                                        <div class="clearfix"></div>\
+                                                                    </article>\
+                                                                </li>\
+                                                            </ol>');
+
+                         });
+                       
+                         $(".comment-list").append('<ol class="children reply-comment d-none">\
+                                                            <li class="comment">\
+                                                                <form action="javascript:void(0);" class="comment-form">\
+                                                                    <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
+                                                                    <input type="text" class="reply_text" placeholder="回覆">\
+                                                                    <button class="reply_submit" >留言</button>\
+                                                                </form>\
+                                                            </li>\
+                                                        </ol>\
+                                                </li>');
+                    });
+                },
+                error: function(XMLHttpRequest, status, error) {
+                    console.log(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    });
+
+    //顯示回覆textarea
+    $(".btn_reply").click(function() { 
+        $(this).parents("li").find(".reply-comment").removeClass("d-none");
+        $('html,body').animate({
+            scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)-300
+        }, 'slow');
+    });
+
+    //點擊回覆留言
+    $(".reply_submit").click(function(){
+        const answer = $(this).prev().val();
+        const question_id = $(this).prev().prev().val();
+        const ol = $(this).parents(".reply-comment");
+         $.ajax({
+                url: "{% url 'reply' %}",
+                type: 'POST',
+                data: { answer:answer,question_id:question_id },
+                dataType: 'json',
+                success: function(data) {
+                    $(".comments-number").html("此課程有"+data.length+"個問題");
+
+                    $(".comment-list").empty();
+                    $.each(data, function(index) {
+                        $(".comment-list").append('<li class="comment">\
+                                                        <article class="comment-body">\
+                                                            <figure class="comment-author-avatar">\
+                                                                <img src="/media/'+data[index].questioner__pic+'" alt="">\
+                                                            </figure>\
+                                                            <div class="comment-wrap">\
+                                                                <div class="comment-author">\
+                                                                    <span class="comment-meta d-block">\
+                                                                        <span>'+DateFormat(data[index].created_at)+'</span>\
+                                                                    </span>\
+                                                                    <span class="fn">\
+                                                                        <span>'+data[index].questioner__name+'</span>\
+                                                                    </span>\
+                                                                </div>\
+                                                                <p>'+data[index].question_content+'</p>\
+                                                                <div class="reply">\
+                                                                    <a class="btn_reply" href="javascript:void(0);">reply</a>\
+                                                                </div>\
+                                                            </div>\
+                                                            <div class="clearfix"></div>\
+                                                        </article>');
+                         const answer = data[index].answer;
+                         $.each(answer, function(index) {
+                                $(".comment-list").append(' <ol class="children">\
+                                                                <li class="comment">\
+                                                                    <article class="comment-body">\
+                                                                        <figure class="comment-author-avatar">\
+                                                                            <img src="/media/'+answer[index].answerer__pic+'" alt="">\
+                                                                        </figure>\
+                                                                        <div class="comment-wrap">\
+                                                                            <div class="comment-author">\
+                                                                                <span class="comment-meta d-block"><span>'+DateFormat(answer[index].created_at)+  
+                                                                                '</span></span>\
+                                                                                <span class="fn">'+answer[index].answerer__name+'</span>\
+                                                                            </div>\
+                                                                            <p>'+answer[index].answer_content+'</p>\
+                                                                        </div>\
+                                                                        <div class="clearfix"></div>\
+                                                                    </article>\
+                                                                </li>\
+                                                            </ol>');
+
+                         });
+                       
+                         $(".comment-list").append('<ol class="children reply-comment d-none">\
+                                                            <li class="comment">\
+                                                                <form action="javascript:void(0);" class="comment-form">\
+                                                                    <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
+                                                                    <input type="text" class="reply_text" placeholder="回覆">\
+                                                                    <button class="reply_submit" >留言</button>\
+                                                                </form>\
+                                                            </li>\
+                                                        </ol>\
+                                                </li>');
+                    });
+                    ol.addClass("d-none");
+                },
+                error: function(XMLHttpRequest, status, error) {
+                    console.log(XMLHttpRequest.responseText);
+                }
+        });
+
+        
+    });
+
+        
+  
+    
+});
+</script>
+{% endblock %}
 {% block body %}
 <body>
 <div class="single-courses-page">
@@ -11,7 +227,7 @@
                 <div class="row">
                     <div class="col-12">
                         <header class="entry-header">
-                            <h1 class="entry-title">Lesson 1:Introduction to this Course</h1>
+                            <h1 class="entry-title">Lesson {{ lesson_index }}:{{ lesson.lesson_name }}</h1>
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
                 </div><!-- .row -->
@@ -23,16 +239,22 @@
         <div class="container-fluid">
             <div class="row justify-content-start">
                 <div class="col-9 col-lg-8 offset-lg-1 ">
-                    <div class="col-lg-12 video-col">
-                        <video width="100%" height="100%" controls>
+                    <div class="col-lg-12 video-col"> 
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{ lesson.lesson_video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        {% comment %} <video width="100%" height="100%" controls>
                             <source src="videos/introduction.mp4" type="video/mp4">
                             Your browser does not support the video tag.
-                        </video>                    
+                        </video>                     {% endcomment %}
                     </div>                  
                 </div><!-- .col -->
                 <div class="col-3 col-lg-3">
                     <div class="col-lg-9 video-col">
-                        <p>1.Introduction to this Course</p>
+                        {% for lesson in all_lesson %}
+                            <p>Lesson {{ forloop.counter }}:
+                            <a href="course/lesson/{{ lesson.lesson_id }}/{{ forloop.counter }}/" class="lesson-href">
+                                {{ lesson.lesson_name }}
+                            </a></p>
+                        {% endfor %}
                     </div>
                 </div><!-- .col -->
             </div><!--.row -->
@@ -43,132 +265,114 @@
         <div class="container-fluid">
             <div class="row justify-content-start">
                 <div class="col-9 col-lg-10 offset-lg-1 "> 
-                    <ul class="flex justify-content-start align-items-center py-2 pt-md-0">
-                        <li><a href="#" style="font-weight: 400;"><span>內容</span></a></li>
-                        <li><a href="#" style="font-weight: 400;">作業</a></li>
-                        <li><a href="#" style="font-weight: 400;">問答</a></li>
-                        <li><a href="#" style="font-weight: 400;">隨堂筆記</a></li>
+                    <ul class="flex justify-content-start align-items-center py-2 pt-md-0 lesson-ul">
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="index"><span>內容</span></a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業</a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">隨堂筆記</a></li>
                     </ul>
                     <hr width="106%" style="margin-top: -5px;">          
                 </div><!-- .col -->
             </div><!--.row -->
             <div class="row justify-content-start">
+                <input type="hidden" id="input_tab" value="{{ tab }}">
                 <!-- 內容區 -->
-                <div class="col-10 col-lg-10 offset-lg-1 teaching-content "> 
-                    教材
+                <div class="col-10 col-lg-10 offset-lg-1 teaching-content tab_index"> 
+                    {{ lesson.lesson_content|safe}}
                 </div><!-- .col -->
                 <!-- 內容區end -->
                 <!-- 作業區 -->
-                <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none"> 
-                    <h3>Title</h3>
-                    <p>Homework Description</p>
+                <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework"> 
+                    <h3>{{ lesson.homework_title }}</h3>
+                    <p>{{ lesson.homework_description }}</p>
                 </div><!-- .col -->
                 <!-- 作業區end -->
                 <!-- 問答區 -->
-                <div class="col-8 col-lg-8 offset-lg-1 d-none">
+                <div class="col-8 col-lg-8 offset-lg-1 d-none tab_qa">
                     <div class="post-comments-wrap">
                         <div class="post-comments">
-                            <h3 class="comments-title"><span class="comments-number">此課程有2個問題</span></h3>
+                            <h3 class="comments-title"><span class="comments-number">此課程有{{ all_questions|length  }}個問題</span></h3>
 
                             <ol class="comment-list">
+                                {% for question in all_questions %}
                                 <li class="comment">
                                     <article class="comment-body">
                                         <figure class="comment-author-avatar">
-                                            <img src="images/c-1.png" alt="">
+                                            <img src="/media/{{question.questioner__pic}}" alt="">
                                         </figure><!-- .comment-author-avatar -->
 
                                         <div class="comment-wrap">
                                             <div class="comment-author">
                                                 <span class="comment-meta d-block">
-                                                    <a href="#">27 Aug 2018</a>
+                                                {% language 'en-GB' %}
+                                                    <a href="#">{{question.created_at|date:'d-M-Y'}}</a>
+                                                {% endlanguage %}
                                                 </span><!-- .comment-meta -->
 
                                                 <span class="fn">
-                                                    <a href="#">Chris Hadfield</a>
+                                                    <a href="#">{{question.questioner__name}}</a>
                                                 </span><!-- .fn -->
                                             </div><!-- .comment-author -->
 
-                                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi</p>
+                                            <p>{{question.question_content}}</p>
 
-                                            <div class="reply">
-                                                <a href="#">like</a>
-                                                <a href="#">reply</a>
+                                            <div class="reply"> 
+                                                <a class="btn_reply" href="javascript:void(0);">reply</a>
                                             </div><!-- .reply -->
                                         </div><!-- .comment-wrap -->
 
                                         <div class="clearfix"></div>
                                     </article><!-- .comment-body -->
 
+                                    {% for answer in question.answer %}
                                     <ol class="children">
                                         <li class="comment">
                                             <article class="comment-body">
                                                 <figure class="comment-author-avatar">
-                                                    <img src="images/c-2.png" alt="">
+                                                    <img src="/media/{{answer.answerer__pic}}" alt="">
                                                 </figure><!-- .comment-author-avatar -->
 
                                                 <div class="comment-wrap">
                                                     <div class="comment-author">
                                                         <span class="comment-meta d-block">
-                                                            <a href="#">27 Aug 2018</a>
+                                                        {% language 'en-GB' %}
+                                                            <a href="#">{{answer.created_at|date:'d-M-Y'}}</a>
+                                                        {% endlanguage %}
                                                         </span><!-- .comment-meta -->
 
                                                         <span class="fn">
-                                                            <a href="#">Albert Einstein</a>
+                                                            <a href="#">{{answer.answerer__name}}</a>
                                                         </span><!-- .fn -->
                                                     </div><!-- .comment-author -->
 
-                                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi </p>
-
-                                                    <div class="reply">
-                                                        <a href="#">like</a>
-                                                        <a href="#">reply</a>
-                                                    </div><!-- .reply -->
+                                                    <p>{{answer.answer_content}}</p>
                                                 </div><!-- .comment-wrap -->
 
                                                 <div class="clearfix"></div>
                                             </article><!-- .comment-body -->
                                         </li><!-- .comment -->
                                     </ol><!-- .children -->
-                                </li><!-- .comment -->
-
-                                <li class="comment">
-                                    <article class="comment-body">
-                                        <figure class="comment-author-avatar">
-                                            <img src="images/c-3.png" alt="">
-                                        </figure><!-- .comment-author-avatar -->
-
-                                        <div class="comment-wrap">
-                                            <div class="comment-author">
-                                                <span class="comment-meta d-block">
-                                                    <a href="#">27 Aug 2018</a>
-                                                </span><!-- .comment-meta -->
-
-                                                <span class="fn">
-                                                    <a href="#">Henry Ford</a>
-                                                </span><!-- .comment-autho -->
-                                            </div><!-- .comment-author -->
-
-                                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi </p>
-
-                                            <div class="reply">
-                                                <a href="#">like</a>
-                                                <a href="#">reply</a>
-                                            </div><!-- .reply -->
-                                        </div><!-- .comment-wrap -->
-
-                                        <div class="clearfix"></div>
-                                    </article><!-- .comment-body -->
-                                </li><!-- .comment -->
-                            </ol><!-- .comment-list -->
-                        </div><!-- .post-comments -->
+                                    {% endfor %}
+                                    <ol class="children d-none reply-comment"><!-- .reply -->
+                                        <li class="comment">
+                                            <form action="javascript:void(0);" class="comment-form">
+                                                <input type="hidden" id="question_id" value="{{question.question_id}}">
+                                                <input type="text" class="reply_text" placeholder="回覆">
+                                                <button class="reply_submit" >留言</button>
+                                            </form>
+                                        </li>
+                                    </ol><!-- .reply -->
+                                </li><!-- .comment --> 
+                                {% endfor %}
+                            </ol>
+                              
 
                         <div class="comments-form">
                             <div class="comment-respond">
                                 <h3 class="comment-reply-title">Ask a question</h3>
-
-                                <form class="comment-form">
-                                    <textarea rows="4" placeholder="問題"></textarea>
-                                    <input type="submit" value="留言">
+                                <form action="javascript:void(0);" class="comment-form">
+                                    <textarea rows="4" id="comment_question" placeholder="問題"></textarea>
+                                    <button id="comment_submit" >留言</button>
                                 </form><!-- .comment-form -->
                             </div><!-- .comment-respond -->
                         </div><!-- .comments-form -->
@@ -179,34 +383,14 @@
         </div><!-- .container -->
     </div><!--.lesson-content -->
 
-    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none" >
+    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework" >
         <div style="max-width: 50em;">
             <label>作業繳交區</label>
-            <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>     
+                <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
             <input type="submit" class="btn homework_submit" value="繳交">         
         </div>
     </div>
    
-
-    <footer class="site-footer">
-        <div class="footer-bar">
-            <div class="container">
-                    <div class="follow-me">
-                        <ul class="flex flex-wrap justify-content-center align-items-center">
-                            <li><a class="icon-follow" href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a class="icon-follow" href="#"><i class="fab fa-instagram"></i></a></li>
-                        </ul>
-                        <p class="footer-copyright">
-                            <i class="fa fa-envelope"></i>&nbsp M10809202@mail.ntust.edu.tw
-                        </p>
-                        <p class="footer-copyright">
-                            Copyright &copy;2020 All rights reserved | NTUST.SIS-LAB
-                        </p>
-                    </div><!-- follow me -->
-            </div><!-- .container -->
-        </div><!-- .footer-bar -->
-    </footer><!-- .site-footer -->
-</div><!-- single-courses-page -->
     {% endblock %}
 
     {% block footer %}
@@ -218,7 +402,23 @@
     
     
     <script>
+     function submit_homework(file){
+        $.ajax({
+            url: "{% url 'upload_homework' %}",
+            type: 'POST',
+            data: { file:file,lesson_id:{{ lesson_id }}},
+            dataType: 'json',
+            success: function(data) {
+
+            },
+            error: function(XMLHttpRequest, status, error) {
+                console.log(XMLHttpRequest.responseText);
+            }
+        });
+
+    }
     FilePond.registerPlugin(
+	
         // encodes the file as base64 data
         FilePondPluginFileEncode,
         
@@ -233,11 +433,41 @@
     );
     
     // Select the file input and use create() to turn it into a pond
-    FilePond.create(
-        document.querySelector('.filepond'),
+    const pond = FilePond.create(
+        document.querySelector('.input_homework'),
         {
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+            onaddfile:(err,file)=>{
+                submit_homework($("input[name='filepond']").val());
+
+                
+
+            }
         }
     );
+
+
+
+    {% comment %} const pond = document.querySelector('.input_homework');
+    pond.addEventListener('FilePond:addfile', e => {
+        const file = e.detail.file;
+        console.log(file);
+        //console.log('File added', e.detail.file);
+    }); {% endcomment %}
+
+    {% comment %} const pond = FilePond.create(); {% endcomment %}
+    {% comment %} pond.on('addfile', (error, file) => {
+        if (error) {
+            console.log('Oh no');
+            return;
+        }
+
+    }); {% endcomment %}
+
+
+
+
+
+
     </script>
     {% endblock %}

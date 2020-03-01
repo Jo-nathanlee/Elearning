@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
 {% load i18n %}
+{% load get_filename %}
 <script>
 function DateFormat(strdate){
     const time = Date.parse(strdate);
@@ -210,6 +211,25 @@ $(document).ready(function(){
         
     });
 
+    $(".homework_submit").click(function(){
+        const input_file = $("input[name='filepond']");
+        if(input_file.attr('type') == 'hidden'){
+            $.ajax({
+                url: "{% url 'upload_homework' %}",
+                type: 'POST',
+                data: { file:input_file.val(),lesson_id:{{ lesson_id }}},
+                dataType: 'json',
+                success: function(data) {
+                    console.log("su");
+                },
+                error: function(XMLHttpRequest, status, error) {
+                    console.log(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    });
+    
+
         
   
     
@@ -387,7 +407,10 @@ $(document).ready(function(){
         <div style="max-width: 50em;">
             <label>作業繳交區</label>
                 <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-            <input type="submit" class="btn homework_submit" value="繳交">         
+            <input type="submit" class="btn homework_submit" value="繳交">  
+            {% if homework != None %}      
+            <p>已繳交檔案：<a href="/user/homework_download/{{ homework.id }}/">{{ homework.homework|get_filename }}</a></p> 
+            {% endif %}
         </div>
     </div>
    
@@ -402,21 +425,6 @@ $(document).ready(function(){
     
     
     <script>
-     function submit_homework(file){
-        $.ajax({
-            url: "{% url 'upload_homework' %}",
-            type: 'POST',
-            data: { file:file,lesson_id:{{ lesson_id }}},
-            dataType: 'json',
-            success: function(data) {
-
-            },
-            error: function(XMLHttpRequest, status, error) {
-                console.log(XMLHttpRequest.responseText);
-            }
-        });
-
-    }
     FilePond.registerPlugin(
 	
         // encodes the file as base64 data
@@ -436,13 +444,15 @@ $(document).ready(function(){
     const pond = FilePond.create(
         document.querySelector('.input_homework'),
         {
+             {% if homework != None %} 
+                files: [
+                    {
+                        source: '/media/{{ homework.homework }}',
+                    }
+                ],
+             {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
-            onaddfile:(err,file)=>{
-                submit_homework($("input[name='filepond']").val());
 
-                
-
-            }
         }
     );
 

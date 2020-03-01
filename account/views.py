@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
+from django.http import FileResponse,JsonResponse
 from account import models, forms
+from course.models import Homework
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from pprint import pprint
@@ -8,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import base64
 from django.core.files.base import ContentFile
+import os
+from django.conf import settings
 
 
 # Create your views here.
@@ -39,8 +43,9 @@ def account(request):
 def account_tab(request,tab):
     tab = tab
     email= request.user.email
-    if request.method == "POST":
-        if tab == "pic":
+    user = models.User.objects.get(email=email)  
+    if tab == "pic":
+        if request.method == "POST":
             pic = request.POST['picture']
             arr_json = json.loads(pic)
             json_data = arr_json['data']
@@ -48,12 +53,17 @@ def account_tab(request,tab):
 
 
             data = ContentFile(base64.b64decode(json_data))  
-            user = models.User.objects.get(email=email)
             user.pic.save(file_name, data, save=True) # image is User's model field
+
+            # pic_url = request.POST['pic_url']
+            # models.User.objects.filter(email=email).update(sex=pic_url)
+            # data = {}
+            # return JsonResponse(data,safe=False)
             user.save()
-    
-    user = models.User.objects.get(email=email)       
-    image = user.pic
+            
+
+    if tab == "homework":
+        homework = Homework.objects.filter(student = request.user)
     return render(request, 'account.html',locals())
 
 
@@ -108,4 +118,15 @@ def login(request):
 def logout(request):
 	auth.logout(request)
 	return redirect('/user/login/')	
+
+def download(request,id):
+    homework = Homework.objects.get(id=id)
+    filename = str(homework.homework).replace("files/","")
+    filename = filename.encode('utf-8').decode('ISO-8859-1')
+    
+    file=open(os.path.join(settings.MEDIA_ROOT, str(homework.homework)),'rb')
+    response =FileResponse(file)
+    response['Content-Type']='application/octet-stream'
+    response['Content-Disposition']='attachment;filename="'+filename+'"'
+    return response
 

@@ -5,7 +5,7 @@ urlpatterns = [
     path('new/', views.new_course,name='new_course'),
     path('', views.course_index,name='courses'),
     path('my_course', views.user_course,name='my_course'),
-    path('category/<str:category>', views.category),
+    path('category/<str:category>/', views.category),
     path('<int:course_id>/', views.course_page),
     path('edit/<int:course_id>/', views.course_edit),
     path('delete/<int:course_id>/', views.course_delete),

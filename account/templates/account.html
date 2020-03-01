@@ -15,11 +15,66 @@
 $(document).ready(function(){
     var content = $("#{{tab}}").html();
     $("#{{tab}}").html("<span>"+content+"</span>");
+
+    /*$('#submit_pic').on("click", function () {
+        if($('input[name=picture]').attr('type')=='hidden'){
+            var file = $('input[name=picture]').val();
+            var json_str = JSON.parse(file);
+            var data = json_str["data"];
+
+            var formData = new FormData();
+            formData.append("image", data);
+               
+            var apiUrl = 'https://api.imgur.com/3/image';
+            var apiKey = '98e1ed2077afcf0';
+            var settings = {
+                async: true,
+                crossDomain: true,
+                url: apiUrl,
+                method: "POST",
+                datatype: "json",
+                headers: {
+                    Authorization: "Client-ID " + apiKey
+                },
+                processData: false,
+                contentType: false,
+                data: formData,
+                beforeSend: function () {
+                    console.log("uploading...");
+                },
+                success: function (res) {
+                    console.log(res.data.link);
+                    $.ajax({
+                        url: "/user/account/pic/",
+                        type: 'POST',
+                        data: { pic_url:res.data.link  },
+                        dataType: 'json',
+                        success: function(results){
+                            console.log("success");
+                        },
+                        error: function(XMLHttpRequest, status, error) {
+                            console.log(XMLHttpRequest.responseText);
+                        }
+                    });
+                },
+                error: function (XMLHttpRequest, status, error) {
+                    //alert(XMLHttpRequest.responseText);
+                }
+            }
+            $.ajax(settings).done(function (res) {
+                console.log("Done");
+            });
+            
+        }
+    });*/
+
+
 });
 </script>
 {% endblock %}
 
 {% block body %}
+{% load get_filename %}
 <body>
 <div class="single-courses-page">
 {% endblock %}
@@ -45,7 +100,6 @@ $(document).ready(function(){
                 <ul class="flex justify-content-start align-items-center py-2 lesson-ul">
                     <li><a href="/user/account/" style="font-weight: 400;" id="index">個人資料</a></li>
                     <li><a href="/user/account/pic/" style="font-weight: 400;" id="pic">個人照片</a></li>
-                    <li><a href="/user/account/history/" style="font-weight: 400;" id="history">修課歷史</a></li>
                     <li><a href="/user/account/homework/" style="font-weight: 400;" id="homework">已繳作業</a></li>
                 </ul>
                 <hr width="100%" style="margin-top: 0px;">          
@@ -53,12 +107,11 @@ $(document).ready(function(){
         </div><!--.row -->
         {% if tab == "pic" %}
         <!-- 圖片上傳 -->
-        {% comment %} <img src="{{ image.url }}"> {% endcomment %}
         <form action="/user/account/pic/" method="POST" enctype="multipart/form-data">
+        {% comment %} <form action="javascript:void(0);"> {% endcomment %}
         {% csrf_token %}
             <input type="file" class="filepond input_homework"  name="picture"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>   
-            <input type="hidden" name="picture_base64">
-            <input type="submit" class="account-submit" value="儲存">  
+            <input type="submit" class="account-submit" id="submit_pic" value="儲存">  
         </form>
         <!-- 圖片上傳end -->
         {% endif %}
@@ -131,9 +184,8 @@ $(document).ready(function(){
         </div><!--.row -->
         <!-- 個人資料end -->
         {% endif %}
-        {% if tab == "history" %}
         <!-- 修課歷史 -->
-        <div class="row mt-2 justify-content-center">
+        {% comment %} <div class="row mt-2 justify-content-center">
             <div class="col-9  col-lg-9">
                 <div class="card card-2">
                     <div class="card-body">
@@ -156,9 +208,8 @@ $(document).ready(function(){
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>  {% endcomment %}
         <!-- 修課歷史end -->
-        {% endif %}
         {% if tab == "homework" %}
         <!-- 已繳作業 -->
         <div class="row justify-content-center">
@@ -173,18 +224,14 @@ $(document).ready(function(){
                       </tr>
                     </thead>
                     <tbody>
+                    {% for hw in homework %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{ hw.created_at|date:'Y-m-d' }}</th>
+                        <td>{{ hw.lesson_id.homework_title }}</td>
+                        <td>{{ hw.lesson_id.homework_description }}</td>
+                        <td><a href="/user/homework_download/{{ hw.id }}/">{{ hw.homework|get_filename }}</a></td>
                       </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
+                    {% endfor %}
                     </tbody>
                   </table>
             </div>
@@ -205,7 +252,8 @@ $(document).ready(function(){
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
-    
+    <script src="https://unpkg.com/cropperjs"></script>  
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
     
     <script>
     FilePond.registerPlugin(
@@ -231,13 +279,125 @@ $(document).ready(function(){
         FilePondPluginImageResize,
 
         // applies crop and resize information on the client
-        FilePondPluginImageTransform
+        FilePondPluginImageTransform,
+        FilePondPluginImageEdit
+        
     );
     
+    const crop_editor = {
+    // Called by FilePond to edit the image
+            // - should open your image editor
+            // - receives file object and image edit instructions
+            open: (file, instructions) => {
+                var editor = document.createElement('div');
+                var bg = document.createElement('div');
+                bg.style.position = 'fixed';
+                bg.style.left = 0;
+                bg.style.right = 0;
+                bg.style.top = 0;
+                bg.style.bottom = 0;
+                bg.style.backgroundColor = 'black';
+                bg.style.opacity = 0.8;
+                bg.style.zIndex = 9997;
+                editor.style.position = 'fixed';
+                editor.style.left = '300px';
+                editor.style.right = '300px';
+                editor.style.top = '50px';
+                editor.style.bottom = '50px';
+                //editor.style.backgroundColor = '#000';
+                editor.style.zIndex = 9998;
+                document.body.appendChild(bg);  
+                document.body.appendChild(editor);  // Create confirm button at the top left of the viewport
+                var buttonConfirm = document.createElement('button');
+                buttonConfirm.style.position = 'absolute';
+                buttonConfirm.style.left = '10px';
+                buttonConfirm.style.top = '10px';
+                buttonConfirm.style.zIndex = 9999;
+                buttonConfirm.textContent = 'Confirm';
+                buttonConfirm.addEventListener('click', function() {    // Remove the editor from the view
+                    // Get the canvas with image data from Cropper.js
+                    const canvasData  = cropper.getCanvasData();
+                    const cropData = cropper.getData();
+                    const cropAreaRatio = cropData.height / cropData.width;
+                    const percentX = (cropData.x + cropData.width / 2) / canvasData.naturalWidth;
+                    const percentY = (cropData.y + cropData.height / 2) / canvasData.naturalHeight;
+
+                    const cx = percentX > 0.5 ? 1 - percentX : percentX;
+                    const cy = percentY > 0.5 ? 1 - percentY : percentY;
+
+                    let width = canvasData.naturalWidth;
+                    let height = width * cropAreaRatio;
+                    if (height > canvasData.naturalHeight) {
+                    height = canvasData.naturalHeight;
+                    width = height / cropAreaRatio;
+                    }
+                    const rectWidth = cx * 2 * width;
+                    const rectHeight = cy * 2 * height;
+
+                    /* Calculate zoom. */
+                    const zoom = Math.max(rectWidth / cropData.width, rectHeight / cropData.height);
+
+                    crop_editor.onconfirm({  
+                        data: {
+                            crop: {
+                            center: {
+                                x: percentX,
+                                y: percentY
+                                //x: 0.5,
+                                //y: 0.5
+                            },
+                            flip: {
+                                //horizontal: cropData.scaleX < 0,
+                                //vertical: cropData.scaleY < 0
+                                horizontal: false,
+                                vertical: false
+                            },
+                            zoom: zoom,
+                            aspectRatio: cropAreaRatio,
+                            //zoom: 2,
+                            rotation: 0,
+                            //aspectRatio: null
+                            }
+                        } 
+                    });
+                    document.body.removeChild(editor); 
+                    document.body.removeChild(bg);  
+                });
+                editor.appendChild(buttonConfirm);
+                var image = new Image();
+                image.src = URL.createObjectURL(file);
+                editor.appendChild(image);
+                var cropper = new Cropper(image, { aspectRatio: 1 }); 
+            },
+
+            // Callback set by FilePond
+            // - should be called by the editor when user confirms editing
+            // - should receive output object, resulting edit information
+            onconfirm: (output) => {
+                
+            },
+            
+            // Callback set by FilePond
+            // - should be called by the editor when user cancels editing
+            oncancel: () => {},
+
+            // Callback set by FilePond
+            // - should be called by the editor when user closes the editor
+            onclose: () => {}
+    };
+
     // Select the file input and use create() to turn it into a pond
+
     FilePond.create(
         document.querySelector('.filepond'),
         {
+            {% if user.pic != None %}
+            files: [
+                {
+                    source: '/media/{{ user.pic }}',
+                }
+            ],
+            {% endif %}
             labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
             imagePreviewHeight: 170,
             imageCropAspectRatio: '1:1',
@@ -245,9 +405,10 @@ $(document).ready(function(){
             imageResizeTargetHeight: 200,
             stylePanelLayout: 'compact circle',
             styleLoadIndicatorPosition: 'center bottom',
-            styleButtonRemoveItemPosition: 'center bottom'
+            styleButtonRemoveItemPosition: 'left bottom',
+            imageEditEditor: crop_editor,  
         }
     );
-
+           
     </script>
 {% endblock %}

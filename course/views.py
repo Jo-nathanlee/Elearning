@@ -113,10 +113,34 @@ def user_course(request):
     return render(request,'user-courses.html',locals())
 
 def category(request,category):
-    courses = models.Course.objects.filter(category=category)
-    course_count = courses.count()
-    page = math.ceil(float(course_count) / float(6))
-    r = range(1,page+1)
+    model_category = models.Category.objects.get(category_name = category)
+    all_course = models.Course.objects.filter(category=model_category)
+    paginator = Paginator(all_course, 6)
+    current_page = int(request.GET.get('page', 1))
+    course_count = paginator.count
+    page = paginator.num_pages
+
+    try:
+        if page > 11:
+            if current_page_num-5 < 1:
+                page_range = range(1, 11)
+            elif current_page_num + 5 > paginator.num_pages:
+                page_range = range(paginator.num_pages-10, paginator.num_pages + 1)
+            else:
+                page_range = range(current_page_num-5, current_page_num+6)
+        else:
+            page_range = paginator.page_range
+    except Exception as e:
+        page_range = paginator.page_range
+
+    try:
+        courses = paginator.page(current_page)
+    except EmptyPage as e:
+        courses = paginator.page(1)
+    except PageNotAnInteger:
+        courses = paginator.page(1)
+
+    latest_course = paginator.page(1)
     category = models.Category.objects.all()   
 
     return render(request,'courses.html',locals())
@@ -192,8 +216,7 @@ def lesson_page(request,lesson_id,lesson_index):
 
 
     all_questions = list(questions) 
-
-    
+    homework = models.Homework.objects.filter(lesson_id=lesson_id,student=request.user).first()
 
     tab = "index"
 
@@ -302,12 +325,20 @@ def upload_homework(request):
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)
     student = User.objects.get(email=request.user.email) 
 
-    model = models.Homework.objects.create(
-        lesson_id=lesson,
-        student=student,
-    )
-    model.homework.save(file_name, file_data, save=True)
-    model.save()
+    
+    model = models.Homework.objects.filter(lesson_id=lesson,student=student).first()
+    if model == None:
+        hw = models.Homework.objects.create(
+            lesson_id=lesson,
+            student=student,
+        )
+        hw.homework.save(file_name, file_data, save=True)
+        hw.save()
+    else:
+        model.homework.save(file_name, file_data, save=True)
+        model.save()
+
+   
 
     data = {}
     return JsonResponse(data,safe=False)

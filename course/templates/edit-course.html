@@ -32,7 +32,7 @@
         <div class="row">
             <div class="m-auto p-4 col-xs-12 col-sm-12 col-md-10 well well-sm card shadow" style="margin-top: 5vh!important;">
                 <legend class="text-left">課程編輯</legend>
-                <form action="/course/edit/" method="post" class="form" role="form">
+                <form action="" method="post" class="form" role="form">
                 {% csrf_token %}
                     課程名稱
                     <input class="form-control" name="course_name" placeholder="輸入您的課程名稱" type="text" required autofocus value="{{ course.course_name }}"/>
@@ -45,7 +45,7 @@
                     課程圖片
                     <input type="file" class="filepond input_homework"  name="picture"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>     
                     課程介紹
-                    <textarea rows="4" class="form-control" name="course_description" placeholder="輸入您的課程介紹">{{ course.course_introduction }}</textarea>
+                    <textarea rows="4" class="form-control" name="course_introduction" placeholder="輸入您的課程介紹">{{ course.course_introduction }}</textarea>
                     <div class="col-lg-12 text-center align-self-center mt-3">
                         <input type="submit" class="account-submit" value="儲存">  
                     </div>
@@ -85,7 +85,7 @@
 {% endblock %}
 
 {% block footer %}
-    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
+   <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
@@ -94,6 +94,8 @@
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    <script src="https://unpkg.com/cropperjs"></script>  
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
     
     <script>
     FilePond.registerPlugin(
@@ -119,14 +121,127 @@
         FilePondPluginImageResize,
 
         // applies crop and resize information on the client
-        FilePondPluginImageTransform
+        FilePondPluginImageTransform,
+        FilePondPluginImageEdit
+        
     );
+    
+    const crop_editor = {
+    // Called by FilePond to edit the image
+            // - should open your image editor
+            // - receives file object and image edit instructions
+            open: (file, instructions) => {
+                var editor = document.createElement('div');
+                var bg = document.createElement('div');
+                bg.style.position = 'fixed';
+                bg.style.left = 0;
+                bg.style.right = 0;
+                bg.style.top = 0;
+                bg.style.bottom = 0;
+                bg.style.backgroundColor = 'black';
+                bg.style.opacity = 0.8;
+                bg.style.zIndex = 9997;
+                editor.style.position = 'fixed';
+                editor.style.left = '300px';
+                editor.style.right = '300px';
+                editor.style.top = '50px';
+                editor.style.bottom = '50px';
+                //editor.style.backgroundColor = '#000';
+                editor.style.zIndex = 9998;
+                document.body.appendChild(bg);  
+                document.body.appendChild(editor);  // Create confirm button at the top left of the viewport
+                var buttonConfirm = document.createElement('button');
+                buttonConfirm.style.position = 'absolute';
+                buttonConfirm.style.left = '10px';
+                buttonConfirm.style.top = '10px';
+                buttonConfirm.style.zIndex = 9999;
+                buttonConfirm.textContent = 'Confirm';
+                buttonConfirm.addEventListener('click', function() {    // Remove the editor from the view
+                    // Get the canvas with image data from Cropper.js
+                    const canvasData  = cropper.getCanvasData();
+                    const cropData = cropper.getData();
+                    const cropAreaRatio = cropData.height / cropData.width;
+                    const percentX = (cropData.x + cropData.width / 2) / canvasData.naturalWidth;
+                    const percentY = (cropData.y + cropData.height / 2) / canvasData.naturalHeight;
+
+                    const cx = percentX > 0.5 ? 1 - percentX : percentX;
+                    const cy = percentY > 0.5 ? 1 - percentY : percentY;
+
+                    let width = canvasData.naturalWidth;
+                    let height = width * cropAreaRatio;
+                    if (height > canvasData.naturalHeight) {
+                    height = canvasData.naturalHeight;
+                    width = height / cropAreaRatio;
+                    }
+                    const rectWidth = cx * 2 * width;
+                    const rectHeight = cy * 2 * height;
+
+                    /* Calculate zoom. */
+                    const zoom = Math.max(rectWidth / cropData.width, rectHeight / cropData.height);
+
+                    crop_editor.onconfirm({  
+                        data: {
+                            crop: {
+                            center: {
+                                x: percentX,
+                                y: percentY
+                                //x: 0.5,
+                                //y: 0.5
+                            },
+                            flip: {
+                                //horizontal: cropData.scaleX < 0,
+                                //vertical: cropData.scaleY < 0
+                                horizontal: false,
+                                vertical: false
+                            },
+                            zoom: zoom,
+                            aspectRatio: cropAreaRatio,
+                            //zoom: 2,
+                            rotation: 0,
+                            //aspectRatio: null
+                            }
+                        } 
+                    });
+                    document.body.removeChild(editor); 
+                    document.body.removeChild(bg);  
+                });
+                editor.appendChild(buttonConfirm);
+                var image = new Image();
+                image.src = URL.createObjectURL(file);
+                editor.appendChild(image);
+                var cropper = new Cropper(image, { aspectRatio: 1 }); 
+            },
+
+            // Callback set by FilePond
+            // - should be called by the editor when user confirms editing
+            // - should receive output object, resulting edit information
+            onconfirm: (output) => {
+                
+            },
+            
+            // Callback set by FilePond
+            // - should be called by the editor when user cancels editing
+            oncancel: () => {},
+
+            // Callback set by FilePond
+            // - should be called by the editor when user closes the editor
+            onclose: () => {}
+    };
+
     
     // Select the file input and use create() to turn it into a pond
     FilePond.create(
         document.querySelector('.filepond'),
         {
+             {% if course.course_pic != None %}
+            files: [
+                {
+                    source: '/media/{{ course.course_pic }}',
+                }
+            ],
+            {% endif %}
             labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+            imageEditEditor: crop_editor,  
         //     imagePreviewHeight: 170,
         //     imageCropAspectRatio: '1:1',
         //     imageResizeTargetWidth: 200,

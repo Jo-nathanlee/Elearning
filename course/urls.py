@@ -15,6 +15,6 @@ urlpatterns = [
     path('tab/', views.index_tab,name='tab'),
     path('comment/', views.comment,name='comment'),
     path('reply/', views.reply,name='reply'),
-    path('register/', views.register,name='register'),
+    path('register/', views.register,name='course_register'),
     path('upload_homework/', views.upload_homework,name='upload_homework'),
 ]

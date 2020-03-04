@@ -134,7 +134,9 @@ LOGIN_REQUIRED_URLS = (
     r'(.*)',
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
-    r'^/user/(\w+)/$',  #^代表Regular Expression開始$代表結束
+    r'^/user/login/$', 
+    r'^/user/logout/$',
+    r'^/user/register/$',   #^代表Regular Expression開始$代表結束
     # r'/index/$',
 )
 LOGIN_URL = '/user/login/'

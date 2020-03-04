@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import models
 from account.models import User
+from django.contrib import messages
 import json
 import math
 import base64
@@ -25,7 +26,7 @@ def new_course(request):
 
 
         #foreign key
-        model_category = models.Category.objects.get(category_name='Python')  
+        model_category = models.Category.objects.get(category_name=category)  
         teacher = User.objects.get(email=request.user.email) 
 
 
@@ -38,6 +39,8 @@ def new_course(request):
         )
         model_course.course_pic.save(file_name, pic_data, save=True)
         model_course.save()
+
+        messages.add_message(request, messages.INFO, '新增成功！')
 
         return HttpResponseRedirect('/course/edit/'+str(model_course.course_id)+'/')
 
@@ -159,12 +162,31 @@ def course_edit(request,course_id):
     category = models.Category.objects.all()   
     lesson = models.Lesson.objects.filter(course_id=course)
 
+    if request.method == "POST":
+        category_name = request.POST['category']
+        model_category = models.Category.objects.get(category_name=category_name)  
+        course.course_name = request.POST['course_name']
+        course.category = model_category
+        course.course_introduction = request.POST['course_introduction']
+
+        picture = request.POST['picture']
+        arr_json = json.loads(picture)
+        json_data = arr_json['data']
+        file_name = arr_json['name']
+        pic_data = ContentFile(base64.b64decode(json_data))  
+
+        course.course_pic.save(file_name, pic_data, save=True)
+        course.save()
+
+        messages.add_message(request, messages.INFO, '編輯成功！')
+
     return render(request,'edit-course.html',locals())
 
 def course_delete(request,course_id):
 
     course = models.Course.objects.get(course_id=course_id)
     course.delete()
+    messages.add_message(request, messages.INFO, '刪除成功！')
 
     return HttpResponseRedirect('/index/teacher')
 
@@ -180,6 +202,8 @@ def new_lesson(request,course_id):
         homework_title = request.POST['homework_title']
         homework_description = request.POST['homework_description']
 
+        
+
         course_id = models.Course.objects.get(course_id = course_id)
 
         lesson = models.Lesson.objects.create(
@@ -190,13 +214,51 @@ def new_lesson(request,course_id):
             homework_title=homework_title,
             homework_description=homework_description
         )
-        lesson.homework_attachment.save(file_name, pic_data, save=True)
+        try:
+            homework_file = request.POST['filepond']
+
+            arr_json = json.loads(homework_file)
+            file_data = arr_json['data']
+            file_name = arr_json['name']
+            file_data = ContentFile(base64.b64decode(file_data))  
+            lesson.homework_attachment.save(file_name, file_data, save=True)
+        except Exception as e:
+            pass
+       
         lesson.save()
+
+        messages.add_message(request, messages.INFO, '新增成功！')
     return render(request,'edit-lesson.html',locals())
 
 def edit_lesson(request,course_id,lesson_id):
     course_id = course_id
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)
+
+    if request.method == 'POST':
+        lesson.lesson_name = request.POST['lesson_name']
+        lesson.lesson_video = request.POST['lesson_video']
+        # 擷取youtube id
+        temp = lesson_video.split('watch?v=')
+        lesson.lesson_video = temp[1]
+        lesson.lesson_content = request.POST['text-editor']
+        lesson.homework_title = request.POST['homework_title']
+        lesson.homework_description = request.POST['homework_description']
+        
+        try:
+            homework_file = request.POST['filepond']
+
+            arr_json = json.loads(homework_file)
+            file_data = arr_json['data']
+            file_name = arr_json['name']
+            file_data = ContentFile(base64.b64decode(file_data))  
+            lesson.homework_attachment.save(file_name, file_data, save=True)
+        except Exception as e:
+            pass
+
+        lesson.save()
+
+        messages.add_message(request, messages.INFO, '編輯成功！')
+
 
     return render(request,'edit-lesson.html',locals())
 
@@ -308,8 +370,10 @@ def register(request):
 
             
             data = {'success':True}
+            messages.add_message(request, messages.INFO, '註冊成功！')
         except Exception as e:
             data = {'success':False}
+            messages.add_message(request, messages.ERROR, '註冊失敗！')
         return JsonResponse(data,safe=False)
 
 def upload_homework(request):

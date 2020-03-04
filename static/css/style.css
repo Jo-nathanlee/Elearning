@@ -657,8 +657,16 @@ a.btn-sort:hover {
 
 .course-thumbnail img {
     display: block;
+    height:180px;
     width: 100%;
-    object-fit: cover;
+    object-fit: cover ;
+}
+
+.teacher-index img{
+    display: block;
+    height:70px;
+    width: 135px;
+    object-fit: cover ;
 }
 
 .course-content-wrap {

@@ -3,7 +3,7 @@ from django.http import FileResponse,JsonResponse
 from account import models, forms
 from course.models import Homework
 from django.contrib.auth import authenticate
-from django.contrib import auth
+from django.contrib import auth,messages
 from pprint import pprint
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
@@ -46,20 +46,24 @@ def account_tab(request,tab):
     user = models.User.objects.get(email=email)  
     if tab == "pic":
         if request.method == "POST":
-            pic = request.POST['picture']
-            arr_json = json.loads(pic)
-            json_data = arr_json['data']
-            file_name = arr_json['name']
+            try:
+                pic = request.POST['picture']
+                arr_json = json.loads(pic)
+                json_data = arr_json['data']
+                file_name = arr_json['name']
 
 
-            data = ContentFile(base64.b64decode(json_data))  
-            user.pic.save(file_name, data, save=True) # image is User's model field
+                data = ContentFile(base64.b64decode(json_data))  
+                user.pic.save(file_name, data, save=True) # image is User's model field
 
-            # pic_url = request.POST['pic_url']
-            # models.User.objects.filter(email=email).update(sex=pic_url)
-            # data = {}
-            # return JsonResponse(data,safe=False)
-            user.save()
+                # pic_url = request.POST['pic_url']
+                # models.User.objects.filter(email=email).update(sex=pic_url)
+                # data = {}
+                # return JsonResponse(data,safe=False)
+                user.save()
+            except Exception as e:
+                pass
+            
             
 
     if tab == "homework":
@@ -89,10 +93,10 @@ def register(request):
             user = auth.authenticate(email=email,password=password)
             if user is not None:
                 auth.login(request,user)
-                message = '註冊成功！'
+                messages.add_message(request, messages.INFO, '註冊成功！')
                 return redirect('/index/')
         else:
-            message = '欄位格式錯誤！'
+            messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
             return render(request, 'register.html',locals())
     if request.user.is_authenticated:
         return redirect('/index/',locals())
@@ -109,7 +113,7 @@ def login(request):
             message = '登入成功！'
             return redirect('/index/',locals())
         else:
-            message = '帳號密碼錯誤，請重新登入！'
+            messages.add_message(request, messages.ERROR, '帳號密碼錯誤，請重新登入！')
 
     if request.user.is_authenticated:
         return redirect('/index/',locals())

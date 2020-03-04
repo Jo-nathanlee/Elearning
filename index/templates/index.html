@@ -1,6 +1,19 @@
 {% extends "base_index.html" %}
 
 {% block body %}
+<script>
+$(document).ready(function(){
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'error' in message.tags %}
+                alertify.error('{{ message }}');   
+            {% else %}
+                alertify.success('{{ message }}');     
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+});
+</script>
 <body>
 {% endblock %}
 {% block navbar %}
@@ -73,7 +86,7 @@
                             <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center">
                                 <li class="current-menu-item"><a href="/index/">Home</a></li>
                                 <li><a href="{% url 'teacher' %}">講師</a></li>
-                                <li><a href="#">我的課程</a></li>
+                                <li><a href="{% url 'my_course' %}">我的課程</a></li>
                             </ul> 
                         </nav><!-- .site-navigation -->
                     </div><!-- .col -->

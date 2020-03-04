@@ -3,16 +3,18 @@
 <script>
 $(document).ready(function(){
     $(".btn-register").click(function() { 
+        $.LoadingOverlay("show");
         $.ajax({
-            url: "{% url 'register' %}",
+            url: "{% url 'course_register' %}",
             type: 'POST',
             data: { course_id:{{course_id}} },
             dataType: 'json',
             success: function(data) {
+                $.LoadingOverlay("hide");
                 if(data.success){
-                    alert("註冊成功！");
+                     alertify.success('註冊成功！');
                 }else{
-                    alert("註冊失敗！");
+                    alertify.error('註冊失敗！');
                 }
             },
             error: function(XMLHttpRequest, status, error) {

@@ -44,6 +44,7 @@ $(document).ready(function(){
     });
 
     $("#comment_submit").click(function() { 
+        $.LoadingOverlay("show");
         var question = $("textarea#comment_question").val();
         if(question != "")
         {
@@ -115,9 +116,11 @@ $(document).ready(function(){
                                                         </ol>\
                                                 </li>');
                     });
+                    $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {
                     console.log(XMLHttpRequest.responseText);
+                    $.LoadingOverlay("hide");
                 }
             });
         }
@@ -133,6 +136,7 @@ $(document).ready(function(){
 
     //點擊回覆留言
     $(".reply_submit").click(function(){
+        $.LoadingOverlay("show");
         const answer = $(this).prev().val();
         const question_id = $(this).prev().prev().val();
         const ol = $(this).parents(".reply-comment");
@@ -202,6 +206,7 @@ $(document).ready(function(){
                                                 </li>');
                     });
                     ol.addClass("d-none");
+                    $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {
                     console.log(XMLHttpRequest.responseText);
@@ -212,6 +217,7 @@ $(document).ready(function(){
     });
 
     $(".homework_submit").click(function(){
+        $.LoadingOverlay("show");
         const input_file = $("input[name='filepond']");
         if(input_file.attr('type') == 'hidden'){
             $.ajax({
@@ -220,7 +226,8 @@ $(document).ready(function(){
                 data: { file:input_file.val(),lesson_id:{{ lesson_id }}},
                 dataType: 'json',
                 success: function(data) {
-                    console.log("su");
+                    $.LoadingOverlay("hide");
+                    alertify.success('繳交成功！');
                 },
                 error: function(XMLHttpRequest, status, error) {
                     console.log(XMLHttpRequest.responseText);

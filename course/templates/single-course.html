@@ -55,7 +55,7 @@ $(document).ready(function(){
         <div class="row">
             <div class="col-12 offset-lg-1 col-lg-10">
                 <div class="featured-image">
-                    <img src="{{course.course_pic.url}}" alt="">
+                    <img src="{{course.course_pic}}" alt="">
                 </div>
             </div><!-- .col -->
         </div><!-- .row -->
@@ -71,6 +71,7 @@ $(document).ready(function(){
                     <div class="course-info flex flex-wrap align-items-center">
                         <div class="course-author flex flex-wrap align-items-center mt-3">
                             <img src="{{teacher.pic.url}}" alt="">
+                            {% comment %} <img src="https://i.imgur.com/U0aMXu4.jpg"> {% endcomment %}
 
                             <div class="author-wrap">
                                 <label class="m-0">Teacher</label>

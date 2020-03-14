@@ -43,6 +43,7 @@
                     {% endfor %}
                     </select>
                     課程圖片
+                    <input type="hidden" name="pic_url" value="{{ course.course_pic }}"> 
                     <input type="file" class="filepond input_homework"  name="picture"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>     
                     課程介紹
                     <textarea rows="4" class="form-control" name="course_introduction" placeholder="輸入您的課程介紹">{{ course.course_introduction }}</textarea>
@@ -57,7 +58,7 @@
                             <legend>教材內容編輯</legend>
                         </div>
                         <div class="col-lg-4 text-right align-self-center">
-                            <a href="/course/new_lesson/{{course.category_id}}"><button type="button" class="btn-sm btn  btn-new" ><i class="fas fa-plus"></i>&nbsp新增</button></a>
+                            <a href="/course/new_lesson/{{course.course_id}}"><button type="button" class="btn-sm btn  btn-new" ><i class="fas fa-plus"></i>&nbsp新增</button></a>
                         </div>
                     </div>
                     <!--  -->
@@ -85,7 +86,8 @@
 {% endblock %}
 
 {% block footer %}
-   <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
+{% load static  %}
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
@@ -122,8 +124,7 @@
 
         // applies crop and resize information on the client
         FilePondPluginImageTransform,
-        FilePondPluginImageEdit
-        
+        FilePondPluginImageEdit,
     );
     
     const crop_editor = {
@@ -215,8 +216,11 @@
             // Callback set by FilePond
             // - should be called by the editor when user confirms editing
             // - should receive output object, resulting edit information
-            onconfirm: (output) => {
-                
+            onconfirm: (output, item) => {
+                pond.processFile(item).then(file => {
+
+                   
+                });    
             },
             
             // Callback set by FilePond
@@ -230,26 +234,92 @@
 
     
     // Select the file input and use create() to turn it into a pond
-    FilePond.create(
+    const pond = FilePond.create(
         document.querySelector('.filepond'),
         {
-             {% if course.course_pic != None %}
+            {% if course.course_pic != None and course.course_pic != '' %}
             files: [
                 {
-                    source: '/media/{{ course.course_pic }}',
+                    //source: '/media/{{ course.course_pic }}',
+                    source:'{{course.course_pic}}',
+                    options: {
+                        type: 'local',
+                     
+                    }
                 }
-            ],
+            ],        
             {% endif %}
+            server: {
+                 load: (source, load, error, progress, abort, headers) => {
+                    var myRequest = new Request(source);
+                    fetch(myRequest).then(function(response) {
+                    response.blob().then(function(myBlob) {
+                        load(myBlob);
+                    });
+                    });         
+                },
+                process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                    var reader = new FileReader();
+                    var temp = reader.readAsDataURL(file); 
+                    reader.onloadend = function() {
+                        var base64data = reader.result;  
+                        var arr = base64data.split("base64,");
+                        var data = arr[1];
+
+                        var formData = new FormData();
+                        formData.append("image", data);            
+
+
+                        
+                        
+                        var apiUrl = 'https://api.imgur.com/3/image';
+                        var apiKey = '2ab06dc0b67b999';
+                        var token = '547aaf1085e77319ffaec1dd10fd868d3b434ca7'
+                        var settings = {
+                            async: true,
+                            crossDomain: true,
+                            url: apiUrl,
+                            method: "POST",
+                            dataType:"JSON",
+                            headers: {
+                                Authorization: "Client-ID " + apiKey
+                            },
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            beforeSend: function () {
+                                
+                            },
+                            success: function (res) {
+                                $('input[name=pic_url]').val(res.data.link);
+                                load();
+                            },
+                            error: function (XMLHttpRequest, status, error) {
+                                alertify.error("上傳失敗！");
+                                //$.LoadingOverlay("hide");
+                                //alert(XMLHttpRequest.responseText);
+                                abort();
+                            }
+                        }
+                        $.ajax(settings).done(function (res) {
+                            
+                        });
+                    }
+                    
+                    
+                },
+            },
             labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+            //instantUpload:true,
             imageEditEditor: crop_editor,  
-        //     imagePreviewHeight: 170,
-        //     imageCropAspectRatio: '1:1',
-        //     imageResizeTargetWidth: 200,
-        //     imageResizeTargetHeight: 200,
-        //     stylePanelLayout: 'compact circle',
-        //     styleLoadIndicatorPosition: 'center bottom',
-        //     styleButtonRemoveItemPosition: 'center bottom'
+            
         }
     );
+
+    const pond2 = document.querySelector('.filepond');
+    pond2.addEventListener('FilePond:removefile', e => {
+            $('input[name=pic_url]').val("");
+        
+    });
     </script>
 {% endblock %}

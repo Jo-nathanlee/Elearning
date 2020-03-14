@@ -16,17 +16,16 @@ $(document).ready(function(){
     var content = $("#{{tab}}").html();
     $("#{{tab}}").html("<span>"+content+"</span>");
 
-    /*$('#submit_pic').on("click", function () {
-        if($('input[name=picture]').attr('type')=='hidden'){
-            var file = $('input[name=picture]').val();
-            var json_str = JSON.parse(file);
-            var data = json_str["data"];
-
+    $('.pic_submit').on("click", function () {
+        if($('input[name=pic_data]').val()!=""){
+            var file = $('input[name=pic_data]').val();
+            var arr = file.split("base64,");
+            var data = arr[1];
             var formData = new FormData();
             formData.append("image", data);
                
             var apiUrl = 'https://api.imgur.com/3/image';
-            var apiKey = '98e1ed2077afcf0';
+            var apiKey = '2ab06dc0b67b999';
             var settings = {
                 async: true,
                 crossDomain: true,
@@ -40,7 +39,7 @@ $(document).ready(function(){
                 contentType: false,
                 data: formData,
                 beforeSend: function () {
-                    console.log("uploading...");
+                    $.LoadingOverlay("show");
                 },
                 success: function (res) {
                     console.log(res.data.link);
@@ -50,23 +49,24 @@ $(document).ready(function(){
                         data: { pic_url:res.data.link  },
                         dataType: 'json',
                         success: function(results){
-                            console.log("success");
+                            alertify.success("上傳成功！");
                         },
                         error: function(XMLHttpRequest, status, error) {
-                            console.log(XMLHttpRequest.responseText);
+                            alertify.error("上傳失敗！");
                         }
                     });
                 },
                 error: function (XMLHttpRequest, status, error) {
-                    //alert(XMLHttpRequest.responseText);
+                    console.log(XMLHttpRequest.responseText);
+                    alertify.error("上傳失敗！");
                 }
             }
             $.ajax(settings).done(function (res) {
-                console.log("Done");
+                $.LoadingOverlay("hide");
             });
             
         }
-    });*/
+    });
 
 
 });
@@ -107,11 +107,12 @@ $(document).ready(function(){
         </div><!--.row -->
         {% if tab == "pic" %}
         <!-- 圖片上傳 -->
-        <form action="/user/account/pic/" method="POST" enctype="multipart/form-data">
-        {% comment %} <form action="javascript:void(0);"> {% endcomment %}
+        {% comment %} <form action="/user/account/pic/" method="POST" enctype="multipart/form-data"> {% endcomment %}
+        <form action="javascript:void(0);">
         {% csrf_token %}
+            <input type="hidden" name="pic_data" value="">
             <input type="file" class="filepond input_homework"  name="picture"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>   
-            <input type="submit" class="account-submit" id="submit_pic" value="儲存">  
+            <input type="submit" class="account-submit pic_submit" value="儲存">
         </form>
         <!-- 圖片上傳end -->
         {% endif %}
@@ -247,13 +248,14 @@ $(document).ready(function(){
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
     <script src="https://unpkg.com/cropperjs"></script>  
-    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
+    
     
     <script>
     FilePond.registerPlugin(
@@ -269,14 +271,16 @@ $(document).ready(function(){
         // corrects mobile image orientation
         FilePondPluginImageExifOrientation,
         
-        // previews dropped images
-        FilePondPluginImagePreview,
+       
 
         // crops the image to a certain aspect ratio
         FilePondPluginImageCrop,
 
         // resizes the image to fit a certain size
         FilePondPluginImageResize,
+
+         // previews dropped images
+        FilePondPluginImagePreview,
 
         // applies crop and resize information on the client
         FilePondPluginImageTransform,
@@ -288,7 +292,7 @@ $(document).ready(function(){
     // Called by FilePond to edit the image
             // - should open your image editor
             // - receives file object and image edit instructions
-            open: (file, instructions) => {
+            open: (file, instructions) => {    
                 var editor = document.createElement('div');
                 var bg = document.createElement('div');
                 bg.style.position = 'fixed';
@@ -359,7 +363,9 @@ $(document).ready(function(){
                             //aspectRatio: null
                             }
                         } 
+                       
                     });
+                   
                     document.body.removeChild(editor); 
                     document.body.removeChild(bg);  
                 });
@@ -373,32 +379,132 @@ $(document).ready(function(){
             // Callback set by FilePond
             // - should be called by the editor when user confirms editing
             // - should receive output object, resulting edit information
-            onconfirm: (output) => {
+            onconfirm: (output, item) => {
                 
+                //const pond = document.querySelector('.filepond');
+
+                pond.processFile(item).then(file => {
+                   
+                   
+                });               
             },
             
             // Callback set by FilePond
             // - should be called by the editor when user cancels editing
-            oncancel: () => {},
+            oncancel: (item) => {console.log('Cancel callback', item);},
 
             // Callback set by FilePond
             // - should be called by the editor when user closes the editor
-            onclose: () => {}
+            onclose: (item) => {
+                console.log('Cancel callback', item);
+            }
     };
+
 
     // Select the file input and use create() to turn it into a pond
 
-    FilePond.create(
+    const pond = FilePond.create(
         document.querySelector('.filepond'),
         {
-            {% if user.pic != None %}
+            {% if user.pic != '' and user.pic != None %}
             files: [
                 {
-                    source: '/media/{{ user.pic }}',
+                    source:'{{user.pic}}',
+                    options: {
+                        type: 'local',
+                     
+                    }
                 }
             ],
             {% endif %}
+            server: {
+                load: (source, load, error, progress, abort, headers) => {
+                    var myRequest = new Request(source);
+                    fetch(myRequest).then(function(response) {
+                    response.blob().then(function(myBlob) {
+                        load(myBlob);
+                    });
+                    });         
+                },
+                process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                    var reader = new FileReader();
+                    var data = reader.readAsDataURL(file); 
+                    reader.onloadend = function() {
+                        var base64data = reader.result;    
+                        //console.log(base64data);
+                        $('input[name=pic_data]').val(base64data);
+                        abort();
+                    }
+                    //console.log(file);
+                    /*var reader = new FileReader();
+                    var temp = reader.readAsDataURL(file); 
+                    reader.onloadend = function() {
+                        var base64data = reader.result;  
+                        var arr = base64data.split("base64,");
+                        var data = arr[1];
+
+                        var formData = new FormData();
+                        formData.append("image", data);            
+
+
+                        
+                        
+                        var apiUrl = 'https://api.imgur.com/3/image';
+                        var apiKey = '2ab06dc0b67b999';
+                        var token = '547aaf1085e77319ffaec1dd10fd868d3b434ca7'
+                        var settings = {
+                            async: true,
+                            crossDomain: true,
+                            url: apiUrl,
+                            method: "POST",
+                            dataType:"JSON",
+                            headers: {
+                                Authorization: "Client-ID " + apiKey
+                            },
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            beforeSend: function () {
+                                
+                            },
+                            success: function (res) {
+                                $.ajax({
+                                    url: "/user/account/pic/",
+                                    type: 'POST',
+                                    data: { pic_url:res.data.link  },
+                                    dataType: 'json',
+                                    success: function(results){
+                                        alertify.success("上傳成功！");
+
+                                        
+                                        load();
+                                    },
+                                    error: function(XMLHttpRequest, status, error) {
+                                        alertify.error("上傳失敗！");
+                                        error();
+                                    }
+                                });
+                                //$.LoadingOverlay("hide");
+                            },
+                            error: function (XMLHttpRequest, status, error) {
+                                alertify.error("上傳失敗！");
+                                //$.LoadingOverlay("hide");
+                                //alert(XMLHttpRequest.responseText);
+                                error();
+                            }
+                        }
+                        $.ajax(settings).done(function (res) {
+                            //load(res.data.link);
+                            load();
+                        });
+                    }*/
+                    
+                    
+                },
+                revert: null,
+            },
             labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+            imageEditEditor: crop_editor,  
             imagePreviewHeight: 170,
             imageCropAspectRatio: '1:1',
             imageResizeTargetWidth: 200,
@@ -406,9 +512,36 @@ $(document).ready(function(){
             stylePanelLayout: 'compact circle',
             styleLoadIndicatorPosition: 'center bottom',
             styleButtonRemoveItemPosition: 'left bottom',
-            imageEditEditor: crop_editor,  
+            allowImageEdit:true,
+            imageEditAllowEdit:true,
+            //imageEditInstantEdit:true,
+            instantUpload:false,
+            
+            
+            
+            
         }
     );
+
+    const pond2 = document.querySelector('.filepond');
+    pond2.addEventListener('FilePond:addfile', e => {
+        var reader = new FileReader();
+        var data = reader.readAsDataURL(e.detail.file.file); 
+        reader.onloadend = function() {
+            var base64data = reader.result;    
+            //console.log(base64data);
+            $('input[name=pic_data]').val(base64data);
+        }
+    });
+    pond2.addEventListener('FilePond:removefile', e => {
+            $('input[name=pic_data]').val("");
+        
+    });
+
+    
+
+
+
            
     </script>
 {% endblock %}

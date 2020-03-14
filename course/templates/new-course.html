@@ -43,6 +43,7 @@
                     {% endfor %}
                     </select>
                     課程圖片
+                    <input type="hidden" name="pic_url" value="{{ course.course_pic }}"> 
                     <input type="file" class="filepond input_homework"  name="picture"  accept="image/png, image/jpeg, image/gif" data-max-file-size="5MB"/>     
                     課程介紹
                     <textarea rows="4" class="form-control" name="course_introduction" placeholder="輸入您的課程介紹"></textarea>
@@ -102,6 +103,8 @@
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    <script src="https://unpkg.com/cropperjs"></script>  
+    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
     
     <script>
     FilePond.registerPlugin(
@@ -127,22 +130,191 @@
         FilePondPluginImageResize,
 
         // applies crop and resize information on the client
-        FilePondPluginImageTransform
+        FilePondPluginImageTransform,
+        FilePondPluginImageEdit,
     );
     
+    const crop_editor = {
+    // Called by FilePond to edit the image
+            // - should open your image editor
+            // - receives file object and image edit instructions
+            open: (file, instructions) => {
+                var editor = document.createElement('div');
+                var bg = document.createElement('div');
+                bg.style.position = 'fixed';
+                bg.style.left = 0;
+                bg.style.right = 0;
+                bg.style.top = 0;
+                bg.style.bottom = 0;
+                bg.style.backgroundColor = 'black';
+                bg.style.opacity = 0.8;
+                bg.style.zIndex = 9997;
+                editor.style.position = 'fixed';
+                editor.style.left = '300px';
+                editor.style.right = '300px';
+                editor.style.top = '50px';
+                editor.style.bottom = '50px';
+                //editor.style.backgroundColor = '#000';
+                editor.style.zIndex = 9998;
+                document.body.appendChild(bg);  
+                document.body.appendChild(editor);  // Create confirm button at the top left of the viewport
+                var buttonConfirm = document.createElement('button');
+                buttonConfirm.style.position = 'absolute';
+                buttonConfirm.style.left = '10px';
+                buttonConfirm.style.top = '10px';
+                buttonConfirm.style.zIndex = 9999;
+                buttonConfirm.textContent = 'Confirm';
+                buttonConfirm.addEventListener('click', function() {    // Remove the editor from the view
+                    // Get the canvas with image data from Cropper.js
+                    const canvasData  = cropper.getCanvasData();
+                    const cropData = cropper.getData();
+                    const cropAreaRatio = cropData.height / cropData.width;
+                    const percentX = (cropData.x + cropData.width / 2) / canvasData.naturalWidth;
+                    const percentY = (cropData.y + cropData.height / 2) / canvasData.naturalHeight;
+
+                    const cx = percentX > 0.5 ? 1 - percentX : percentX;
+                    const cy = percentY > 0.5 ? 1 - percentY : percentY;
+
+                    let width = canvasData.naturalWidth;
+                    let height = width * cropAreaRatio;
+                    if (height > canvasData.naturalHeight) {
+                    height = canvasData.naturalHeight;
+                    width = height / cropAreaRatio;
+                    }
+                    const rectWidth = cx * 2 * width;
+                    const rectHeight = cy * 2 * height;
+
+                    /* Calculate zoom. */
+                    const zoom = Math.max(rectWidth / cropData.width, rectHeight / cropData.height);
+
+                    crop_editor.onconfirm({  
+                        data: {
+                            crop: {
+                            center: {
+                                x: percentX,
+                                y: percentY
+                                //x: 0.5,
+                                //y: 0.5
+                            },
+                            flip: {
+                                //horizontal: cropData.scaleX < 0,
+                                //vertical: cropData.scaleY < 0
+                                horizontal: false,
+                                vertical: false
+                            },
+                            zoom: zoom,
+                            aspectRatio: cropAreaRatio,
+                            //zoom: 2,
+                            rotation: 0,
+                            //aspectRatio: null
+                            }
+                        } 
+                    });
+                    document.body.removeChild(editor); 
+                    document.body.removeChild(bg);  
+                });
+                editor.appendChild(buttonConfirm);
+                var image = new Image();
+                image.src = URL.createObjectURL(file);
+                editor.appendChild(image);
+                var cropper = new Cropper(image, { aspectRatio: 1 }); 
+            },
+
+            // Callback set by FilePond
+            // - should be called by the editor when user confirms editing
+            // - should receive output object, resulting edit information
+            onconfirm: (output, item) => {
+                pond.processFile(item).then(file => {
+
+                   
+                });    
+            },
+            
+            // Callback set by FilePond
+            // - should be called by the editor when user cancels editing
+            oncancel: () => {},
+
+            // Callback set by FilePond
+            // - should be called by the editor when user closes the editor
+            onclose: () => {}
+    };
+
+    
     // Select the file input and use create() to turn it into a pond
-    FilePond.create(
+    const pond = FilePond.create(
         document.querySelector('.filepond'),
         {
+            server: {
+                 load: (source, load, error, progress, abort, headers) => {
+                    var myRequest = new Request(source);
+                    fetch(myRequest).then(function(response) {
+                    response.blob().then(function(myBlob) {
+                        load(myBlob);
+                    });
+                    });         
+                },
+                process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                    var reader = new FileReader();
+                    var temp = reader.readAsDataURL(file); 
+                    reader.onloadend = function() {
+                        var base64data = reader.result;  
+                        var arr = base64data.split("base64,");
+                        var data = arr[1];
+
+                        var formData = new FormData();
+                        formData.append("image", data);            
+
+
+                        
+                        
+                        var apiUrl = 'https://api.imgur.com/3/image';
+                        var apiKey = '2ab06dc0b67b999';
+                        var token = '547aaf1085e77319ffaec1dd10fd868d3b434ca7'
+                        var settings = {
+                            async: true,
+                            crossDomain: true,
+                            url: apiUrl,
+                            method: "POST",
+                            dataType:"JSON",
+                            headers: {
+                                Authorization: "Client-ID " + apiKey
+                            },
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            beforeSend: function () {
+                                
+                            },
+                            success: function (res) {
+                                $('input[name=pic_url]').val(res.data.link);
+                                load();
+                            },
+                            error: function (XMLHttpRequest, status, error) {
+                                alertify.error("上傳失敗！");
+                                //$.LoadingOverlay("hide");
+                                //alert(XMLHttpRequest.responseText);
+                                abort();
+                            }
+                        }
+                        $.ajax(settings).done(function (res) {
+                            
+                        });
+                    }
+                    
+                    
+                },
+            },
             labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
-        //     imagePreviewHeight: 170,
-        //     imageCropAspectRatio: '1:1',
-        //     imageResizeTargetWidth: 200,
-        //     imageResizeTargetHeight: 200,
-        //     stylePanelLayout: 'compact circle',
-        //     styleLoadIndicatorPosition: 'center bottom',
-        //     styleButtonRemoveItemPosition: 'center bottom'
+            //instantUpload:true,
+            imageEditEditor: crop_editor,  
+            
         }
     );
+
+    const pond2 = document.querySelector('.filepond');
+    pond2.addEventListener('FilePond:removefile', e => {
+            $('input[name=pic_url]').val("");
+        
+    });
     </script>
 {% endblock %}

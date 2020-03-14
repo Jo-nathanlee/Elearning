@@ -13,7 +13,7 @@ class Course(models.Model):
         'Category',
         on_delete=models.CASCADE
     )
-    course_pic = models.ImageField(upload_to='images/',null=True)
+    course_pic = models.TextField(null=True,blank=True)
     course_introduction = models.TextField(default='')
     teacher = models.ForeignKey(
         'account.User',
@@ -37,6 +37,7 @@ class Lesson(models.Model):
     homework_title = models.CharField(max_length=255)
     homework_description = models.TextField(default='',null=True,blank=True)
     homework_attachment = models.FileField(upload_to='files/',null=True,blank=True)
+    if_compiler = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Question(models.Model):

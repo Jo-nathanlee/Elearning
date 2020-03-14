@@ -2,7 +2,7 @@
 @font-face {
     font-family: MyCustomFont; /* 同樣的 font-family */
     unicode-range: U+00-024F; /* Latin, Latin1 Sup., Ext-A, Ext-B */
-    src: url(fonts/futura-medium-bt.ttf),
+    src: url(../fonts/futura-medium-bt.ttf),
          local(Helvetica),     /* OS X preferred */
          local(Arial);         /* Other OS */
 }
@@ -94,6 +94,10 @@ a:hover, a:active {
 
 .header-bar-text p {
     margin: 0;
+}
+
+.filepond--action-process-item{
+    visibility:hidden;
 }
 
 /*

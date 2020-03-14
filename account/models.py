@@ -37,7 +37,7 @@ class User(AbstractUser):
     birthday = models.DateField(blank=True,null=True )
     sex = models.CharField(max_length=5)
     language_learnt = models.CharField(max_length=100,default='')
-    pic = models.ImageField(upload_to='images/',null=True)
+    pic = models.TextField(blank=True,null=True)
     self_introduction = models.TextField(default='')
 
     objects = UserManager()
@@ -52,9 +52,6 @@ class User(AbstractUser):
     def get_full_name(self):
         return self.name
 
-    def get_cover_base64(self):
-        # settings.MEDIA_ROOT = '/path/to/env/projectname/media'
-        return image_as_base64(settings.MEDIA_ROOT + self.pic.path)
 
 
 

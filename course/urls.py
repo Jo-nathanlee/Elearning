@@ -17,4 +17,5 @@ urlpatterns = [
     path('reply/', views.reply,name='reply'),
     path('register/', views.register,name='course_register'),
     path('upload_homework/', views.upload_homework,name='upload_homework'),
+    path('upload_pic/', views.upload_pic,name='upload_pic'),
 ]

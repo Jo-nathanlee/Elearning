@@ -52,6 +52,15 @@
                     附件
                     <input type="file" class="filepond"  name="filepond"  data-max-file-size="50MB"/>
                     <input type="hidden" name="course_id" value="{{ course_id }}">
+                    Python線上編譯器<br>
+                    <label class="radio-inline ">
+                        <input type="radio" name="if_compiler" value="false" checked="checked"/>
+                        否
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="if_compiler" value="true" />
+                        是
+                    </label>
                     <div class="col-lg-12 text-center align-self-center mt-3">
                         <input type="submit" class="account-submit" value="儲存">  
                     </div>
@@ -107,6 +116,13 @@
     FilePond.create(
         document.querySelector('.filepond'),
         {
+             {% if lesson.homework_attachment != '' %}
+            files: [
+                {
+                    source: '/media/{{ lesson.homework_attachment }}',
+                }
+            ],
+            {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
         //     imagePreviewHeight: 170,
         //     imageCropAspectRatio: '1:1',

@@ -11,6 +11,8 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator,InvalidPage,EmptyPage,PageNotAnInteger
+import os
+from django.conf import settings
 # Create your views here.
 def new_course(request):
     if request.method == "POST":
@@ -55,7 +57,13 @@ def new_course(request):
     return render(request, 'new-course.html',locals())
 
 def course_index(request):
-    all_course = models.Course.objects.all().order_by('-created_at')
+    if request.method == 'POST': #search
+        keyword = request.POST['keyword']
+        all_course = models.Course.objects.filter(course_name__contains=keyword).order_by('-created_at')
+        
+    else:
+        all_course = models.Course.objects.all().order_by('-created_at')
+    
 
     paginator = Paginator(all_course, 6)
     current_page = int(request.GET.get('page', 1))
@@ -84,7 +92,7 @@ def course_index(request):
         courses = paginator.page(1)
 
     category = models.Category.objects.all()   
-    latest_course = paginator.page(1)
+    latest_course = models.Course.objects.all().order_by('-created_at')[:4]
 
     return render(request,'courses.html',locals())
 
@@ -115,7 +123,7 @@ def user_course(request):
     except PageNotAnInteger:
         courses = paginator.page(1)
 
-    latest_course = paginator.page(1)
+    latest_course = models.Course.objects.all().order_by('-created_at')
     category = models.Category.objects.all()
 
     return render(request,'user-courses.html',locals())
@@ -158,7 +166,9 @@ def course_page(request,course_id):
     course = models.Course.objects.get(course_id=course_id)
     teacher = User.objects.get(email=course.teacher)
     teacher_course_count = models.Course.objects.filter(teacher=course.teacher).count()
+    teacher_student_count = models.UserCourse.objects.filter(course__teacher=course.teacher).count()
     lesson = models.Lesson.objects.filter(course_id=course)
+    user_course = models.UserCourse.objects.filter(course=course)
 
     return render(request,'single-course.html',locals())
 
@@ -177,10 +187,10 @@ def course_edit(request,course_id):
             course.course_pic = request.POST['pic_url']
             course.save()
             messages.add_message(request, messages.INFO, '編輯成功！')
+            return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！')
    
-
     return render(request,'edit-course.html',locals())
 
 def course_delete(request,course_id):
@@ -220,17 +230,21 @@ def new_lesson(request,course_id):
             )
             
             homework_file = request.POST['filepond']
+            if homework_file != "":
+                arr_json = json.loads(homework_file)
+                file_data = arr_json['data']
+                file_name = arr_json['name']
+                file_data = ContentFile(base64.b64decode(file_data))  
+                lesson.homework_attachment.save(file_name, file_data, save=True)
 
-            arr_json = json.loads(homework_file)
-            file_data = arr_json['data']
-            file_name = arr_json['name']
-            file_data = ContentFile(base64.b64decode(file_data))  
-            lesson.homework_attachment.save(file_name, file_data, save=True)
+          
             lesson.save()
             messages.add_message(request, messages.INFO, '新增成功！')
+            return HttpResponseRedirect('/course/edit/'+course_id+'/')
+
         except Exception as e:
             messages.add_message(request, messages.ERROR, '新增失敗！')
-        
+    
     return render(request,'edit-lesson.html',locals())
 
 def edit_lesson(request,course_id,lesson_id):
@@ -261,7 +275,8 @@ def edit_lesson(request,course_id,lesson_id):
             lesson.save()
 
             messages.add_message(request, messages.INFO, '編輯成功！')
-            
+            return HttpResponseRedirect('/course/edit/'+course_id+'/')
+
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！') 
 
@@ -270,25 +285,41 @@ def edit_lesson(request,course_id,lesson_id):
 
 def lesson_page(request,lesson_id,lesson_index):
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)
-    lesson_index = lesson_index
     course_id = lesson.course_id.course_id
-    lesson_id = lesson_id
-    all_lesson = models.Lesson.objects.filter(course_id=course_id).order_by('created_at')
+    is_teacher = False
 
-    questions = models.Question.objects.filter(lesson_id=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
-    'question_content','created_at','questioner__pic')   
-    for question in questions:
-        answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',
-        'answerer__name','created_at','answerer__pic')
-        question['answer'] = list(answer)  # list()把QuerySet變成list
+    course = models.Course.objects.get(course_id=course_id)
+    user_course = models.UserCourse.objects.filter(course=course,user=request.user).count()
+    if user_course > 0 or course.teacher.email == request.user.email:
+        lesson_index = lesson_index
+        lesson_id = lesson_id
+        all_lesson = models.Lesson.objects.filter(course_id=course_id).order_by('created_at')
+
+        questions = models.Question.objects.filter(lesson_id=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
+        'question_content','created_at','questioner__pic')   
+        for question in questions:
+            answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',
+            'answerer__name','created_at','answerer__pic')
+            question['answer'] = list(answer)  # list()把QuerySet變成list
 
 
-    all_questions = list(questions) 
-    homework = models.Homework.objects.filter(lesson_id=lesson_id,student=request.user).first()
+        all_questions = list(questions) 
+        homework = models.Homework.objects.filter(lesson_id=lesson_id,student=request.user).first()
 
-    tab = "index"
+        if course.teacher.email == request.user.email:
+            is_teacher = True
+            homework = models.Homework.objects.filter(lesson_id=lesson_id)
 
-    return render(request,'lesson.html',locals())
+
+        tab = "index"
+
+        return render(request,'lesson.html',locals())
+    else:
+        messages.add_message(request, messages.ERROR, '請先註冊課程') 
+        return HttpResponseRedirect('/course/'+str(course_id)+'/')
+
+
+    
 
 def index_tab(request):
     if request.method == 'POST':
@@ -432,3 +463,5 @@ def upload_pic(request):
         
     except Exception as e:
         pass
+
+

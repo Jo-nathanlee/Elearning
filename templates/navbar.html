@@ -21,8 +21,9 @@
 
                     <div class="col-12 col-lg-6 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
                         <div class="header-bar-search">
-                            <form class="flex align-items-stretch">
-                                <input type="search" placeholder="What would you like to learn?">
+                            <form action="/course/" class="flex align-items-stretch" method="POST">
+                            {% csrf_token %}
+                                <input type="search" name="keyword" placeholder="What would you like to learn?">
                                 <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
                             </form>
                         </div><!-- .header-bar-search -->
@@ -65,9 +66,9 @@
                     <div  class="col-3 col-lg-7 flex justify-content-end align-content-center" >
                         <nav class="site-navigation flex justify-content-end align-items-center">
                             <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center nav-ul">
-                                <li class="current-menu-item li-home"><a href="/index/">Home</a></li>
-                                <li class="li-teacher"><a href="{% url 'teacher' %}">講師</a></li>
-                                <li class="li-course"><a href="{% url 'my_course' %}">我的課程</a></li>
+                                <li class="current-menu-item li-home" ><a href="/index/">Home</a></li>
+                                <li class="li-teacher" ><a href="{% url 'teacher' %}">講師</a></li>
+                                <li class="li-course" ><a href="{% url 'my_course' %}">我的課程</a></li>
                             </ul> 
                         </nav><!-- .site-navigation -->
                     </div><!-- .col -->

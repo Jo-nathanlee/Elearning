@@ -22,13 +22,20 @@
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumbs">
-                    <ul class="flex flex-wrap justify-content-center align-items-center p-0 m-0">
-                        <li><a href="{% url 'courses' %}">全部課程</a></li>
-                        <li><a href="{% url 'my_course' %}">我的課程</a></li>
+                    <ul class="flex flex-wrap justify-content-center align-items-center p-0 m-0 nav-ul">
+                        <li class="font-green"><a href="{% url 'courses' %}" >全部課程</a></li>
+                        <li><a href="{% url 'my_course' %}" >我的課程</a></li>
                     </ul>
                 </div><!-- .breadcrumbs -->
             </div><!-- .col -->
         </div><!-- .row -->
+        {% if keyword != None %}
+        <div class="row">
+            <div class="col-12 col-lg-12 justify-content-start">
+                <p>根據 "{{ keyword }}" 搜尋之結果為：</p>
+            </div>
+        </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -68,7 +75,9 @@
                     </div><!-- .row -->
                 </div><!-- .featured-courses -->
 
-                <div class="pagination flex flex-wrap justify-content-between align-items-center">
+                <div class="pagination flex flex-wrap justify-content-end align-items-center">
+                
+                    {% if all_course.count > 0  %}
                     <div class="col-12 col-lg-4 order-2 order-lg-1 mt-3 mt-lg-0">
                         <ul class="flex flex-wrap align-items-center order-2 order-lg-1 p-0 m-0">
                         {% if courses.has_previous %}
@@ -86,9 +95,10 @@
                         {% endif %}
                         </ul>
                     </div>
+                    {% endif %}
 
-                    <div class="col-12 flex justify-content-start justify-content-lg-end col-lg-8 order-1 order-lg-2">
-                        <div class="pagination-results flex flex-wrap align-items-center">
+                    <div class="col-12 flex justify-content-end justify-content-lg-end col-lg-8 order-1 order-lg-2">
+                        <div class="pagination-results flex flex-wrap align-items-right">
                             <p class="m-0">共 {{ course_count }} 個結果</p>
                         </div><!-- .pagination-results -->
                     </div>
@@ -119,7 +129,6 @@
 
                         <ul class="p-0 m-0">
                             {% for c in latest_course %}
-                            {% if forloop.counter < 4 %}
                             <li class="flex flex-wrap justify-content-between align-items-center">
                                 <img src="{{ c.course_pic }}" alt="">
 
@@ -129,13 +138,12 @@
                                     <a href="/course/{{ c.course_id }}"><div class="course-cost free-cost">查看詳情</div></a>
                                 </div><!-- .content-wrap -->
                             </li>
-                            {% endif %}
                             {% endfor %}
 
                         </ul>
                     </div><!-- .latest-courses -->
 
-                    <div class="popular-tags">
+                    {% comment %} <div class="popular-tags">
                         <h2>Popular Tags</h2>
 
                         <ul class="flex flex-wrap align-items-center p-0 m-0">
@@ -145,7 +153,7 @@
                             <li><a href="#">Django</a></li>
                             <li><a href="#">Heroku</a></li>
                         </ul>
-                    </div><!-- .popular-tags -->
+                    </div><!-- .popular-tags --> {% endcomment %}
                 </div><!-- .sidebar -->
             </div><!-- .col -->
         </div><!-- .row -->

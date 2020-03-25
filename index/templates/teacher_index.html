@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block body %}
+{% load tag_library %}
+<script>
+$(document).ready(function(){
+    $(".btn-dark").click(function() { 
+        const url = $(this).attr("url");
+        alertify.confirm('Warning', '是否確定刪除？', function(){ window.location.replace(url); }
+                , function(){ });
+    });
+});
+</script>
+
 <body>
 <div class="single-courses-page">
 {% endblock %}
@@ -18,8 +29,10 @@
                                     <ul class="p-0 m-0 mt-3">
                                        <li><i class="fa fa-star"></i> 4.7  Average rating</li>
                                         <li><i class="fa fa-comment"></i> 25,182 Reviews</li>
-                                        <li><i class="fa fa-user"></i> 11,085 Students</li>
-                                        <li><i class="fa fa-play-circle"></i> {{mycourse.count}}</li>
+                                        <li><i class="fa fa-user"></i> {% if teacher_student_count|to_int > 1 %}{{teacher_student_count}} Students
+                                                                   {% else %}{{teacher_student_count}} Student{% endif %}</li>
+                                        <li><i class="fa fa-play-circle"></i> {% if teacher_course_count|to_int > 1 %}{{teacher_course_count}} Courses
+                                                                   {% else %}{{teacher_course_count}} Course{% endif %}</li>
                                     </ul>
                                 </div><!-- .instructors-stats -->
                             </div>
@@ -66,18 +79,18 @@
                     <div class="card card-2">
                         <div class="card-body">
                             <div class="media">
-                                <div class="sq align-self-center teacher-index"> <img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{c.course_pic}}" width="135" height="70" /> </div>
+                                <div class="sq align-self-center teacher-index"> <a href="/course/{{ c.course_id }}/"><img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{c.course_pic}}" width="135" height="70" /></a> </div>
                                 <div class="media-body my-auto text-right">
                                     <div class="row my-auto flex-column flex-md-row">
                                         <div class="col my-auto text-left">
-                                            <h5 class="mb-0">{{c.course_name}}</h5>
+                                            <a style="text-decoration:none;" href="/course/{{ c.course_id }}/"><h5 class="mb-0">{{c.course_name}}</h5></a>
                                         </div>
                                         <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
                                         <div class="col my-auto"> <small>Size : M</small></div>
                                         <div class="col my-auto"> <small>Qty : 1</small></div> -->
                                         <div class="col my-auto">
                                             <a href="/course/edit/{{ c.course_id }}"><button type="button" class="btn btn-edit">編輯</button></a>
-                                            <a href="/course/delete/{{ c.course_id }}"><button type="button" class="btn btn-dark">刪除</button></a>
+                                            <a href="#"><button type="button" class="btn btn-dark" url="/course/delete/{{ c.course_id }}">刪除</button></a>
                                         </div>
                                     </div>
                                 </div>

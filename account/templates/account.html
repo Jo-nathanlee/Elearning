@@ -42,7 +42,6 @@ $(document).ready(function(){
                     $.LoadingOverlay("show");
                 },
                 success: function (res) {
-                    console.log(res.data.link);
                     $.ajax({
                         url: "/user/account/pic/",
                         type: 'POST',
@@ -57,7 +56,7 @@ $(document).ready(function(){
                     });
                 },
                 error: function (XMLHttpRequest, status, error) {
-                    console.log(XMLHttpRequest.responseText);
+                    //console.log(XMLHttpRequest.responseText);
                     alertify.error("上傳失敗！");
                 }
             }
@@ -74,7 +73,7 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block body %}
-{% load get_filename %}
+{% load tag_library %}
 <body>
 <div class="single-courses-page">
 {% endblock %}
@@ -247,14 +246,17 @@ $(document).ready(function(){
     <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
-    <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.js"></script> 
+    {% comment %} <script src="https://unpkg.com/filepond-plugin-image-edit/dist/filepond-plugin-image-edit.js"></script> {% endcomment %}
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script> 
     <script src="https://unpkg.com/cropperjs"></script>  
+    {% load static  %}
+    <script src="{% static "js/filepond-plugin-image-edit.js" %}"></script>
+    
     
     
     <script>
@@ -381,7 +383,6 @@ $(document).ready(function(){
             // - should receive output object, resulting edit information
             onconfirm: (output, item) => {
                 
-                //const pond = document.querySelector('.filepond');
 
                 pond.processFile(item).then(file => {
                    
@@ -391,12 +392,11 @@ $(document).ready(function(){
             
             // Callback set by FilePond
             // - should be called by the editor when user cancels editing
-            oncancel: (item) => {console.log('Cancel callback', item);},
+            oncancel: (item) => {},
 
             // Callback set by FilePond
             // - should be called by the editor when user closes the editor
             onclose: (item) => {
-                console.log('Cancel callback', item);
             }
     };
 
@@ -431,7 +431,6 @@ $(document).ready(function(){
                     var data = reader.readAsDataURL(file); 
                     reader.onloadend = function() {
                         var base64data = reader.result;    
-                        //console.log(base64data);
                         $('input[name=pic_data]').val(base64data);
                         abort();
                     }
@@ -505,16 +504,16 @@ $(document).ready(function(){
             },
             labelIdle: `請將圖片拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
             imageEditEditor: crop_editor,  
-            imagePreviewHeight: 170,
+            //imagePreviewHeight: 170,
             imageCropAspectRatio: '1:1',
             imageResizeTargetWidth: 200,
             imageResizeTargetHeight: 200,
             stylePanelLayout: 'compact circle',
             styleLoadIndicatorPosition: 'center bottom',
             styleButtonRemoveItemPosition: 'left bottom',
-            allowImageEdit:true,
-            imageEditAllowEdit:true,
-            //imageEditInstantEdit:true,
+            //allowImageEdit:true,
+            //imageEditAllowEdit:true,
+            imageEditInstantEdit:true,
             instantUpload:false,
             
             
@@ -525,6 +524,7 @@ $(document).ready(function(){
 
     const pond2 = document.querySelector('.filepond');
     pond2.addEventListener('FilePond:addfile', e => {
+       
         var reader = new FileReader();
         var data = reader.readAsDataURL(e.detail.file.file); 
         reader.onloadend = function() {

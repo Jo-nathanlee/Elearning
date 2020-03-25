@@ -18,7 +18,7 @@ $(document).ready(function(){
                 }
             },
             error: function(XMLHttpRequest, status, error) {
-                console.log(XMLHttpRequest.responseText);
+                //console.log(XMLHttpRequest.responseText);
             }
         });
     });
@@ -26,6 +26,7 @@ $(document).ready(function(){
 </script>
 {% endblock %}
 {% block body %}
+{% load tag_library %}
 <body>
 <div class="single-courses-page">
 {% endblock %}
@@ -70,7 +71,7 @@ $(document).ready(function(){
                 <div class="single-course-wrap">
                     <div class="course-info flex flex-wrap align-items-center">
                         <div class="course-author flex flex-wrap align-items-center mt-3">
-                            <img src="{{teacher.pic.url}}" alt="">
+                            <img src="{{teacher.pic}}" alt="">
                             {% comment %} <img src="https://i.imgur.com/U0aMXu4.jpg"> {% endcomment %}
 
                             <div class="author-wrap">
@@ -86,7 +87,7 @@ $(document).ready(function(){
 
                         <div class="course-students mt-3">
                             <label class="m-0">Student</label>
-                            <div class="author-name"><a href="#">26</a></div>
+                            <div class="author-name"><a href="#">{{user_course.count}}</a></div>
                         </div><!-- .course-students -->
 
                         <div class="buy-course mt-3">
@@ -124,13 +125,15 @@ $(document).ready(function(){
 
                         <div class="instructor-short-info flex flex-wrap">
                             <div class="instructors-stats">
-                                <img src="{{teacher.pic.url}}" alt="">
+                                <img src="{{teacher.pic}}" alt="">
 
                                 <ul class="p-0 m-0 mt-3" style="color: #383749;">
                                    <li><i class="fa fa-star"></i> 4.7 Average rating</li>
                                     <li><i class="fa fa-comment"></i> 25,182 Reviews</li>
-                                    <li><i class="fa fa-user"></i> 11,085 Students</li>
-                                    <li><i class="fa fa-play-circle"></i> {{teacher_course_count}}</li>
+                                    <li><i class="fa fa-user"></i> {% if teacher_student_count|to_int > 1 %}{{teacher_student_count}} Students
+                                                                   {% else %}{{teacher_student_count}} Student{% endif %}</li>
+                                    <li><i class="fa fa-play-circle"></i> {% if teacher_course_count|to_int > 1 %}{{teacher_course_count}} Courses
+                                                                   {% else %}{{teacher_course_count}} Course{% endif %}</li>
                                 </ul>
                             </div><!-- .instructors-stats -->
 
@@ -145,7 +148,7 @@ $(document).ready(function(){
                                 <h2 class="entry-title mt-3">{{course.course_name}}</h2>
 
                                 <div class="course-teacher mt-3">
-                                    Teacher: <a href="#">{{teacher.name}}</a>
+                                    Teacher: <span>{{teacher.name}}</span>
                                 </div><!-- .course-teacher -->
 
                                 <div class="entry-content mt-3">

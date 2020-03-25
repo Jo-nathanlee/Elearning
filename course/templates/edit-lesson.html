@@ -50,7 +50,7 @@
                         {{ lesson.homework_description }}
                     </textarea>     
                     附件
-                    <input type="file" class="filepond"  name="filepond"  data-max-file-size="50MB"/>
+                    <input type="file" class="filepond"  name="filepond"  data-max-file-size="5MB"/>
                     <input type="hidden" name="course_id" value="{{ course_id }}">
                     Python線上編譯器<br>
                     <label class="radio-inline ">
@@ -113,17 +113,36 @@
     );
     
     // Select the file input and use create() to turn it into a pond
-    FilePond.create(
+    const pond = FilePond.create(
         document.querySelector('.filepond'),
         {
-             {% if lesson.homework_attachment != '' %}
+             {% if lesson.homework_attachment != None and lesson.homework_attachment != '' %}
             files: [
                 {
-                    source: '/media/{{ lesson.homework_attachment }}',
+                    source: '{{ lesson.homework_attachment }}',
+                    options: {
+                        type: 'local',
+                     
+                    }
                 }
             ],
+             server: {
+                 load: (source, load, error, progress, abort, headers) => {
+                    var myRequest = new Request(source);
+                    fetch(myRequest).then(function(response) {
+                    response.blob().then(function(myBlob) {
+                        load(myBlob);
+                    });
+                    });         
+                },
+                process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                    load();
+                },
+                revert: null,
+             },
             {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+            //instantUpload:false,
         //     imagePreviewHeight: 170,
         //     imageCropAspectRatio: '1:1',
         //     imageResizeTargetWidth: 200,
@@ -133,6 +152,13 @@
         //     styleButtonRemoveItemPosition: 'center bottom'
         }
     );
+
+    const pond2 = document.querySelector('.filepond');
+    pond2.addEventListener('FilePond:removefile', e => {
+            pond.server = null;
+            pond.files = null;
+        
+    });
 
     </script>
   {% endblock %}

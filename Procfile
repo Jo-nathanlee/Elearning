@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath elearning elearning.wsgi

@@ -22,9 +22,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumbs">
-                    <ul class="flex flex-wrap justify-content-center align-items-center p-0 m-0">
-                        <li><a href="{% url 'courses' %}">全部課程</a></li>
-                        <li><a href="{% url 'my_course' %}">我的課程</a></li>
+                    <ul class="flex flex-wrap justify-content-center align-items-center p-0 m-0 nav-ul">
+                        <li><a href="{% url 'courses' %}" >全部課程</a></li>
+                        <li class="font-green"><a href="{% url 'my_course' %}" >我的課程</a></li>
                     </ul>
                 </div><!-- .breadcrumbs -->
             </div><!-- .col -->
@@ -135,7 +135,7 @@
                         </ul>
                     </div><!-- .latest-courses -->
 
-                    <div class="popular-tags">
+                    {% comment %} <div class="popular-tags">
                         <h2>Popular Tags</h2>
 
                         <ul class="flex flex-wrap align-items-center p-0 m-0">
@@ -145,7 +145,7 @@
                             <li><a href="#">Django</a></li>
                             <li><a href="#">Heroku</a></li>
                         </ul>
-                    </div><!-- .popular-tags -->
+                    </div><!-- .popular-tags --> {% endcomment %}
                 </div><!-- .sidebar -->
             </div><!-- .col -->
         </div><!-- .row -->

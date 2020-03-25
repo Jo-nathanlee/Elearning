@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
 {% load i18n %}
-{% load get_filename %}
+{% load tag_library %}
 <script>
 function DateFormat(strdate){
     const time = Date.parse(strdate);
@@ -38,7 +38,7 @@ $(document).ready(function(){
                 $("#input_tab").val(clicked_tab);
             },
             error: function(XMLHttpRequest, status, error) {
-                console.log(XMLHttpRequest.responseText);
+                //console.log(XMLHttpRequest.responseText);
             }
         });
     });
@@ -64,7 +64,7 @@ $(document).ready(function(){
                         $(".comment-list").append('<li class="comment">\
                                                         <article class="comment-body">\
                                                             <figure class="comment-author-avatar">\
-                                                                <img src="/media/'+data[index].questioner__pic+'" alt="">\
+                                                                <img src="'+data[index].questioner__pic+'" alt="">\
                                                             </figure>\
                                                             <div class="comment-wrap">\
                                                                 <div class="comment-author">\
@@ -88,7 +88,7 @@ $(document).ready(function(){
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
                                                                         <figure class="comment-author-avatar">\
-                                                                            <img src="/media/'+answer[index].answerer__pic+'" alt="">\
+                                                                            <img src="'+answer[index].answerer__pic+'" alt="">\
                                                                         </figure>\
                                                                         <div class="comment-wrap">\
                                                                             <div class="comment-author">\
@@ -119,7 +119,7 @@ $(document).ready(function(){
                     $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {
-                    console.log(XMLHttpRequest.responseText);
+                    //console.log(XMLHttpRequest.responseText);
                     $.LoadingOverlay("hide");
                 }
             });
@@ -153,7 +153,7 @@ $(document).ready(function(){
                         $(".comment-list").append('<li class="comment">\
                                                         <article class="comment-body">\
                                                             <figure class="comment-author-avatar">\
-                                                                <img src="/media/'+data[index].questioner__pic+'" alt="">\
+                                                                <img src="'+data[index].questioner__pic+'" alt="">\
                                                             </figure>\
                                                             <div class="comment-wrap">\
                                                                 <div class="comment-author">\
@@ -177,7 +177,7 @@ $(document).ready(function(){
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
                                                                         <figure class="comment-author-avatar">\
-                                                                            <img src="/media/'+answer[index].answerer__pic+'" alt="">\
+                                                                            <img src="'+answer[index].answerer__pic+'" alt="">\
                                                                         </figure>\
                                                                         <div class="comment-wrap">\
                                                                             <div class="comment-author">\
@@ -209,7 +209,7 @@ $(document).ready(function(){
                     $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {
-                    console.log(XMLHttpRequest.responseText);
+                    //console.log(XMLHttpRequest.responseText);
                 }
         });
 
@@ -275,10 +275,10 @@ $(document).ready(function(){
                     </div>                  
                 </div><!-- .col -->
                 <div class="col-3 col-lg-3">
-                    <div class="col-lg-9 video-col">
+                    <div class="col-lg-10 video-col">
                         {% for lesson in all_lesson %}
                             <p>Lesson {{ forloop.counter }}:
-                            <a href="course/lesson/{{ lesson.lesson_id }}/{{ forloop.counter }}/" class="lesson-href">
+                            <a href="/course/lesson/{{ lesson.lesson_id }}/{{ forloop.counter }}/" class="lesson-href">
                                 {{ lesson.lesson_name }}
                             </a></p>
                         {% endfor %}
@@ -296,7 +296,7 @@ $(document).ready(function(){
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="index"><span>內容</span></a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業</a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
-                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">隨堂筆記</a></li>
+                        {% comment %} <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">隨堂筆記</a></li> {% endcomment %}
                     </ul>
                     <hr width="106%" style="margin-top: -5px;">          
                 </div><!-- .col -->
@@ -312,6 +312,29 @@ $(document).ready(function(){
                 <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework"> 
                     <h3>{{ lesson.homework_title }}</h3>
                     <p>{{ lesson.homework_description }}</p>
+                    {% if lesson.homework_attachment != None %}
+                    <p>附件：<a href="{{ lesson.homework_attachment.url }}">{{ lesson.homework_attachment|to_str }}</a>
+                    {% endif %}
+                    {% if is_teacher is True %}
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">學生</th>
+                                <th scope="col">繳交檔案</th>
+                                <th scope="col">繳交日期</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for hw in homework %}
+                            <tr>
+                                <th scope="row">{{ hw.student.name }}</th>
+                                <td><a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a></td>
+                                <td>{{ hw.created_at|date:'Y-m-d' }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
                 </div><!-- .col -->
                 <!-- 作業區end -->
                 <!-- 問答區 -->
@@ -325,7 +348,7 @@ $(document).ready(function(){
                                 <li class="comment">
                                     <article class="comment-body">
                                         <figure class="comment-author-avatar">
-                                            <img src="/media/{{question.questioner__pic}}" alt="">
+                                            <img src="{{question.questioner__pic}}" alt="">
                                         </figure><!-- .comment-author-avatar -->
 
                                         <div class="comment-wrap">
@@ -356,7 +379,7 @@ $(document).ready(function(){
                                         <li class="comment">
                                             <article class="comment-body">
                                                 <figure class="comment-author-avatar">
-                                                    <img src="/media/{{answer.answerer__pic}}" alt="">
+                                                    <img src="{{answer.answerer__pic}}" alt="">
                                                 </figure><!-- .comment-author-avatar -->
 
                                                 <div class="comment-wrap">
@@ -409,17 +432,15 @@ $(document).ready(function(){
             </div><!--.row -->
         </div><!-- .container -->
     </div><!--.lesson-content -->
-
-    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework" >
+    {% if is_teacher is not True%}
+    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework homework_upload" >
         <div style="max-width: 50em;">
             <label>作業繳交區</label>
                 <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
             <input type="submit" class="btn homework_submit" value="繳交">  
-            {% if homework != None %}      
-            <p>已繳交檔案：<a href="/user/homework_download/{{ homework.id }}/">{{ homework.homework|get_filename }}</a></p> 
-            {% endif %}
         </div>
     </div>
+    {% endif %}
    
     {% endblock %}
 
@@ -429,14 +450,20 @@ $(document).ready(function(){
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
     <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
     
     
     <script>
     FilePond.registerPlugin(
-	
-        // encodes the file as base64 data
+	  // encodes the file as base64 data
         FilePondPluginFileEncode,
         
+        // validates files based on input type
+        FilePondPluginFileValidateType,
+
         // validates the size of the file
         FilePondPluginFileValidateSize,
         
@@ -444,47 +471,57 @@ $(document).ready(function(){
         FilePondPluginImageExifOrientation,
         
         // previews dropped images
-        FilePondPluginImagePreview
+        FilePondPluginImagePreview,
+
+        // crops the image to a certain aspect ratio
+        FilePondPluginImageCrop,
+
+        // resizes the image to fit a certain size
+        FilePondPluginImageResize,
+
+        // applies crop and resize information on the client
+        FilePondPluginImageTransform
     );
     
     // Select the file input and use create() to turn it into a pond
     const pond = FilePond.create(
         document.querySelector('.input_homework'),
         {
-             {% if homework != None %} 
+             {% if homework.homework != None and homework.homework != '' %} 
                 files: [
                     {
-                        source: '/media/{{ homework.homework }}',
+                        source: '{{ homework.homework }}',
+                        options: {
+                            type: 'local',
+                        
+                        }
                     }
                 ],
+                server: {
+                    load: (source, load, error, progress, abort, headers) => {
+                        var myRequest = new Request(source);
+                        fetch(myRequest).then(function(response) {
+                        response.blob().then(function(myBlob) {
+                            load(myBlob);
+                        });
+                        });         
+                    },
+                    process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                        load();
+                    },
+                    revert: null,
+                },
              {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
 
         }
     );
 
-
-
-    {% comment %} const pond = document.querySelector('.input_homework');
-    pond.addEventListener('FilePond:addfile', e => {
-        const file = e.detail.file;
-        console.log(file);
-        //console.log('File added', e.detail.file);
-    }); {% endcomment %}
-
-    {% comment %} const pond = FilePond.create(); {% endcomment %}
-    {% comment %} pond.on('addfile', (error, file) => {
-        if (error) {
-            console.log('Oh no');
-            return;
-        }
-
-    }); {% endcomment %}
-
-
-
-
-
-
+    const pond2 = document.querySelector('.input_homework');
+    pond2.addEventListener('FilePond:removefile', e => {
+            pond.server = null;
+            pond.files = null;
+        
+    });
     </script>
     {% endblock %}

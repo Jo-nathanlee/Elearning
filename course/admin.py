@@ -6,10 +6,10 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ['course_id','course_name','category','course_pic','course_introduction','teacher','created_at','credits']
 
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ['lesson_id','course_id','lesson_content','lesson_name','lesson_video','homework_title','homework_description','homework_attachment','if_compiler','created_at']
+    list_display = ['lesson_id','course','lesson_content','lesson_name','lesson_video','homework_title','homework_description','homework_attachment','if_compiler','created_at']
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['question_id','lesson_id','question_content','questioner','created_at']
+    list_display = ['question_id','lesson','question_content','questioner','created_at']
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ['answer_id','question','answer_content','answerer','created_at']

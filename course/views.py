@@ -167,7 +167,7 @@ def course_page(request,course_id):
     teacher = User.objects.get(email=course.teacher)
     teacher_course_count = models.Course.objects.filter(teacher=course.teacher).count()
     teacher_student_count = models.UserCourse.objects.filter(course__teacher=course.teacher).count()
-    lesson = models.Lesson.objects.filter(course_id=course)
+    lesson = models.Lesson.objects.filter(course=course)
     user_course = models.UserCourse.objects.filter(course=course)
 
     return render(request,'single-course.html',locals())
@@ -175,7 +175,7 @@ def course_page(request,course_id):
 def course_edit(request,course_id):
     course = models.Course.objects.get(course_id=course_id)
     category = models.Category.objects.all()   
-    lesson = models.Lesson.objects.filter(course_id=course)
+    lesson = models.Lesson.objects.filter(course=course)
 
     if request.method == "POST":
         try:
@@ -196,6 +196,8 @@ def course_edit(request,course_id):
 def course_delete(request,course_id):
     try:
         course = models.Course.objects.get(course_id=course_id)
+        lesson = models.Lesson.objects.filter(course=course)
+        lesson.delete()
         course.delete()
         messages.add_message(request, messages.INFO, '刪除成功！')
     except Exception as e:
@@ -218,10 +220,10 @@ def new_lesson(request,course_id):
 
         
 
-        course_id = models.Course.objects.get(course_id = course_id)
+        course = models.Course.objects.get(course_id = course_id)
 
         lesson = models.Lesson.objects.create(
-            course_id=course_id,
+            course=course,
             lesson_name=lesson_name,
             lesson_video=lesson_video,
             lesson_content=lesson_content,
@@ -286,7 +288,7 @@ def edit_lesson(request,course_id,lesson_id):
 
 def lesson_page(request,lesson_id,lesson_index):
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)
-    course_id = lesson.course_id.course_id
+    course_id = lesson.course.course_id
     is_teacher = False
 
     course = models.Course.objects.get(course_id=course_id)
@@ -294,9 +296,9 @@ def lesson_page(request,lesson_id,lesson_index):
     if user_course > 0 or course.teacher.email == request.user.email:
         lesson_index = lesson_index
         lesson_id = lesson_id
-        all_lesson = models.Lesson.objects.filter(course_id=course_id).order_by('created_at')
+        all_lesson = models.Lesson.objects.filter(course=course_id).order_by('created_at')
 
-        questions = models.Question.objects.filter(lesson_id=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
+        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',
@@ -350,7 +352,7 @@ def comment(request):
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
 
         model_question = models.Question.objects.create(
-            lesson_id=lesson,
+            lesson=lesson,
             question_content=question,
             questioner=user,
         )
@@ -358,7 +360,7 @@ def comment(request):
         model_question.save()
 
 
-        questions = models.Question.objects.filter(lesson_id=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
+        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',
@@ -383,7 +385,7 @@ def reply(request):
 
         answer.save()
 
-        questions = models.Question.objects.filter(question_id=question_id).values('question_id', 'questioner__name','lesson_id_id',
+        questions = models.Question.objects.filter(question_id=question_id).values('question_id', 'questioner__name','lesson_id',
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',

@@ -27,7 +27,7 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     lesson_id = models.AutoField(primary_key=True)
-    course_id = models.ForeignKey(
+    course = models.ForeignKey(
         'Course',
         on_delete=models.CASCADE
     )
@@ -41,7 +41,7 @@ class Lesson(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Question(models.Model):
-    lesson_id = models.ForeignKey(
+    lesson = models.ForeignKey(
         'Lesson',
         on_delete=models.SET
     )

@@ -226,8 +226,8 @@ def new_lesson(request,course_id):
             lesson_video=lesson_video,
             lesson_content=lesson_content,
             homework_title=homework_title,
-            homework_description=homework_description
-            if_compiler=eval(request.POST['if_compiler'])
+            homework_description=homework_description,
+            if_compiler=eval(if_compiler)
         )
         
         homework_file = request.POST['filepond']

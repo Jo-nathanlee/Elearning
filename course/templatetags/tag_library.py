@@ -11,3 +11,8 @@ def to_int(value):
 @register.filter
 def to_str(value):
     return str(value)
+@register.filter
+def youtube_url(value):
+    if value != '':
+        return 'https://www.youtube.com/watch?v='+value
+    return value

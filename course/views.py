@@ -214,7 +214,7 @@ def new_lesson(request,course_id):
         lesson_content = request.POST['text-editor']
         homework_title = request.POST['homework_title']
         homework_description = request.POST['homework_description']
-        if_compiler = eval(request.POST['if_compiler'])
+        if_compiler = request.POST['if_compiler']
 
         
 
@@ -227,6 +227,7 @@ def new_lesson(request,course_id):
             lesson_content=lesson_content,
             homework_title=homework_title,
             homework_description=homework_description
+            if_compiler=eval(request.POST['if_compiler'])
         )
         
         homework_file = request.POST['filepond']

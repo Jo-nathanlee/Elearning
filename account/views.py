@@ -68,9 +68,9 @@ def account_tab(request,tab):
                 messages.add_message(request, messages.INFO, '更新成功！')
                 
             except Exception as e:
-                messages.add_message(request, messages.ERROR, '更新失敗！')
                 pass
-            
+            messages.add_message(request, messages.ERROR, '更新失敗！')
+
             
 
     if tab == "homework":

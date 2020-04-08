@@ -321,6 +321,8 @@
     const pond2 = document.querySelector('.filepond');
     pond2.addEventListener('FilePond:removefile', e => {
             $('input[name=pic_url]').val("");
+            pond.server = null;
+            pond.files = null;
         
     });
     </script>

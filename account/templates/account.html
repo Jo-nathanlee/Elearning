@@ -434,69 +434,6 @@ $(document).ready(function(){
                         $('input[name=pic_data]').val(base64data);
                         abort();
                     }
-                    //console.log(file);
-                    /*var reader = new FileReader();
-                    var temp = reader.readAsDataURL(file); 
-                    reader.onloadend = function() {
-                        var base64data = reader.result;  
-                        var arr = base64data.split("base64,");
-                        var data = arr[1];
-
-                        var formData = new FormData();
-                        formData.append("image", data);            
-
-
-                        
-                        
-                        var apiUrl = 'https://api.imgur.com/3/image';
-                        var apiKey = '2ab06dc0b67b999';
-                        var token = '547aaf1085e77319ffaec1dd10fd868d3b434ca7'
-                        var settings = {
-                            async: true,
-                            crossDomain: true,
-                            url: apiUrl,
-                            method: "POST",
-                            dataType:"JSON",
-                            headers: {
-                                Authorization: "Client-ID " + apiKey
-                            },
-                            processData: false,
-                            contentType: false,
-                            data: formData,
-                            beforeSend: function () {
-                                
-                            },
-                            success: function (res) {
-                                $.ajax({
-                                    url: "/user/account/pic/",
-                                    type: 'POST',
-                                    data: { pic_url:res.data.link  },
-                                    dataType: 'json',
-                                    success: function(results){
-                                        alertify.success("上傳成功！");
-
-                                        
-                                        load();
-                                    },
-                                    error: function(XMLHttpRequest, status, error) {
-                                        alertify.error("上傳失敗！");
-                                        error();
-                                    }
-                                });
-                                //$.LoadingOverlay("hide");
-                            },
-                            error: function (XMLHttpRequest, status, error) {
-                                alertify.error("上傳失敗！");
-                                //$.LoadingOverlay("hide");
-                                //alert(XMLHttpRequest.responseText);
-                                error();
-                            }
-                        }
-                        $.ajax(settings).done(function (res) {
-                            //load(res.data.link);
-                            load();
-                        });
-                    }*/
                     
                     
                 },
@@ -513,7 +450,7 @@ $(document).ready(function(){
             styleButtonRemoveItemPosition: 'left bottom',
             //allowImageEdit:true,
             //imageEditAllowEdit:true,
-            imageEditInstantEdit:true,
+            imageEditInstantEdit:false,
             instantUpload:false,
             
             

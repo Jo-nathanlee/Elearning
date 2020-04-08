@@ -406,7 +406,7 @@ $(document).ready(function(){
     const pond = FilePond.create(
         document.querySelector('.filepond'),
         {
-            {% if user.pic != '' and user.pic != None %}
+            {% if user.pic != '' and user.pic != None and user.pic != 'https://www.pinclipart.com/picdir/middle/8-82428_profile-clipart-generic-user-gender-neutral-head-icon.png' %}
             files: [
                 {
                     source:'{{user.pic}}',

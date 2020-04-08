@@ -125,8 +125,8 @@ $(document).ready(function(){
                         <div class="form-block" >
                             姓名
                             <input class="form-control" name="name" placeholder="Name" type="text" value="{{ User.name }}" required autofocus />
-                            生日
-                            <input id="birthday" type="date" class="form-control" name="birthday" placeholder="Birthday" value="{{ User.birthday|date:'Y-m-d' }}">                           
+                            就讀科系
+                            <input type="text" class="form-control" name="department" placeholder="就讀科系" value="{{ User.department }}">                           
                             自我介紹<br>
                             <textarea name="self_introduction" class="form-control" rows="5" value="">
                                 {{ User.self_introduction }}

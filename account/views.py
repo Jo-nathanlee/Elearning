@@ -36,7 +36,10 @@ def account(request):
             model_user = models.User.objects.get(email=email)
             model_user.__dict__.update(**data)
             model_user.save()
+            messages.add_message(request, messages.INFO, '更新成功！')
+
         except Exception as e:
+            messages.add_message(request, messages.ERROR, '更新失敗！')
             pass
 
 
@@ -65,11 +68,9 @@ def account_tab(request,tab):
                 models.User.objects.filter(email=email).update(pic=pic_url)
                 data = {}
                 return JsonResponse(data,safe=False)
-                messages.add_message(request, messages.INFO, '更新成功！')
                 
             except Exception as e:
                 pass
-            messages.add_message(request, messages.ERROR, '更新失敗！')
 
             
 

@@ -128,7 +128,7 @@
   
           queueEditRequest({ item: item, resolve: resolve, reject: reject });
   
-          if (editRequestQueue.length > 1) {
+          if (editRequestQueue.length > 0) {
             requestEdit();
           }
         });

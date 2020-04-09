@@ -312,7 +312,7 @@ $(document).ready(function(){
                 <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework"> 
                     <h3>{{ lesson.homework_title }}</h3>
                     <p>{{ lesson.homework_description }}</p>
-                    {% if lesson.homework_attachment != None %}
+                    {% if lesson.homework_attachment %}
                     <p>附件：<a href="{{ lesson.homework_attachment.url }}">{{ lesson.homework_attachment|to_str }}</a>
                     {% endif %}
                     {% if is_teacher is True %}

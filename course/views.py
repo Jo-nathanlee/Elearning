@@ -410,10 +410,8 @@ def register(request):
 
             
             data = {'success':True}
-            messages.add_message(request, messages.INFO, '註冊成功！')
         except Exception as e:
             data = {'success':False}
-            messages.add_message(request, messages.ERROR, '註冊失敗！')
         return JsonResponse(data,safe=False)
 
 def upload_homework(request):

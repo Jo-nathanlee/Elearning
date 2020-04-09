@@ -278,7 +278,7 @@ $(document).ready(function(){
                     <div class="col-lg-10 video-col">
                         {% for lesson in all_lesson %}
                             <p>Lesson {{ forloop.counter }}:
-                            <a href="/course/lesson/{{ lesson.lesson_id }}/{{ forloop.counter }}/" class="lesson-href">
+                            <a href="/course/lesson/{{ lesson.lesson_id }}/{{ forloop.counter }}" class="lesson-href">
                                 {{ lesson.lesson_name }}
                             </a></p>
                         {% endfor %}

@@ -111,7 +111,7 @@ $(document).ready(function(){
                             <div class="accordion-wrap">
                             {% for l in lesson %}
                                 <h3 class="entry-title flex flex-wrap align-items-lg-center ">
-                                    Lesson {{ forloop.counter }}:<a href="/course/lesson/{{ l.lesson_id }}/{{ forloop.counter }}/" class="lecture-group-title lesson-href">{{ l.lesson_name }}</a>
+                                    Lesson {{ forloop.counter }}:<a href="/course/lesson/{{ l.lesson_id }}/{{ forloop.counter }}" class="lecture-group-title lesson-href">{{ l.lesson_name }}</a>
                                 </h3>
                             {% endfor %}
                             </div>

@@ -45,7 +45,7 @@ def new_course(request):
             model_course.save()
 
             messages.add_message(request, messages.INFO, '新增成功！')
-            return HttpResponseRedirect('/course/edit/'+str(model_course.course_id)+'/')
+            return HttpResponseRedirect('/course/edit/'+str(model_course.course_id))
         except Exception as e:
             messages.add_message(request, messages.ERROR, '新增失敗！')
 
@@ -187,7 +187,7 @@ def course_edit(request,course_id):
             course.course_pic = request.POST['pic_url']
             course.save()
             messages.add_message(request, messages.INFO, '編輯成功！')
-            return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
+            return HttpResponseRedirect('/course/edit/'+str(course_id))
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！')
    
@@ -202,7 +202,7 @@ def course_delete(request,course_id):
     messages.add_message(request, messages.INFO, '刪除成功！')
     #except Exception as e:
     messages.add_message(request, messages.ERROR, '刪除失敗！')
-    return HttpResponseRedirect('/index/teacher/')
+    return HttpResponseRedirect('/index/teacher')
 
 def lesson_delete(request,lesson_id):
     try: 
@@ -212,7 +212,7 @@ def lesson_delete(request,lesson_id):
         messages.add_message(request, messages.INFO, '刪除成功！')
     except Exception as e:
         messages.add_message(request, messages.ERROR, '刪除失敗！')
-    return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
+    return HttpResponseRedirect('/course/edit/'+str(course_id))
 
 
 def new_lesson(request,course_id):
@@ -254,7 +254,7 @@ def new_lesson(request,course_id):
         
         lesson.save()
         messages.add_message(request, messages.INFO, '新增成功！')
-        return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
+        return HttpResponseRedirect('/course/edit/'+str(course_id))
 
         #except Exception as e:
             #messages.add_message(request, messages.ERROR, '新增失敗！')
@@ -289,7 +289,7 @@ def edit_lesson(request,course_id,lesson_id):
             lesson.save()
 
             messages.add_message(request, messages.INFO, '編輯成功！')
-            return HttpResponseRedirect('/course/edit/'+course_id+'/')
+            return HttpResponseRedirect('/course/edit/'+course_id)
 
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！') 
@@ -330,7 +330,7 @@ def lesson_page(request,lesson_id,lesson_index):
         return render(request,'lesson.html',locals())
     else:
         messages.add_message(request, messages.ERROR, '請先註冊課程') 
-        return HttpResponseRedirect('/course/'+str(course_id)+'/')
+        return HttpResponseRedirect('/course/'+str(course_id))
 
 
     

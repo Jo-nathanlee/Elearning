@@ -12,7 +12,8 @@ $(document).ready(function(){
             success: function(data) {
                 $.LoadingOverlay("hide");
                 if(data.success){
-                     alertify.success('註冊成功！');
+                    location.reload() 
+                    alertify.success('註冊成功！');
                 }else{
                     alertify.error('註冊失敗！');
                 }

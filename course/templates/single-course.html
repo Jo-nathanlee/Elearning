@@ -12,8 +12,7 @@ $(document).ready(function(){
             success: function(data) {
                 $.LoadingOverlay("hide");
                 if(data.success){
-                    const count = $("#student_count").html();
-                    $("#student_count").html(count+1);
+                    $("#student_count").html(data.student_count);
                     alertify.success('註冊成功！');
                 }else{
                     alertify.error('註冊失敗！');

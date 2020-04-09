@@ -421,8 +421,9 @@ def register(request):
                 defaults={'user': request.user},
             )
 
+            student_count = models.UserCourse.objects.filter(course=course).count()
             
-            data = {'success':True}
+            data = {'success':True,'student_count':student_count}
         except Exception as e:
             data = {'success':False}
         return JsonResponse(data,safe=False)

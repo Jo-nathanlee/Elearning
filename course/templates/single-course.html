@@ -12,6 +12,8 @@ $(document).ready(function(){
             success: function(data) {
                 $.LoadingOverlay("hide");
                 if(data.success){
+                    const count = $("#student_count").html();
+                    $("#student_count").html(count+1);
                     alertify.success('註冊成功！');
                 }else{
                     alertify.error('註冊失敗！');
@@ -87,11 +89,15 @@ $(document).ready(function(){
 
                         <div class="course-students mt-3">
                             <label class="m-0">Student</label>
-                            <div class="author-name"><a href="#">{{user_course.count}}</a></div>
+                            <div class="author-name"><a href="#" id="student_count">{{user_course.count}}</a></div>
                         </div><!-- .course-students -->
 
                         <div class="buy-course mt-3">
+                        {% if is_teacher %}
+                            <a class="btn btn-register" href="#" disabled>註冊</a>
+                        {% else %}
                             <a class="btn btn-register" href="#">註冊</a>
+                        {% endif %}
                         </div><!-- .buy-course -->
                     </div><!-- .course-info -->
 

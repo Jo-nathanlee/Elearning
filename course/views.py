@@ -165,6 +165,8 @@ def course_page(request,course_id):
     course_id = course_id
     course = models.Course.objects.get(course_id=course_id)
     teacher = User.objects.get(email=course.teacher)
+    
+    is_teacher = True if teacher.email == request.user.email else False
     teacher_course_count = models.Course.objects.filter(teacher=course.teacher).count()
     teacher_student_count = models.UserCourse.objects.filter(course__teacher=course.teacher).count()
     lesson = models.Lesson.objects.filter(course=course)

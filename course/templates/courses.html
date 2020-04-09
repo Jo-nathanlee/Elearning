@@ -108,8 +108,9 @@
             <div class="col-12 col-lg-4">
                 <div class="sidebar">
                     <div class="search-widget">
-                        <form class="flex flex-wrap align-items-center">
-                            <input type="search" placeholder="Search...">
+                        <form action="/course/" class="flex flex-wrap align-items-center">
+                        {% csrf_token %}
+                            <input type="search" name="keyword" placeholder="Search...">
                             <button type="submit" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
                         </form><!-- .flex -->
                     </div><!-- .search-widget -->

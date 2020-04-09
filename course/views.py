@@ -360,7 +360,7 @@ def comment(request):
         model_question.save()
 
 
-        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id'
+        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson__lesson_id'
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',
@@ -385,7 +385,7 @@ def reply(request):
 
         answer.save()
 
-        questions = models.Question.objects.filter(question_id=question_id).values('question_id', 'questioner__name','lesson_id',
+        questions = models.Question.objects.filter(question_id=question_id).values('question_id', 'questioner__name','lesson__lesson_id',
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',

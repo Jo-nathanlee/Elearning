@@ -59,7 +59,7 @@ def new_course(request):
 def course_index(request):
     if request.method == 'POST': #search
         keyword = request.POST['keyword']
-        all_course = models.Course.objects.filter(course_name__contains=keyword).order_by('-created_at')
+        all_course = models.Course.objects.filter(course_name__icontains=keyword).order_by('-created_at')
         
     else:
         all_course = models.Course.objects.all().order_by('-created_at')

@@ -8,6 +8,15 @@
         box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     }
 </style>
+<script>
+$(document).ready(function(){
+    $(".btn-dark").click(function() { 
+        const url = $(this).attr("url");
+        alertify.confirm('Warning', '是否確定刪除？', function(){ window.location.replace(url); }
+                , function(){ });
+    });
+});
+</script>
 {% endblock %}
 
 {% block body %}
@@ -74,6 +83,7 @@
                                 </div>
                                 <div class="col-md-2 text-right ">
                                     <a href="/course/edit_lesson/{{ course.course_id }}/{{ l.lesson_id }}/"><button type="button" class="btn btn-edit ">編輯</button></a>
+                                    <a href="#"><button type="button" class="btn btn-dark" url="/course/lesson/delete/{{ l.lesson_id }}">刪除</button></a>
                                 </div>
                             </div>
                         {% endfor %}

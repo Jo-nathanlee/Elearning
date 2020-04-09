@@ -204,6 +204,17 @@ def course_delete(request,course_id):
     messages.add_message(request, messages.ERROR, '刪除失敗！')
     return HttpResponseRedirect('/index/teacher')
 
+def lesson_delete(request,lesson_id):
+    try: 
+        lesson = models.Lesson.objects.get(lesson_id=lesson_id)
+        course_id = lesson.course.course_id
+        lesson.delete()
+        messages.add_message(request, messages.INFO, '刪除成功！')
+    except Exception as e:
+        messages.add_message(request, messages.ERROR, '刪除失敗！')
+    return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
+
+
 def new_lesson(request,course_id):
     course_id = course_id
     if request.method == 'POST':
@@ -243,7 +254,7 @@ def new_lesson(request,course_id):
         
         lesson.save()
         messages.add_message(request, messages.INFO, '新增成功！')
-        return HttpResponseRedirect('/course/edit/'+course_id+'/')
+        return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
 
         #except Exception as e:
             #messages.add_message(request, messages.ERROR, '新增失敗！')

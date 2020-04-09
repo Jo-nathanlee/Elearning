@@ -298,7 +298,7 @@ def lesson_page(request,lesson_id,lesson_index):
         lesson_id = lesson_id
         all_lesson = models.Lesson.objects.filter(course=course_id).order_by('created_at')
 
-        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
+        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id',
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',
@@ -360,7 +360,7 @@ def comment(request):
         model_question.save()
 
 
-        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id_id',
+        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson_id,
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',

@@ -194,15 +194,15 @@ def course_edit(request,course_id):
     return render(request,'edit-course.html',locals())
 
 def course_delete(request,course_id):
-    # try:
+    #try:
     course = models.Course.objects.get(course_id=course_id)
-    lesson = models.Lesson.objects.filter(course=course)
-    lesson.delete()
+    # lesson = models.Lesson.objects.filter(course=course)
+    # lesson.delete()
     course.delete()
     messages.add_message(request, messages.INFO, '刪除成功！')
-    # except Exception as e:
+    #except Exception as e:
     messages.add_message(request, messages.ERROR, '刪除失敗！')
-    return HttpResponseRedirect('/index/teacher')
+    return HttpResponseRedirect('/index/teacher/')
 
 def lesson_delete(request,lesson_id):
     try: 

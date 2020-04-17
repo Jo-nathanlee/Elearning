@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
+from index import views as index_views  # new
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
     path('user/', include('account.urls')),
     path('course/', include('course.urls')),
-    path('index/', include('index.urls'))
+    path('index/', include('index.urls')),
+    path('', index_views.index),
 ]

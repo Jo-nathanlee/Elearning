@@ -2,6 +2,7 @@
 {% block head %}
 {% load i18n %}
 {% load tag_library %}
+<script src="https://cdn.ckeditor.com/ckeditor5/19.0.0/classic/ckeditor.js"></script>
 <script>
 function DateFormat(strdate){
     const time = Date.parse(strdate);
@@ -235,8 +236,13 @@ $(document).ready(function(){
             });
         }
     });
-    
 
+    $('#sidebarCollapse').on('click', function () {
+            //   $('#sidebar').toggleClass('active');
+            $('#div_fixed').toggleClass('active');
+    });
+    
+    $('#editor').html('{{ note.note }}');
         
   
     
@@ -245,6 +251,16 @@ $(document).ready(function(){
 {% endblock %}
 {% block body %}
 <body>
+<div id="div_fixed" class="scrollbar">
+    <div id="sidebarCollapse" class="custom-menu"></div>
+
+    <span class="logo">筆記分享</span>
+    <div class="div_editor">
+        <div id="editor">
+        </div>
+        
+    </div>
+</div>
 <div class="single-courses-page">
 {% endblock %}
 
@@ -457,6 +473,56 @@ $(document).ready(function(){
     
     
     <script>
+     var text_changed = false;
+
+		 ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+        placeholder: '新增筆記...'
+    } )
+	.then(editor => {
+		window.editor = editor;
+
+		detectTextChanges(editor);
+		detectFocusOut(editor);
+	})
+    .catch( error => {
+        console.error( error );
+    } );
+
+	function detectFocusOut(editor) {
+        editor.ui.focusTracker.on('change:isFocused', (evt, name, isFocused) => {
+            if (!isFocused && text_changed) {
+                text_changed = false;
+                var note = editor.getData();
+                update_note(note);
+                
+            }
+        });
+    }
+
+    function update_note(note) {
+                $.LoadingOverlay("show");
+                $.ajax({
+                    url: "{% url 'update_note' %}",
+                    type: 'POST',
+                    data: { note:note,lesson_id:{{ lesson_id }}  },
+                    dataType: 'json',
+                    success: function(data) {
+                        $.LoadingOverlay("hide");
+                    },
+                    error: function(XMLHttpRequest, status, error) {
+                        //console.log(XMLHttpRequest.responseText);
+                    }
+                });
+    }
+
+    function detectTextChanges(editor) {
+        editor.model.document.on('change:data', () => {
+            text_changed = true;
+        });
+    }
+
+
     FilePond.registerPlugin(
 	  // encodes the file as base64 data
         FilePondPluginFileEncode,

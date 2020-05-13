@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,Course,Lesson,Question,Answer,UserCourse,Homework
+from .models import Category,Course,Lesson,Question,Answer,UserCourse,Homework,Note
 # Register your models here.
 
 class CourseAdmin(admin.ModelAdmin):
@@ -20,6 +20,9 @@ class UserCourseAdmin(admin.ModelAdmin):
 class HomeworkAdmin(admin.ModelAdmin):
     list_display = ['lesson_id','student','homework']
 
+class NoteAdmin(admin.ModelAdmin):
+    list_display = ['lesson_id','student','note']
+
 admin.site.register(Category)
 admin.site.register(Course,CourseAdmin)
 admin.site.register(Lesson,LessonAdmin)
@@ -27,3 +30,4 @@ admin.site.register(Question,QuestionAdmin)
 admin.site.register(Answer,AnswerAdmin)
 admin.site.register(UserCourse,UserCourseAdmin)
 admin.site.register(Homework,HomeworkAdmin)
+admin.site.register(Note,NoteAdmin)

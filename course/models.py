@@ -43,7 +43,7 @@ class Lesson(models.Model):
 class Question(models.Model):
     lesson = models.ForeignKey(
         'Lesson',
-        on_delete=models.SET
+        on_delete=models.CASCADE
     )
     question_id = models.AutoField(primary_key=True)
     question_content = models.TextField(default='')
@@ -81,7 +81,7 @@ class UserCourse(models.Model):
 class Homework(models.Model):
     lesson_id = models.ForeignKey(
         'Lesson',
-        on_delete=models.SET
+        on_delete=models.CASCADE
     )
     student = models.ForeignKey(
         'account.User',
@@ -90,7 +90,17 @@ class Homework(models.Model):
     homework = models.FileField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-
+class Note(models.Model):
+    lesson_id = models.ForeignKey(
+        'Lesson',
+        on_delete=models.CASCADE
+    )
+    student = models.ForeignKey(
+        'account.User',
+        on_delete=models.CASCADE
+    )
+    note = models.TextField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 

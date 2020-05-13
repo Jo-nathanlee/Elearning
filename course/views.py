@@ -321,6 +321,7 @@ def lesson_page(request,lesson_id,lesson_index):
 
         all_questions = list(questions) 
         homework = models.Homework.objects.filter(lesson_id=lesson_id,student=request.user).first()
+        note = models.Note.objects.filter(lesson_id=lesson_id,student=request.user).first()
 
         if course.teacher.email == request.user.email:
             is_teacher = True
@@ -429,35 +430,38 @@ def register(request):
         return JsonResponse(data,safe=False)
 
 def upload_homework(request):
-    homework = request.POST['file']
-    lesson_id = request.POST['lesson_id']
+    try:
+        homework = request.POST['file']
+        lesson_id = request.POST['lesson_id']
 
 
-    arr_json = json.loads(homework)
-    file_data = arr_json['data']
-    file_name = arr_json['name']
-    file_data = ContentFile(base64.b64decode(file_data))  
+        arr_json = json.loads(homework)
+        file_data = arr_json['data']
+        file_name = arr_json['name']
+        file_data = ContentFile(base64.b64decode(file_data))  
 
-    lesson = models.Lesson.objects.get(lesson_id=lesson_id)
-    student = User.objects.get(email=request.user.email) 
+        lesson = models.Lesson.objects.get(lesson_id=lesson_id)
+        student = User.objects.get(email=request.user.email) 
+
+        
+        model = models.Homework.objects.filter(lesson_id=lesson,student=student).first()
+        if model == None:
+            hw = models.Homework.objects.create(
+                lesson_id=lesson,
+                student=student,
+            )
+            hw.homework.save(file_name, file_data, save=True)
+            hw.save()
+        else:
+            model.homework.save(file_name, file_data, save=True)
+            model.save()
 
     
-    model = models.Homework.objects.filter(lesson_id=lesson,student=student).first()
-    if model == None:
-        hw = models.Homework.objects.create(
-            lesson_id=lesson,
-            student=student,
-        )
-        hw.homework.save(file_name, file_data, save=True)
-        hw.save()
-    else:
-        model.homework.save(file_name, file_data, save=True)
-        model.save()
 
-   
-
-    data = {}
-    return JsonResponse(data,safe=False)
+        data = {}
+        return JsonResponse(data,safe=False)
+    except Exception as e:
+        pass
 
 def upload_pic(request):
     try:
@@ -479,4 +483,19 @@ def upload_pic(request):
     except Exception as e:
         pass
 
-
+def update_note(request):
+    try:
+        note = request.POST['note']
+        lesson_id = request.POST['lesson_id']
+        lesson = models.Lesson.objects.get(lesson_id=lesson_id)
+        student = User.objects.get(email=request.user.email) 
+        
+        models.Note.objects.update_or_create(
+            lesson_id=lesson, student=student,
+            defaults={'note': note},
+        )
+        data = {}
+        return JsonResponse(data,safe=False)
+        
+    except Exception as e:
+        pass

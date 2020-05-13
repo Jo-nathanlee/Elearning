@@ -1690,8 +1690,8 @@ a.btn:hover {
 
 .single-courses-page .featured-image img {
     display: block;
-    width: 920px;
-    height: 520px;
+    width: 100%;
+    height: 100%;
    
     object-fit: cover;
 }
@@ -3243,3 +3243,66 @@ p.footer-copyright {
 .filepond--drip-blob {
 	background-color: #7f8a9a;
 }
+
+.div_editor {
+    width:90%;
+    margin:0px auto;
+    color:black;	
+    padding-bottom:50px;	
+}
+.ck-editor__editable {
+    height:400px;
+}
+
+.ck.ck-toolbar > .ck-toolbar__items {
+    flex-grow:0;
+}
+.ck.ck-editor__editable > .ck-placeholder::before {
+    color:#8E8E8E;
+}
+#div_fixed {
+    width:600px;
+    position:fixed;
+    top:0;
+    height:100%;
+    right:-600px;
+    background: url("/static/images/bg_2.jpg"); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index:999;
+    
+}
+.scrollbar::-webkit-scrollbar { -webkit-appearance: none; }
+.scrollbar::-webkit-scrollbar:vertical { width: 5px; }
+.scrollbar::-webkit-scrollbar-thumb { border-radius: 8px; border: 1px solid #ADADAD; background-color: #ADADAD; }
+
+#div_fixed.active {
+    right: 0; 
+}
+
+
+.custom-menu {
+    display: inline-block;
+    position: fixed;
+    width:50px;
+    height:50px;
+    background: url("/static/images/note.png"); 
+    background-size: contain;
+    bottom: 1%;
+
+    margin-left:-55px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; 
+}
+
+#div_fixed .logo {
+color: #fff;
+font-size: 36px;
+padding: 50px 30px;
+display: block; }

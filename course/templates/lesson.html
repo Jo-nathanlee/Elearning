@@ -243,7 +243,6 @@ $(document).ready(function(){
             $('#div_fixed').toggleClass('active');
     });
     
-    $('#editor').html('{{ note.note }}');
         
   
     
@@ -259,6 +258,7 @@ $(document).ready(function(){
     <span class="logo">筆記分享</span>
     <div class="div_editor">
         <div id="editor">
+            {{ note.note }}
         </div>
         
     </div>

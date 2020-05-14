@@ -503,6 +503,7 @@ $(document).ready(function(){
     }
 
     function update_note(note) {
+                alertify.success("Saving...");
                 $('.ball-clip-rotate').show();
                 $.ajax({
                     url: "{% url 'update_note' %}",
@@ -511,7 +512,6 @@ $(document).ready(function(){
                     dataType: 'json',
                     success: function(data) {
                         $('.ball-clip-rotate').hide();
-                        alertify.success("Saving...");
                     },
                     error: function(XMLHttpRequest, status, error) {
                         //console.log(XMLHttpRequest.responseText);

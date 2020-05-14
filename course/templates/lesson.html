@@ -14,6 +14,7 @@ function DateFormat(strdate){
     return formattedDate;
 }
 $(document).ready(function(){
+    $('.ball-clip-rotate').hide();
     $("#input_tab").val('index');
 
     $(".a_href").click(function() {
@@ -252,6 +253,7 @@ $(document).ready(function(){
 {% block body %}
 <body>
 <div id="div_fixed" class="scrollbar">
+    <div class="ball-clip-rotate"><div></div></div>
     <div id="sidebarCollapse" class="custom-menu"></div>
 
     <span class="logo">筆記分享</span>
@@ -501,14 +503,15 @@ $(document).ready(function(){
     }
 
     function update_note(note) {
-                $.LoadingOverlay("show");
+                $('.ball-clip-rotate').show();
                 $.ajax({
                     url: "{% url 'update_note' %}",
                     type: 'POST',
                     data: { note:note,lesson_id:{{ lesson_id }}  },
                     dataType: 'json',
                     success: function(data) {
-                        $.LoadingOverlay("hide");
+                        $('.ball-clip-rotate').hide();
+                        alertify.success("Saving...");
                     },
                     error: function(XMLHttpRequest, status, error) {
                         //console.log(XMLHttpRequest.responseText);

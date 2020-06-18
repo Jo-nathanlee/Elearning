@@ -361,7 +361,7 @@ def lesson_page(request,lesson_id,lesson_index):
 
 
     
-
+# lesson page 
 def lesson_tab(request):
     if request.method == 'POST':
         tab = request.POST['tab']
@@ -380,7 +380,7 @@ def lesson_tab(request):
             data = {}
             return JsonResponse(data,safe=False)
 
-
+# lesson comment
 def comment(request):
     if request.method == 'POST':
         question = request.POST['question']
@@ -408,6 +408,7 @@ def comment(request):
         data = list(questions) 
         return JsonResponse(data, safe=False) 
 
+# reply comment
 def reply(request):
     if request.method =='POST':
         answer = request.POST['answer']
@@ -433,7 +434,7 @@ def reply(request):
 
         data = list(questions) 
         return JsonResponse(data,safe=False)
-
+# register course
 def register(request):
     if request.method =='POST':
         try:
@@ -453,6 +454,7 @@ def register(request):
             data = {'success':False}
         return JsonResponse(data,safe=False)
 
+# upload homework in lesson page
 def upload_homework(request):
     try:
         homework = request.POST['file']

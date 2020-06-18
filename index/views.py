@@ -1,13 +1,19 @@
 from django.shortcuts import render
 from account.models import User
-from course.models import Course,UserCourse
+from course.models import Course,UserCourse,Category
 
-# Create your views here.
+# Get programming language categories
+def get_language():
+    model_category = models.Category.objects.all()
+    return model_category
+
 def index(request):
     all_course = Course.objects.all().order_by('-created_at')
+    category = get_language()
     return render(request, 'index.html',locals())
 
 def teacher(request):
+    category = get_language()
     teacher = User.objects.get(email=request.user.email)
     mycourse = Course.objects.filter(teacher=teacher).order_by('-created_at')
     sort = 'newest'

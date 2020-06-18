@@ -6,7 +6,7 @@
                     <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
                         <div class="header-bar-email d-flex align-items-center">
                             <div class="btn-group"  aria-haspopup="true" aria-expanded="false">
-                                <button class="btn btn-category " type="button" data-toggle="dropdown" >
+                                <button class="btn btn-category " type="button"  >
                                         程式語言
                                     <button type="button" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
                                         <span class="sr-only"></span>
@@ -14,7 +14,7 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     {% for c in category %}
-                                    <a class="dropdown-item" href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
+                                    <a class="dropdown-item" data-toggle="dropdown" href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
                                     {% endfor %}
                                 </div>
                             </div>

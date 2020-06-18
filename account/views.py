@@ -89,7 +89,6 @@ def register(request):
                 name = request.POST['name']
                 email = request.POST['email']
                 password = request.POST['password']
-                birthday = request.POST['birthday']
                 sex = request.POST['sex']
                 language_learnt = request.POST['language_learnt']
 

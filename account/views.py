@@ -89,7 +89,6 @@ def register(request):
                 name = request.POST['name']
                 email = request.POST['email']
                 password = request.POST['password']
-                sex = request.POST['sex']
                 language_learnt = request.POST['language_learnt']
 
                 user_email = list(models.User.objects.all().values_list('email'))

@@ -25,6 +25,11 @@ class Course(models.Model):
     def __str__(self):
         return self.course_name
 
+    class Meta:
+        permissions = (
+            ("can_access","can create update delete"),
+        )
+
 class Lesson(models.Model):
     lesson_id = models.AutoField(primary_key=True)
     course = models.ForeignKey(

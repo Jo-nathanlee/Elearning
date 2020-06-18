@@ -17,7 +17,7 @@ from django.conf import settings
 # Create your views here.
 # get programming language categories
 def get_language():
-    model_category = models.Category.objects.all()
+    model_category = Category.objects.all()
     return model_category
 
 # update personal info

@@ -188,6 +188,7 @@ def course_page(request,course_id):
     return render(request,'single-course.html',locals())
 
 # edit course
+@permission_required('course.can_access', raise_exception = True )
 def course_edit(request,course_id):
     course = models.Course.objects.get(course_id=course_id)
     category = get_language()
@@ -211,6 +212,7 @@ def course_edit(request,course_id):
     return render(request,'edit-course.html',locals())
 
 # delete course
+@permission_required('course.can_access', raise_exception = True )
 def course_delete(request,course_id):
     try:
         course = models.Course.objects.get(course_id=course_id)
@@ -223,6 +225,7 @@ def course_delete(request,course_id):
     return HttpResponseRedirect('/index/teacher')
 
 # delete lesson
+@permission_required('course.can_access', raise_exception = True )
 def lesson_delete(request,lesson_id):
     try: 
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
@@ -234,6 +237,7 @@ def lesson_delete(request,lesson_id):
     return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
 
 # new lesson
+@permission_required('course.can_access', raise_exception = True )
 def new_lesson(request,course_id):
     course_id = course_id
     category = get_language()
@@ -284,6 +288,7 @@ def new_lesson(request,course_id):
     return render(request,'edit-lesson.html',locals())
 
 # edit lesson
+@permission_required('course.can_access', raise_exception = True )
 def edit_lesson(request,course_id,lesson_id):
     course_id = course_id
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)

@@ -130,7 +130,7 @@
 
                         <ul class="p-0 m-0">
                             {% for c in latest_course %}
-                            {% if c.course_id is not None }
+                            {% if forloop.counter < 4 and forloop.counter > 0 %}
                             <li class="flex flex-wrap justify-content-between align-items-center">
                                 <img src="{{ c.course_pic }}" alt="">
 

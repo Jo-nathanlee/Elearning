@@ -130,7 +130,7 @@
 
                         <ul class="p-0 m-0">
                             {% for c in latest_course %}
-                            {% not empty }
+                            {% if c is not None }
                             <li class="flex flex-wrap justify-content-between align-items-center">
                                 <img src="{{ c.course_pic }}" alt="">
 
@@ -140,6 +140,7 @@
                                     <a href="/course/{{ c.course_id }}"><div class="course-cost free-cost">查看詳情</div></a>
                                 </div><!-- .content-wrap -->
                             </li>
+                            {% endif %}
                             {% endfor %}
 
                         </ul>

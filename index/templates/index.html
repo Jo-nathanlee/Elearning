@@ -32,7 +32,9 @@ $(document).ready(function(){
                                     </button>
                                 </button>
                                 <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="#">Python</a>
+                                    {% for c in category %}
+                                    <a class="dropdown-item" href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div><!-- .header-bar-email -->

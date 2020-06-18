@@ -239,45 +239,45 @@ def new_lesson(request,course_id):
     # creating lesson
     if request.method == 'POST':
         try:
-        lesson_name = request.POST['lesson_name']
-        lesson_video = request.POST['lesson_video']
-        # 擷取youtube id
-        temp = lesson_video.split('watch?v=')
-        lesson_video = temp[1]
-        lesson_content = request.POST['text-editor']
-        homework_title = request.POST['homework_title']
-        homework_description = request.POST['homework_description']
-        if_compiler = request.POST['if_compiler']
+            lesson_name = request.POST['lesson_name']
+            lesson_video = request.POST['lesson_video']
+            # 擷取youtube id
+            temp = lesson_video.split('watch?v=')
+            lesson_video = temp[1]
+            lesson_content = request.POST['text-editor']
+            homework_title = request.POST['homework_title']
+            homework_description = request.POST['homework_description']
+            if_compiler = request.POST['if_compiler']
 
-        
+            
 
-        course = models.Course.objects.get(course_id = course_id)
+            course = models.Course.objects.get(course_id = course_id)
 
-        lesson = models.Lesson.objects.create(
-            course=course,
-            lesson_name=lesson_name,
-            lesson_video=lesson_video,
-            lesson_content=lesson_content,
-            homework_title=homework_title,
-            homework_description=homework_description,
-            if_compiler=eval(if_compiler)
-        )
-        
-        homework_file = request.POST['filepond']
-        if homework_file != "":
-            arr_json = json.loads(homework_file)
-            file_data = arr_json['data']
-            file_name = arr_json['name']
-            file_data = ContentFile(base64.b64decode(file_data))  
-            lesson.homework_attachment.save(file_name, file_data, save=True)
+            lesson = models.Lesson.objects.create(
+                course=course,
+                lesson_name=lesson_name,
+                lesson_video=lesson_video,
+                lesson_content=lesson_content,
+                homework_title=homework_title,
+                homework_description=homework_description,
+                if_compiler=eval(if_compiler)
+            )
+            
+            homework_file = request.POST['filepond']
+            if homework_file != "":
+                arr_json = json.loads(homework_file)
+                file_data = arr_json['data']
+                file_name = arr_json['name']
+                file_data = ContentFile(base64.b64decode(file_data))  
+                lesson.homework_attachment.save(file_name, file_data, save=True)
 
-        
-        lesson.save()
-        messages.add_message(request, messages.INFO, '新增成功！')
-        return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
+            
+            lesson.save()
+            messages.add_message(request, messages.INFO, '新增成功！')
+            return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
 
         except Exception as e:
-            #messages.add_message(request, messages.ERROR, '新增失敗！')
+            messages.add_message(request, messages.ERROR, '新增失敗！')
     # showing creating page
     return render(request,'edit-lesson.html',locals())
 

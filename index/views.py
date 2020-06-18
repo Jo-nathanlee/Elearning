@@ -4,7 +4,7 @@ from course.models import Course,UserCourse,Category
 
 # Get programming language categories
 def get_language():
-    model_category = models.Category.objects.all()
+    model_category = Category.objects.all()
     return model_category
 
 def index(request):

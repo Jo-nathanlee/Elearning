@@ -13,6 +13,7 @@ from django.core.files.base import ContentFile
 from django.core.paginator import Paginator,InvalidPage,EmptyPage,PageNotAnInteger
 import os
 from django.conf import settings
+from django.contrib.auth.decorators import permission_required
 
 # Get programming language categories
 def get_language():
@@ -20,6 +21,7 @@ def get_language():
     return model_category
 
 # create a new course
+@permission_required('course.can_access', raise_exception = True )
 def new_course(request):
     # creating
     if request.method == "POST":

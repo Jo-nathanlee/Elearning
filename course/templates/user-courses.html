@@ -126,7 +126,7 @@
                                 <div class="content-wrap">
                                     <h3><a href="/course/{{ c.course.course_id }}">{{ c.course.course_name }}</a></h3>
 
-                                    <a href="/course/{{ c.course.course_id }}"><div class="course-cost free-cost">查看詳情</div></a>
+                                    <a href="/course/{{ c.course.course_id }}"><div class="course-cost free-cost">查看詳情{{ forloop.counter  }}</div></a>
                                 </div><!-- .content-wrap -->
                             </li>
                             {% endif %}

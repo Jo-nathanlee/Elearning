@@ -121,12 +121,12 @@
                             {% for c in latest_course %}
                             {% if forloop.counter < 4 and forloop.counter > 0 %}
                             <li class="flex flex-wrap justify-content-between align-items-center">
-                                <img src="{{ c.course.course_pic }}" alt="">
+                                <img src="{{ c.course_pic }}" alt="">
 
                                 <div class="content-wrap">
-                                    <h3><a href="/course/{{ c.course.course_id }}">{{ c.course.course_name }}</a></h3>
+                                    <h3><a href="/course/{{ c.course_id }}">{{ c.course_name }}</a></h3>
 
-                                    <a href="/course/{{ c.course.course_id }}"><div class="course-cost free-cost">查看詳情{{ forloop.counter  }}</div></a>
+                                    <a href="/course/{{ c.course_id }}"><div class="course-cost free-cost">查看詳情</div></a>
                                 </div><!-- .content-wrap -->
                             </li>
                             {% endif %}

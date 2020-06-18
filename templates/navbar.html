@@ -14,7 +14,7 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     {% for c in category %}
-                                        <li><a href="/course/category/{{c.category_name}}">{{c.category_name}}</a></li>
+                                    <a class="dropdown-item" href="/course/category/{{c.category_name}}">{{c.category_name}}</a>
                                     {% endfor %}
                                 </div>
                             </div>

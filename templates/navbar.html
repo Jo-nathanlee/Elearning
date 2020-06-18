@@ -8,13 +8,13 @@
                             <div class="btn-group"  aria-haspopup="true" aria-expanded="false">
                                 <button class="btn btn-category " type="button"  >
                                         程式語言
-                                    <button type="button" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
+                                    <a href="#" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" >
                                         <span class="sr-only"></span>
-                                    </button>
+                                    </a>
                                 </button>
                                 <div class="dropdown-menu">
                                     {% for c in category %}
-                                    <a class="dropdown-item" data-toggle="dropdown" href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
+                                    <a class="dropdown-item"  href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
                                     {% endfor %}
                                 </div>
                             </div>

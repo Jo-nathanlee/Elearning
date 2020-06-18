@@ -39,6 +39,7 @@ class User(AbstractUser):
     language_learnt = models.CharField(max_length=100,default='',null=True,blank=True)
     pic = models.TextField(blank=True,null=True,default='https://www.pinclipart.com/picdir/middle/8-82428_profile-clipart-generic-user-gender-neutral-head-icon.png')
     self_introduction = models.TextField(default='')
+    if_teacher = models.BooleanField(default=False)
 
     objects = UserManager()
     USERNAME_FIELD = 'email' 

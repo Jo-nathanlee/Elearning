@@ -20,7 +20,7 @@ class UserAdmin(UserAdmin):
     """Define admin model for custom User model with no email field."""
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (('Personal info'), {'fields': ('name', 'department','sex','language_learnt','pic')}),
+        (('Personal info'), {'fields': ('name', 'department','sex','language_learnt','pic','if_teacher')}),
         (('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -32,6 +32,6 @@ class UserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ['id','name','email','password','department','sex','language_learnt','pic','is_staff', 'is_active', 'is_superuser']
+    list_display = ['id','name','email','password','department','sex','language_learnt','pic','if_teacher','is_staff', 'is_active', 'is_superuser']
     search_fields = ('email','name')
     ordering = ('email',)

@@ -24,7 +24,7 @@ $(document).ready(function(){
                 <div class="row">
                     <div class="col-12 col-lg-6 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
                         <div class="header-bar-email d-flex align-items-center">
-                            <div class="btn-group" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a  aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
                                 <button class="btn btn-category " type="button" >
                                     程式語言
                                     <button type="button" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
@@ -36,7 +36,7 @@ $(document).ready(function(){
                                     <a class="dropdown-item" data-target="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
                                     {% endfor %}
                                 </div>
-                            </div>
+                            </a>
                         </div><!-- .header-bar-email -->
                     </div><!-- .col -->
 

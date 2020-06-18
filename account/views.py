@@ -85,7 +85,7 @@ def register(request):
         # validate form field type
         accountForm = forms.AccountForm(request.POST)
         if accountForm.is_valid():
-            try:
+            #try:
                 name = request.POST['name']
                 email = request.POST['email']
                 password = request.POST['password']
@@ -106,8 +106,8 @@ def register(request):
                     auth.login(request,user)
                     messages.add_message(request, messages.INFO, '註冊成功！')
                     return redirect('/index/')
-            except Exception as e:
-                messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
+            #except Exception as e:
+                #messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
         else:
             messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
     if request.user.is_authenticated:

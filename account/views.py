@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from django.http import FileResponse,JsonResponse
 from account import models, forms
-from course.models import Homework
+from course.models import Homework,Category
 from django.contrib.auth import authenticate
 from django.contrib import auth,messages
 from pprint import pprint
@@ -15,8 +15,14 @@ from django.conf import settings
 
 
 # Create your views here.
-# 個人資料
+# get programming language categories
+def get_language():
+    model_category = models.Category.objects.all()
+    return model_category
+
+# update personal info
 def account(request):
+    # POST = updating
     if request.method == "POST":
         try:
             email= request.user.email
@@ -43,27 +49,20 @@ def account(request):
             pass
 
 
-
+    # Entering index page
     tab = "index"
     User = models.User.objects.get(email= request.user.email)
+    category = get_language()
     return render(request, 'account.html', locals())
-#修改照片&顯示作業
+
+#photo edit & homework display
 def account_tab(request,tab):
-    tab = tab
     email= request.user.email
     user = models.User.objects.get(email=email)  
     if tab == "pic":
+        # updating pic
         if request.method == "POST":
             try:
-                # pic = request.POST['picture']
-                # arr_json = json.loads(pic)
-                # json_data = arr_json['data']
-                # file_name = arr_json['name']
-
-                # if file_name not in str(user.pic):
-                #     data = ContentFile(base64.b64decode(json_data))  
-                #     user.pic.save(file_name, data, save=True)
-                #user.save()
                 pic_url = request.POST['pic_url']
                 models.User.objects.filter(email=email).update(pic=pic_url)
                 data = {}
@@ -73,14 +72,17 @@ def account_tab(request,tab):
                 pass
 
             
-
+    category = get_language()
+    # showing homework page
     if tab == "homework":
         homework = Homework.objects.filter(student = request.user)
     return render(request, 'account.html',locals())
 
-
+# register account
 def register(request):
+    category = get_language()
     if request.method == "POST":
+        # validate form field type
         accountForm = forms.AccountForm(request.POST)
         if accountForm.is_valid():
             try:
@@ -112,7 +114,9 @@ def register(request):
         return redirect('/index/',locals())
     return render(request, 'register.html')
 
+# login account
 def login(request):
+    category = get_language()
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -129,10 +133,12 @@ def login(request):
         return redirect('/index/',locals())
     return render(request,"login.html",locals())
 
+# logout account
 def logout(request):
 	auth.logout(request)
 	return redirect('/user/login/')	
 
+# download homework (ajax)
 def download(request,id):
     homework = Homework.objects.get(id=id)
     filename = str(homework.homework).replace("files/","")

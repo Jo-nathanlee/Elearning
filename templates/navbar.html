@@ -9,11 +9,13 @@
                                 <button class="btn btn-category " type="button" >
                                         程式語言
                                     <button type="button" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
-                                        <span class="sr-only">Toggle Dropright</span>
+                                        <span class="sr-only"></span>
                                     </button>
                                 </button>
                                 <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="#">Python</a>
+                                    {% for c in category %}
+                                        <li><a href="/course/category/{{c.category_name}}">{{c.category_name}}</a></li>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div><!-- .header-bar-email -->

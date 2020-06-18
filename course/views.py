@@ -13,8 +13,15 @@ from django.core.files.base import ContentFile
 from django.core.paginator import Paginator,InvalidPage,EmptyPage,PageNotAnInteger
 import os
 from django.conf import settings
-# Create your views here.
+
+# Get programming language categories
+def get_language():
+    model_category = models.Category.objects.all()
+    return model_category
+
+# create a new course
 def new_course(request):
+    # creating
     if request.method == "POST":
         try:
             course_name = request.POST['course_name']
@@ -51,18 +58,18 @@ def new_course(request):
 
         
 
-
-    category = models.Category.objects.all()   
-
+    #showing creating page
+    category = get_language()
     return render(request, 'new-course.html',locals())
 
+# course index page
 def course_index(request):
-    if request.method == 'POST': #search
+    # search by keyword
+    if request.method == 'POST':
         keyword = request.POST['keyword']
         all_course = models.Course.objects.filter(course_name__icontains=keyword).order_by('-created_at')
-        
-    else:
-        all_course = models.Course.objects.all().order_by('-created_at')
+    # default
+    all_course = models.Course.objects.all().order_by('-created_at')
     
 
     paginator = Paginator(all_course, 6)
@@ -91,11 +98,12 @@ def course_index(request):
     except PageNotAnInteger:
         courses = paginator.page(1)
 
-    category = models.Category.objects.all()   
-    latest_course = models.Course.objects.all().order_by('-created_at')[:4]
+    category = get_language()
+    latest_course = models.Course.objects.all().order_by('-created_at')
 
     return render(request,'courses.html',locals())
 
+# showing my course
 def user_course(request):
     all_course = models.UserCourse.objects.filter(user = request.user).order_by('-created_at')
     paginator = Paginator(all_course, 6)
@@ -124,10 +132,11 @@ def user_course(request):
         courses = paginator.page(1)
 
     latest_course = models.Course.objects.all().order_by('-created_at')
-    category = models.Category.objects.all()
+    category = get_language()
 
     return render(request,'user-courses.html',locals())
 
+# click language category in course page
 def category(request,category):
     model_category = models.Category.objects.get(category_name = category)
     all_course = models.Course.objects.filter(category=model_category)
@@ -157,10 +166,11 @@ def category(request,category):
         courses = paginator.page(1)
 
     latest_course = paginator.page(1)
-    category = models.Category.objects.all()   
+    category = get_language()
 
     return render(request,'courses.html',locals())
 
+# page after clicking course
 def course_page(request,course_id):
     course_id = course_id
     course = models.Course.objects.get(course_id=course_id)
@@ -171,14 +181,17 @@ def course_page(request,course_id):
     teacher_student_count = models.UserCourse.objects.filter(course__teacher=course.teacher).count()
     lesson = models.Lesson.objects.filter(course=course)
     user_course = models.UserCourse.objects.filter(course=course)
+    category = get_language()
 
     return render(request,'single-course.html',locals())
 
+# edit course
 def course_edit(request,course_id):
     course = models.Course.objects.get(course_id=course_id)
-    category = models.Category.objects.all()   
+    category = get_language()
     lesson = models.Lesson.objects.filter(course=course)
 
+    # updating course
     if request.method == "POST":
         try:
             category_name = request.POST['category']
@@ -192,9 +205,10 @@ def course_edit(request,course_id):
             return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！')
-   
+    # showing edit page
     return render(request,'edit-course.html',locals())
 
+# delete course
 def course_delete(request,course_id):
     try:
         course = models.Course.objects.get(course_id=course_id)
@@ -206,6 +220,7 @@ def course_delete(request,course_id):
         messages.add_message(request, messages.ERROR, '刪除失敗！')
     return HttpResponseRedirect('/index/teacher')
 
+# delete lesson
 def lesson_delete(request,lesson_id):
     try: 
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
@@ -216,11 +231,14 @@ def lesson_delete(request,lesson_id):
         messages.add_message(request, messages.ERROR, '刪除失敗！')
     return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
 
-
+# new lesson
 def new_lesson(request,course_id):
     course_id = course_id
+    category = get_language()
+
+    # creating lesson
     if request.method == 'POST':
-        #try:
+        try:
         lesson_name = request.POST['lesson_name']
         lesson_video = request.POST['lesson_video']
         # 擷取youtube id
@@ -258,15 +276,18 @@ def new_lesson(request,course_id):
         messages.add_message(request, messages.INFO, '新增成功！')
         return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
 
-        #except Exception as e:
+        except Exception as e:
             #messages.add_message(request, messages.ERROR, '新增失敗！')
-    
+    # showing creating page
     return render(request,'edit-lesson.html',locals())
 
+# edit lesson
 def edit_lesson(request,course_id,lesson_id):
     course_id = course_id
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)
+    category = get_language()
 
+    #editing lesson
     if request.method == 'POST':
         try:
             lesson.lesson_name = request.POST['lesson_name']
@@ -296,16 +317,19 @@ def edit_lesson(request,course_id,lesson_id):
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！') 
 
-
+    # showing editing page
     return render(request,'edit-lesson.html',locals())
 
+# showing lesson page
 def lesson_page(request,lesson_id,lesson_index):
     lesson = models.Lesson.objects.get(lesson_id=lesson_id)
     course_id = lesson.course.course_id
     is_teacher = False
+    category = get_language()
 
     course = models.Course.objects.get(course_id=course_id)
     user_course = models.UserCourse.objects.filter(course=course,user=request.user).count()
+    # if the user is the teacher or he has registered the course
     if user_course > 0 or course.teacher.email == request.user.email:
         lesson_index = lesson_index
         lesson_id = lesson_id
@@ -338,7 +362,7 @@ def lesson_page(request,lesson_id,lesson_index):
 
     
 
-def index_tab(request):
+def lesson_tab(request):
     if request.method == 'POST':
         tab = request.POST['tab']
         lesson_id = request.POST['lesson_id']

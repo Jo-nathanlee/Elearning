@@ -13,7 +13,7 @@ urlpatterns = [
     path('edit_lesson/<int:course_id>/<int:lesson_id>/', views.edit_lesson),
     path('lesson/<int:lesson_id>/<int:lesson_index>/', views.lesson_page),
     path('lesson/delete/<int:lesson_id>/', views.lesson_delete),
-    path('tab/', views.index_tab,name='tab'),
+    path('lesson_tab/', views.lesson_tab,name='lesson_tab'),
     path('comment', views.comment,name='comment'),
     path('reply', views.reply,name='reply'),
     path('register', views.register,name='course_register'),

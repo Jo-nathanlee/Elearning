@@ -28,7 +28,6 @@ $(document).ready(function(){
                                     <p>Teacher:{{teacher.name}}</p>
                                     <ul class="p-0 m-0 mt-3">
                                        <li><i class="fa fa-star"></i> 4.7  Average rating</li>
-                                        <li><i class="fa fa-comment"></i> 25,182 Reviews</li>
                                         <li><i class="fa fa-user"></i> {% if teacher_student_count|to_int > 1 %}{{teacher_student_count}} Students
                                                                    {% else %}{{teacher_student_count}} Student{% endif %}</li>
                                         <li><i class="fa fa-play-circle"></i> {% if teacher_course_count|to_int > 1 %}{{teacher_course_count}} Courses

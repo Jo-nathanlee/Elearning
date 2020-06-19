@@ -33,17 +33,17 @@ $.fn.rating = function(params, callback) {
 		$(this).hover(function() {
 			$(".text-star").css({cursor: "default"});
 			
-			$.each($(".text-star small"), function(item, value) {
+			$.each($(".text-star i"), function(item, value) {
 				$(this).hover(function() {
 					i = 0;
 					selected = item + 1;
 					
-					$(this).css({cursor: "pointer"}).removeClass("fa-star-o").removeClass("fa-star-half-o").addClass("fa-star").css("font-size", "1.3em");
+					$(this).css({cursor: "pointer"}).removeClass("far").removeClass("fa-star-half-alt").addClass("fa-star").addClass("fas").css("font-size", "1.3em");
 					$(this).prevAll().each(function() {
-						$(this).removeClass("fa-star-o").removeClass("fa-star-half-o").addClass("fa-star").css("font-size", "1em");
+						$(this).removeClass("far").removeClass("fa-star-half-alt").addClass("fa-star").addClass("fas").css("font-size", "1em");
 					});
 					$(this).nextAll().each(function() {
-						$(this).removeClass("fa-star-half-o").removeClass("fa-star").addClass("fa-star-o").css("font-size", "1em");
+						$(this).removeClass("fa-star-half-alt").removeClass("fas").addClass("far").css("font-size", "1em");
 					});
 					$(this).click(function() {
 						i++;

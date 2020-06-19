@@ -28,14 +28,12 @@ def account(request):
             email= request.user.email
             name = request.POST['name']
             department = request.POST['department']
-            sex = request.POST['sex']
             language_learnt = request.POST['language_learnt']
             self_introduction = request.POST['self_introduction']
 
             data = {
                 'name':name,
                 'department':department,
-                'sex':sex,
                 'language_learnt':language_learnt,
                 'self_introduction':self_introduction
             }

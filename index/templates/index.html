@@ -26,14 +26,14 @@ $(document).ready(function(){
                         <div class="header-bar-email d-flex align-items-center">
                             <a  aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
                                 <button class="btn btn-category " type="button" >
-                                    程式語言
-                                    <button type="button" class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
-                                        <span class="sr-only">Toggle Dropright</span>
+                                        程式語言
+                                    <button type="button"  class="btn btn-category-dropdown dropdown-toggle dropdown-toggle-split" >
+                                        <span class="sr-only"></span>
                                     </button>
                                 </button>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu" >
                                     {% for c in category %}
-                                    <a class="dropdown-item" data-target="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
+                                    <a class="dropdown-item" href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
                                     {% endfor %}
                                 </div>
                             </a>

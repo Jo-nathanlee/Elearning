@@ -124,9 +124,7 @@ $(document).ready(function(){
                     <div class="flex">
                         <div class="form-block" >
                             姓名
-                            <input class="form-control" name="name" placeholder="Name" type="text" value="{{ User.name }}" required autofocus />
-                            就讀科系
-                            <input type="text" class="form-control" name="department" placeholder="就讀科系" value="{{ User.department }}">                           
+                            <input class="form-control" name="name" placeholder="Name" type="text" value="{{ User.name }}" required autofocus />                          
                             自我介紹<br>
                             <textarea name="self_introduction" class="form-control" rows="5" value="">
                                 {{ User.self_introduction }}
@@ -134,25 +132,9 @@ $(document).ready(function(){
 
                         </div>
                         <div class="form-block" >
-                             <div class="form-group">
-                                性別
-                                <br/>
-                                <label class="radio-inline ">
-                                    {% if User.sex == 'male' %}
-                                        <input type="radio" name="sex" id="inlineCheckbox1" value="male" checked="checked"/>
-                                    {% else %}
-                                        <input type="radio" name="sex" id="inlineCheckbox1" value="male"/>
-                                    {% endif %}
-                                    男
-                                </label>
-                                <label class="radio-inline">
-                                    {% if User.sex == 'female' %}
-                                        <input type="radio" name="sex" id="inlineCheckbox1" value="female" checked="checked"/>
-                                    {% else %}
-                                        <input type="radio" name="sex" id="inlineCheckbox1" value="female"/>
-                                    {% endif %}
-                                    女
-                                </label>                            
+                            <div class="form-group">
+                                就讀科系
+                                <input type="text" class="form-control" name="department" placeholder="就讀科系" value="{{ User.department }}">
                             </div> 
                             <div class="form-group">
                                 以前是否接觸過程式語言

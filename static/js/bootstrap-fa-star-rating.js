@@ -61,5 +61,5 @@ $.fn.rating = function(params, callback) {
 		});
 	} else {
 	}
-	box.tooltip();
+	//box.tooltip();
 }

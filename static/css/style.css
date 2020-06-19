@@ -1918,6 +1918,10 @@ ul.black-doted {
     color: #f3a90b;
 }
 
+.instructors-info #rating .fa{
+    font-family: none;
+}
+
 .instructors-info #rating .fa-star-o{
     color: rgb(170, 170, 170);
 }

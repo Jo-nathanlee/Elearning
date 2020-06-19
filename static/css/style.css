@@ -1911,6 +1911,15 @@ ul.black-doted {
 
 .instructors-info {
     margin-top: -60px;
+    color: white;
+}
+
+.instructors-info #rating .fa-star{
+    color: #f3a90b;
+}
+
+.instructors-info #rating .fa-star-o{
+    color: #fff;
 }
 
 .instructors-info .entry-heading h2 {
@@ -2060,11 +2069,6 @@ ul.black-doted {
 
 .ratings .fa {
     margin-right: 2px;
-}
-
-.ratings .fa-star {
-    margin-right: 2px;
-    color: #f3a90b;
 }
 
 .ratings .fa-star {

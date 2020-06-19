@@ -1917,6 +1917,12 @@ ul.black-doted {
     color: #f3a90b;
 }
 
+.instructors-info #rating .fa-star-half-alt{
+    color: #f3a90b;
+}
+
+
+
 
 
 .instructors-info #rating .fa-star-o{
@@ -2076,8 +2082,9 @@ ul.black-doted {
     color: #f3a90b;
 }
 
+
 .ratings .fa-star-o {
-    color: #fff;
+    color: rgb(170, 170, 170);
 }
 
 /*--------------------------------------------------------------

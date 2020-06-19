@@ -18,8 +18,8 @@ $.fn.rating = function(params, callback) {
 	split_rate = rat.split("."),
 	box =  ((settings.readOnly) ? $('<a href="' + settings.readOnlyLink + '" class="text-star" title="' + settings.readOnlyMessage + '"></a>') : $('<span class="text-star"></span>')),
 	total_rates = $('<small id="total_rates"></small>'),
-	current_poll = $.str_repeat('<small class="fa fa-star"></small>', split_rate[0]) + ((split_rate[1] != null) ? '<small class="fa fa-star-half-o"></small>' : "") + $.str_repeat('<small class="fa fa-star-o"></small>', (settings.stars - Math.ceil(settings.startRate))),
-	empty_poll = $.str_repeat('<small class="fa fa-star-o"></small>', settings.stars);
+	current_poll = $.str_repeat('<i class="fas fa-star"></i>', split_rate[0]) + ((split_rate[1] != null) ? '<i class="fas fa-star-half-alt"></i>' : "") + $.str_repeat('<i class="far fa-star"></i>', (settings.stars - Math.ceil(settings.startRate))),
+	empty_poll = $.str_repeat('<i class="far fa-star"></i>', settings.stars);
 	
 	box.html(current_poll);
 	total_rates.html("(<small>" + settings.startRate + "</small>/" + settings.total + " " + ((settings.total == 1) ? settings.textVote : settings.textVotes) + ")");

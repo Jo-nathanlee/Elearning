@@ -1913,6 +1913,10 @@ ul.black-doted {
     margin-top: -60px;
 }
 
+.instructors-info #rating {
+    font-size: 1.3em;
+}
+
 .instructors-info #rating .fa-star{
     color: #f3a90b;
 }

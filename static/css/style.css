@@ -2067,6 +2067,11 @@ ul.black-doted {
     color: #f3a90b;
 }
 
+.ratings .fa-star {
+    margin-right: 2px;
+    color: #f3a90b;
+}
+
 .ratings .fa-star-o {
     color: #fff;
 }

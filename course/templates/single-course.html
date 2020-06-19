@@ -23,6 +23,20 @@ $(document).ready(function(){
             }
         });
     });
+
+    $("#rating").rating({
+		rate: 3.71, // Start to show this rates when page loads
+		total: 7, // Number of total votes
+		stars: 5, // Number of stars
+		readOnly: false,
+		// You can translate in your language
+		textVote: "rate",
+		textVotes: "rates",
+		readOnlyMessage: "If you want to rate please login",
+		readOnlyLink: "./Login"
+	}, function(selected) {
+
+	});
 });
 </script>
 {% endblock %}
@@ -166,6 +180,7 @@ $(document).ready(function(){
                         <div class="comments-form">
                             <div class="comment-respond">
                                 <h3 class="comment-reply-title">Review</h3>
+                                <div id="rating"></div>
                                 <form action="javascript:void(0);" class="comment-form">
                                     <textarea rows="4" id="comment_question" placeholder="評論"></textarea>
                                     <button id="comment_submit" >送出</button>

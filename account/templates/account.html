@@ -124,18 +124,7 @@ $(document).ready(function(){
                     <div class="flex">
                         <div class="form-block" >
                             姓名
-                            <input class="form-control" name="name" placeholder="Name" type="text" value="{{ User.name }}" required autofocus />                          
-                            自我介紹<br>
-                            <textarea name="self_introduction" class="form-control" rows="5" value="">
-                                {{ User.self_introduction }}
-                            </textarea>          
-
-                        </div>
-                        <div class="form-block" >
-                            <div class="form-group">
-                                就讀科系
-                                <input type="text" class="form-control" name="department" placeholder="就讀科系" value="{{ User.department }}">
-                            </div> 
+                            <input class="form-control" name="name" placeholder="Name" type="text" value="{{ User.name }}" required autofocus />     
                             <div class="form-group">
                                 以前是否接觸過程式語言
                                 <div class="form-inline">
@@ -157,6 +146,18 @@ $(document).ready(function(){
                                     </label>
                                     <input class="form-control form-control-sm" type="text" name="language_learnt" placeholder="程式語言" value="{{ User.language_learnt }}">
                                 </div>           
+                            </div> 
+                            {% if perms.course.can_access %}
+                            自我介紹<br>
+                            <textarea name="self_introduction" class="form-control" rows="5" value="">
+                                {{ User.self_introduction }}
+                            </textarea>      
+                            {% endif %}    
+                        </div>
+                        <div class="form-block" >
+                            <div class="form-group">
+                                就讀科系
+                                <input type="text" class="form-control" name="department" placeholder="就讀科系" value="{{ User.department }}">
                             </div> 
                         </div>   
                     </div>

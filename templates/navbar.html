@@ -69,7 +69,9 @@
                         <nav class="site-navigation flex justify-content-end align-items-center">
                             <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center nav-ul">
                                 <li class="current-menu-item li-home" ><a href="/index/">Home</a></li>
-                                <li class="li-teacher" ><a href="{% url 'teacher' %}">講師</a></li>
+                                {% if perms.course.can_access %}
+                                <li><a href="{% url 'teacher' %}">講師</a></li>
+                                {% endif %}
                                 <li class="li-course" ><a href="{% url 'my_course' %}">我的課程</a></li>
                             </ul> 
                         </nav><!-- .site-navigation -->

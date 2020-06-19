@@ -26,7 +26,7 @@ $.fn.rating = function(params, callback) {
 	
 	$(this).html(box);
 	$(this).append(" ");
-	$(this).append(total_rates);
+	// $(this).append(total_rates);
 	
 	if(!settings.readOnly) {
 		var i = 0;
@@ -38,12 +38,12 @@ $.fn.rating = function(params, callback) {
 					i = 0;
 					selected = item + 1;
 					
-					$(this).css({cursor: "pointer"}).removeClass("far").removeClass("fa-star-half-alt").addClass("fa-star").addClass("fas").css("font-size", "1.3em");
+					$(this).css({cursor: "pointer"}).removeClass("far").removeClass("fa-star-half-alt").addClass("fa-star").addClass("fas").css("font-size", "1.6em");
 					$(this).prevAll().each(function() {
-						$(this).removeClass("far").removeClass("fa-star-half-alt").addClass("fa-star").addClass("fas").css("font-size", "1em");
+						$(this).removeClass("far").removeClass("fa-star-half-alt").addClass("fa-star").addClass("fas").css("font-size", "1.3em");
 					});
 					$(this).nextAll().each(function() {
-						$(this).removeClass("fa-star-half-alt").removeClass("fas").addClass("far").css("font-size", "1em");
+						$(this).removeClass("fa-star-half-alt").removeClass("fas").addClass("far").css("font-size", "1.3em");
 					});
 					$(this).click(function() {
 						i++;

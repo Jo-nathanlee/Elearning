@@ -543,7 +543,7 @@ def review(request):
     if int(rating) == 0:
         #messages.add_message(request, messages.WARNING, '請評分！')
         messages.error(request, '請評分！')
-        return redirect(request.META['HTTP_REFERER'])   
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])   
 
     course = models.Course.objects.get(course_id=course_id)
     reviewer = User.objects.get(email=request.user.email) 
@@ -554,5 +554,5 @@ def review(request):
             reviewer=reviewer,
         )
 
-    return redirect(request.META['HTTP_REFERER'])   
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])   
 

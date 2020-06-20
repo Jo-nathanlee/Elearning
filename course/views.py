@@ -103,6 +103,7 @@ def course_index(request):
 
     for c in courses:
         course = models.Course.objects.filter(course_id=c.course_id)
+        return HttpResponse(course[0].course_id)
         course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
         rating = int(course_rating['rating__avg'])
         c.update(rating = range(rating) )

@@ -186,7 +186,7 @@ def course_page(request,course_id):
     user_course = models.UserCourse.objects.filter(course=course)
     category = get_language()
 
-    review = models.Review.objects.filter(reviewer=user,course=course)
+    review = models.Review.objects.filter(reviewer=user,course=course).count()
 
     return render(request,'single-course.html',locals())
 

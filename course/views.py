@@ -187,6 +187,8 @@ def course_page(request,course_id):
     category = get_language()
 
     review = models.Review.objects.filter(reviewer=user,course=course).count()
+    teacher_rating = models.Review.objects.filter(course__teacher=course.teacher).aggregate(Avg('rating'))
+    course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
 
     return render(request,'single-course.html',locals())
 

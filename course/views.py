@@ -540,7 +540,7 @@ def review(request):
     rating = request.POST['rating']
     review = request.POST['review']
     course_id = request.POST['course_id']
-    if rating == 0:
+    if int(rating) == 0:
         #messages.add_message(request, messages.WARNING, '請評分！')
         messages.error(request, '請評分！')
         return redirect(request.META['HTTP_REFERER'])   
@@ -554,4 +554,5 @@ def review(request):
             reviewer=reviewer,
         )
 
-    
+    return redirect(request.META['HTTP_REFERER'])   
+

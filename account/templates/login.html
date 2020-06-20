@@ -24,6 +24,7 @@
             <legend class="text-center">Sign In</legend>
             <form action="/user/login/" method="post" class="form" role="form">
                 {% csrf_token %}
+                <input type='hidden' name='next' value='{{ next }}'>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                     <input id="username" type="email" class="form-control" name="email" placeholder="Email">

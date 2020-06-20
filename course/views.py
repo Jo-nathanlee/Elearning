@@ -14,6 +14,7 @@ from django.core.paginator import Paginator,InvalidPage,EmptyPage,PageNotAnInteg
 import os
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
+from django.db.models import Avg
 
 # Get programming language categories
 def get_language():

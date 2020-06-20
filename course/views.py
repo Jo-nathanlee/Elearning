@@ -177,6 +177,7 @@ def course_page(request,course_id):
     course_id = course_id
     course = models.Course.objects.get(course_id=course_id)
     teacher = User.objects.get(email=course.teacher)
+    user = User.objects.get(email=request.user.email)
     
     is_teacher = True if teacher.email == request.user.email else False
     teacher_course_count = models.Course.objects.filter(teacher=course.teacher).count()
@@ -184,6 +185,8 @@ def course_page(request,course_id):
     lesson = models.Lesson.objects.filter(course=course)
     user_course = models.UserCourse.objects.filter(course=course)
     category = get_language()
+
+    review = models.Review.objects.filter(reviewer=user,course=course)
 
     return render(request,'single-course.html',locals())
 

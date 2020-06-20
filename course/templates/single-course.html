@@ -167,11 +167,12 @@ $(document).ready(function(){
                         </div><!-- .instructor-short-info -->
                     </div><!-- .instructors-info -->
                     <!-- Review -->
+                    {% if if_reviewed != None  %}
                     <div class="instructors-info mt-5">
                         <div class="comments-form">
                             <div class="comment-respond">
                                 <h3 class="comment-reply-title">Review</h3>
-                                <input type="number" name="course_rating" id="course_rating" class="rating" data-empty-value="0" data-icon-lib="" data-active-icon="fas fa-star" data-inactive-icon="far fa-star" value="0"/>  
+                                <input type="number" name="course_rating" id="course_rating" class="rating" data-empty-value="0" data-icon-lib="" data-active-icon="fas fa-star" data-inactive-icon="far fa-star" value="{{ if_reviewed.rating }}"/>  
                                 <input type="hidden" id="rating_value" value=""> 
                                 <form action="javascript:void(0);" class="comment-form">
                                     <textarea rows="4" id="comment_question" placeholder="評論"></textarea>
@@ -180,6 +181,7 @@ $(document).ready(function(){
                             </div><!-- .comment-respond -->
                         </div><!-- .comments-form -->
                     </div>
+                    {% endif %}
                     <!-- Review end -->
 
                 </div><!-- .single-course-wrap -->

@@ -46,10 +46,9 @@ $(document).ready(function(){
                             <h1 class="entry-title">{{course.course_name}}</h1>
 
                             <div class="ratings flex justify-content-center align-items-center">
+                                {% for i in range (course_rating) %}
                                 <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                                {% endfor %}
                             </div><!-- .ratings -->
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
@@ -148,10 +147,9 @@ $(document).ready(function(){
 
                             <div class="instructors-details">
                                 <div class="ratings flex align-items-center">
+                                    {% for i in range (course_rating) %}
                                     <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
+                                    {% endfor %}
                                 </div><!-- .ratings -->
 
                                 <h2 class="entry-title mt-3">{{course.course_name}}</h2>

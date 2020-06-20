@@ -20,7 +20,6 @@ class Course(models.Model):
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    credits = models.IntegerField(default=0)
 
     def __str__(self):
         return self.course_name
@@ -84,7 +83,7 @@ class UserCourse(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Homework(models.Model):
-    lesson_id = models.ForeignKey(
+    lesson = models.ForeignKey(
         'Lesson',
         on_delete=models.CASCADE
     )
@@ -96,7 +95,7 @@ class Homework(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Note(models.Model):
-    lesson_id = models.ForeignKey(
+    lesson = models.ForeignKey(
         'Lesson',
         on_delete=models.CASCADE
     )
@@ -105,6 +104,19 @@ class Note(models.Model):
         on_delete=models.CASCADE
     )
     note = models.TextField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Review(models.Model):
+    course = models.ForeignKey(
+        'Course',
+        on_delete=models.CASCADE
+    )
+    reviewer = models.ForeignKey(
+        'account.User',
+        on_delete=models.CASCADE
+    )
+    review = models.TextField(null=True,blank=True)
+    rating = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

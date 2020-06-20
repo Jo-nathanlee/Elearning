@@ -351,12 +351,12 @@ def lesson_page(request,lesson_id,lesson_index):
 
 
         all_questions = list(questions) 
-        homework = models.Homework.objects.filter(lesson_id=lesson_id,student=request.user).first()
-        note = models.Note.objects.filter(lesson_id=lesson_id,student=request.user).first()
+        homework = models.Homework.objects.filter(lesson=lesson_id,student=request.user).first()
+        note = models.Note.objects.filter(lesson=lesson_id,student=request.user).first()
 
         if course.teacher.email == request.user.email:
             is_teacher = True
-            homework = models.Homework.objects.filter(lesson_id=lesson_id)
+            homework = models.Homework.objects.filter(lesson=lesson_id)
 
 
         tab = "index"
@@ -477,10 +477,10 @@ def upload_homework(request):
         student = User.objects.get(email=request.user.email) 
 
         
-        model = models.Homework.objects.filter(lesson_id=lesson,student=student).first()
+        model = models.Homework.objects.filter(lesson=lesson,student=student).first()
         if model == None:
             hw = models.Homework.objects.create(
-                lesson_id=lesson,
+                lesson=lesson,
                 student=student,
             )
             hw.homework.save(file_name, file_data, save=True)
@@ -524,7 +524,7 @@ def update_note(request):
         student = User.objects.get(email=request.user.email) 
         
         models.Note.objects.update_or_create(
-            lesson_id=lesson, student=student,
+            lesson=lesson, student=student,
             defaults={'note': note},
         )
         data = {}

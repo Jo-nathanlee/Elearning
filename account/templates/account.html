@@ -217,8 +217,8 @@ $(document).ready(function(){
                     {% for hw in homework %}
                       <tr>
                         <th scope="row">{{ hw.created_at|date:'Y-m-d' }}</th>
-                        <td>{{ hw.lesson_id.homework_title }}</td>
-                        <td>{{ hw.lesson_id.homework_description }}</td>
+                        <td>{{ hw.lesson.homework_title }}</td>
+                        <td>{{ hw.lesson.homework_description }}</td>
                         <td><a href="/user/homework_download/{{ hw.id }}/">{{ hw.homework|get_filename }}</a></td>
                       </tr>
                     {% endfor %}

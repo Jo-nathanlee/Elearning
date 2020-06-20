@@ -105,7 +105,7 @@ def course_index(request):
         course = models.Course.objects.filter(course_id=c['course_id'])
         course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
         rating = int(course_rating['rating__avg'])
-        c.update(rating = rating )
+        c.update(rating = range(rating) )
 
 
     category = get_language()

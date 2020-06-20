@@ -174,6 +174,7 @@ $(document).ready(function(){
                                 <h3 class="comment-reply-title">Review</h3>
                                 <input type="number" name="course_rating" id="course_rating" class="rating" data-empty-value="0" data-icon-lib="" data-active-icon="fas fa-star" data-inactive-icon="far fa-star" value="0"/>  
                                 <form action="{% url 'review' %}" method="post" class="comment-form">
+                                    {% csrf_token %}
                                     <input type="hidden" name="course_id" value="{{course.course_id}}"> 
                                     <input type="hidden" name="rating" id="rating_value" value="0"> 
                                     <textarea rows="4" name="review" placeholder="評論"></textarea>

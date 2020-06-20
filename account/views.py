@@ -116,11 +116,13 @@ def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
+        next = request.POST['next']
         user = auth.authenticate(email=email,password=password)
 
         if user is not None:
             auth.login(request,user)
             message = '登入成功！'
+            return redirect(request.POST['next'], '/index/',locals()) 
             return redirect('/index/',locals())
         else:
             messages.add_message(request, messages.ERROR, '帳號密碼錯誤，請重新登入！')

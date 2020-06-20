@@ -550,7 +550,7 @@ def review(request):
     model_review = models.Review.objects.create(
             course=course,
             review=review,
-            rating=(int)rating,
+            rating=int(rating),
             reviewer=reviewer,
         )
 

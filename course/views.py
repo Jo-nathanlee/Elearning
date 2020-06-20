@@ -141,6 +141,12 @@ def user_course(request):
     except PageNotAnInteger:
         courses = paginator.page(1)
 
+    for c in courses:
+        course = models.Course.objects.get(course_id=c.course_id)
+        course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
+        rating = int(course_rating['rating__avg'])
+        c.rating = range(rating) 
+
     latest_course = models.Course.objects.all().order_by('-created_at')
     category = get_language()
 

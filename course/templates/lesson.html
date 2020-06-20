@@ -130,6 +130,7 @@ $(document).ready(function(){
 
     //顯示回覆textarea
     $(".btn_reply").click(function() { 
+        console.log("123");
         $(this).parents("li").find(".reply-comment").removeClass("d-none");
         $('html,body').animate({
             scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)-300

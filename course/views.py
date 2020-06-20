@@ -102,7 +102,7 @@ def course_index(request):
         courses = paginator.page(1)
 
     for c in courses:
-        course = models.Course.objects.filter(course_id=c('course_id'))
+        course = models.Course.objects.filter(course_id=c.course_id)
         course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
         rating = int(course_rating['rating__avg'])
         c.update(rating = range(rating) )

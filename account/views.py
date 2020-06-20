@@ -113,6 +113,8 @@ def register(request):
 # login account
 def login(request):
     category = get_language()
+    if request.method == 'GET':
+        cache.set('next', request.GET.get('next', None))
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -122,12 +124,20 @@ def login(request):
         if user is not None:
             auth.login(request,user)
             message = '登入成功！'
-            return redirect(request.POST['next'], '/index/',locals()) 
+
+            next_url = cache.get('next')
+            if next_url:
+                cache.delete('next')
+                return redirect(next_url,locals())
             return redirect('/index/',locals())
         else:
             messages.add_message(request, messages.ERROR, '帳號密碼錯誤，請重新登入！')
 
     if request.user.is_authenticated:
+        next_url = cache.get('next')
+        if next_url:
+            cache.delete('next')
+            return redirect(next_url,locals())
         return redirect('/index/',locals())
     return render(request,"login.html",locals())
 

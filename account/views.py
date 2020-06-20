@@ -12,6 +12,7 @@ import base64
 from django.core.files.base import ContentFile
 import os
 from django.conf import settings
+from django.core.cache import cache
 
 
 # Create your views here.

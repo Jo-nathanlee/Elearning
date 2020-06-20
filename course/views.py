@@ -535,3 +535,23 @@ def update_note(request):
         
     except Exception as e:
         pass
+
+def review(request):
+    rating = request.POST['rating']
+    review = request.POST['review']
+    course_id = request.POST['course_id']
+    if rating == 0:
+        #messages.add_message(request, messages.WARNING, '請評分！')
+        messages.error(request, '請評分！')
+        return redirect(request.META['HTTP_REFERER'])   
+
+    course = models.Course.objects.get(course_id=course_id)
+    reviewer = User.objects.get(email=request.user.email) 
+    model_review = models.Review.objects.create(
+            course=course,
+            review=review,
+            rating=(int)rating,
+            reviewer=reviewer,
+        )
+
+    

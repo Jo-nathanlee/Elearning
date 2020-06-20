@@ -20,4 +20,5 @@ urlpatterns = [
     path('upload_homework', views.upload_homework,name='upload_homework'),
     path('upload_pic', views.upload_pic,name='upload_pic'),
     path('update_note/', views.update_note,name='update_note'),
+    path('review/', views.review,name='review'),
 ]

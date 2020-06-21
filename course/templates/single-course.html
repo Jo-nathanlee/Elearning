@@ -183,35 +183,39 @@ $(document).ready(function(){
                                     <button id="comment_submit" >送出</button>
                                 </form><!-- .comment-form -->
                                 {% endif %}
-                                <ol class="comment-list" id="comment-list">
-                                    {% for r in review %}
-                                    <li class="comment">
-                                        <article class="comment-body">
-                                            <figure class="comment-author-avatar">
-                                                <img src="{{r.reviewer.pic}}" alt="">
-                                            </figure><!-- .comment-author-avatar -->
+                                <div class="post-comments-wrap">
+                                    <div class="post-comments">
+                                        <ol class="comment-list" id="comment-list">
+                                            {% for r in review %}
+                                            <li class="comment">
+                                                <article class="comment-body">
+                                                    <figure class="comment-author-avatar">
+                                                        <img src="{{r.reviewer.pic}}" alt="">
+                                                    </figure><!-- .comment-author-avatar -->
 
-                                            <div class="comment-wrap">
-                                                <div class="comment-author">
-                                                    <span class="comment-meta d-block">
-                                                    {% language 'en-GB' %}
-                                                        <a href="#">{{r.created_at|date:'d-M-Y'}}</a>
-                                                    {% endlanguage %}
-                                                    </span><!-- .comment-meta -->
+                                                    <div class="comment-wrap">
+                                                        <div class="comment-author">
+                                                            <span class="comment-meta d-block">
+                                                            {% language 'en-GB' %}
+                                                                <a href="#">{{r.created_at|date:'d-M-Y'}}</a>
+                                                            {% endlanguage %}
+                                                            </span><!-- .comment-meta -->
 
-                                                    <span class="fn">
-                                                        <a href="#">{{r.reviewer.name}}</a>
-                                                    </span><!-- .fn -->
-                                                </div><!-- .comment-author -->
+                                                            <span class="fn">
+                                                                <a href="#">{{r.reviewer.name}}</a>
+                                                            </span><!-- .fn -->
+                                                        </div><!-- .comment-author -->
 
-                                                <p>{{r.review}}</p>
-                                            </div><!-- .comment-wrap -->
+                                                        <p>{{r.review}}</p>
+                                                    </div><!-- .comment-wrap -->
 
-                                            <div class="clearfix"></div>
-                                        </article><!-- .comment-body -->
-                                    </li>
-                                    {% endfor %}
-                                </ol>
+                                                    <div class="clearfix"></div>
+                                                </article><!-- .comment-body -->
+                                            </li>
+                                            {% endfor %}
+                                        </ol>
+                                    </div><!-- .comment-respond -->
+                                </div><!-- .comments-form -->
                             </div><!-- .comment-respond -->
                         </div><!-- .comments-form -->
                     </div>

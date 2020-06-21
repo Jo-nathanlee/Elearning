@@ -130,10 +130,17 @@ $(document).ready(function(){
 
     //顯示回覆textarea
     $(".btn_reply").click(function() { 
-        $(this).parents("li").find(".reply-comment").removeClass("d-none");
-        $('html,body').animate({
-            scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)-300
-        }, 'slow');
+        if($(this).parents("li").find(".reply-comment").hasClass("d-none")){
+            $(this).parents("li").find(".reply-comment").removeClass("d-none");
+            $('html,body').animate({
+                scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)-300
+            }, 'slow');
+        }else{
+            $(this).parents("li").find(".reply-comment").addClass("d-none");
+            $('html,body').animate({
+                scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)+300
+            }, 'slow');
+        }
     });
 
     //點擊回覆留言

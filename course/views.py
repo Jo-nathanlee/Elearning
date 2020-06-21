@@ -443,7 +443,7 @@ def reply(request):
         question_id = request.POST['question_id']
         question = models.Question.objects.get(question_id=question_id)
         user = request.user
-        lesson = models.Lesson.objects.get(lesson_id=question.lesson__lesson_id)
+        lesson = models.Lesson.objects.get(lesson_id=question.lesson.lesson_id)
 
         answer = models.Answer.objects.create(
             question=question,

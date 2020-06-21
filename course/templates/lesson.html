@@ -130,7 +130,7 @@ $(document).ready(function(){
     });
 
     //顯示回覆textarea
-    $(document).on('click', '.btn_reply', function() {
+    $('#comment-list').on('click', '.btn_reply', function() {
         if($(this).parents("li").find(".reply-comment").hasClass("d-none")){
             $(this).parents("li").find(".reply-comment").removeClass("d-none");
             $('html,body').animate({
@@ -143,7 +143,7 @@ $(document).ready(function(){
     });
 
     //點擊回覆留言
-    $(document).on('click', '.reply_submit', function() {
+    $('#comment-list').on('click', '.reply_submit', function() {
         $.LoadingOverlay("show");
         const answer = $(this).prev().val();
         const question_id = $(this).prev().prev().val();
@@ -367,7 +367,7 @@ $(document).ready(function(){
                         <div class="post-comments">
                             <h3 class="comments-title"><span class="comments-number">此課程有{{ all_questions|length  }}個問題</span></h3>
 
-                            <ol class="comment-list">
+                            <ol class="comment-list" id="comment-list">
                                 {% for question in all_questions %}
                                 <li class="comment">
                                     <article class="comment-body">

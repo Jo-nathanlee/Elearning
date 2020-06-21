@@ -137,9 +137,7 @@ $(document).ready(function(){
             }, 'slow');
         }else{
             $(this).parents("li").find(".reply-comment").addClass("d-none");
-            $('html,body').animate({
-                scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)
-            }, 'slow');
+
         }
     });
 

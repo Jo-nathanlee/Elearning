@@ -45,7 +45,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#comment_submit").click(function() { 
+    $('.comment-list').on('click', '.btn_reply', function() {
         $.LoadingOverlay("show");
         var question = $("textarea#comment_question").val();
         if(question != "")
@@ -129,8 +129,7 @@ $(document).ready(function(){
     });
 
     //顯示回覆textarea
-    $(".btn_reply").click(function() { 
-        console.log("123");
+    $('.comment-list').on('click', '.btn_reply', function() {
         if($(this).parents("li").find(".reply-comment").hasClass("d-none")){
             $(this).parents("li").find(".reply-comment").removeClass("d-none");
             $('html,body').animate({

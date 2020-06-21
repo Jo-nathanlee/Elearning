@@ -85,9 +85,8 @@ $(document).ready(function(){
                                                             </div>\
                                                             <div class="clearfix"></div>\
                                                         </article>');
-                        const answer = data[index].answer;
-
-                            $.each(answer, function(index) {
+                         const answer = data[index].answer;
+                         $.each(answer, function(index) {
                                 $(".comment-list").append(' <ol class="children">\
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
@@ -107,9 +106,7 @@ $(document).ready(function(){
                                                                 </li>\
                                                             </ol>');
 
-                                });
-                         
-
+                         });
                        
                          $(".comment-list").append('<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
@@ -183,8 +180,7 @@ $(document).ready(function(){
                                                             <div class="clearfix"></div>\
                                                         </article>');
                          const answer = data[index].answer;
-                         if(answer.length > 0) {
-                            $.each(answer, function(index) {
+                         $.each(answer, function(index) {
                                 $(".comment-list").append(' <ol class="children">\
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
@@ -204,8 +200,7 @@ $(document).ready(function(){
                                                                 </li>\
                                                             </ol>');
 
-                            });
-                         }
+                         });
                        
                          $(".comment-list").append('<ol class="children reply-comment d-none">\
                                                             <li class="comment">\

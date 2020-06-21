@@ -104,8 +104,11 @@ def course_index(request):
     for c in courses:
         course = models.Course.objects.get(course_id=c.course_id)
         course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
-        rating = int(course_rating['rating__avg'])
-        c.rating = range(rating) 
+        if course_rating['rating__avg'] != None:
+            rating = int(course_rating['rating__avg'])
+            c.rating = range(rating) 
+        else:
+            c.rating = None
 
 
     category = get_language()
@@ -148,7 +151,8 @@ def user_course(request):
             rating = int(course_rating['rating__avg'])
             c.rating = range(rating) 
         else:
-            c.rating = 0
+            c.rating = None
+
 
     latest_course = models.Course.objects.all().order_by('-created_at')
     category = get_language()
@@ -212,8 +216,6 @@ def course_page(request,course_id):
     course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
     if course_rating['rating__avg'] != None :
         rating_range = range(int(course_rating['rating__avg']))
-    else:
-        rating_range = range(0)
 
 
     return render(request,'single-course.html',locals())

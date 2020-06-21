@@ -53,9 +53,11 @@
                                     <footer class="entry-footer flex flex-wrap justify-content-between align-items-center">
 
                                         <div class="course-ratings flex justify-content-end align-items-center">
+                                            {% if c.rating != None %}
                                             {% for i in c.rating %}
                                             <span class="fa fa-star checked"></span>
                                             {% endfor %}
+                                            {% endif %}
                                         </div><!-- .course-ratings -->
                                     </footer><!-- .entry-footer -->
                                 </div><!-- .course-content-wrap -->

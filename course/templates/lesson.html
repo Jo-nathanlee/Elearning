@@ -64,7 +64,7 @@ $(document).ready(function(){
 
                     $(".comment-list").empty();
                     $.each(data, function(index) {
-                        $(".comment-list").append('<li class="comment">\
+                        const part1 = '<li class="comment">\
                                                         <article class="comment-body">\
                                                             <figure class="comment-author-avatar">\
                                                                 <img src="'+data[index].questioner__pic+'" alt="">\
@@ -84,11 +84,15 @@ $(document).ready(function(){
                                                                 </div>\
                                                             </div>\
                                                             <div class="clearfix"></div>\
-                                                        </article>');
-                         /*const answer = data[index].answer;
+                                                        </article>';
+                        
+
+                         const answer = data[index].answer;
+                         const part2 = '';
+                         const part3 = '';
                          if(answer.length > 0){
                             $.each(answer, function(index) {
-                                $(".comment-list").append(' <ol class="children">\
+                                part2 += ' <ol class="children">\
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
                                                                         <figure class="comment-author-avatar">\
@@ -105,12 +109,11 @@ $(document).ready(function(){
                                                                         <div class="clearfix"></div>\
                                                                     </article>\
                                                                 </li>\
-                                                            </ol>');
+                                                            </ol>';
 
                             });
                          }
-                       
-                         $(".comment-list").append('<ol class="children reply-comment d-none">\
+                         part3 += '<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
                                                                 <form action="javascript:void(0);" class="comment-form">\
                                                                     <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
@@ -119,7 +122,9 @@ $(document).ready(function(){
                                                                 </form>\
                                                             </li>\
                                                         </ol>\
-                                                </li>');*/
+                                                </li>';
+
+                         $(".comment-list").append(part1+part2+part3);
                     });
                     $.LoadingOverlay("hide");
                 },
@@ -160,7 +165,7 @@ $(document).ready(function(){
 
                     $(".comment-list").empty();
                     $.each(data, function(index) {
-                        $(".comment-list").append('<li class="comment">\
+                        const part1 = '<li class="comment">\
                                                         <article class="comment-body">\
                                                             <figure class="comment-author-avatar">\
                                                                 <img src="'+data[index].questioner__pic+'" alt="">\
@@ -176,15 +181,19 @@ $(document).ready(function(){
                                                                 </div>\
                                                                 <p>'+data[index].question_content+'</p>\
                                                                 <div class="reply">\
-                                                                    <a class="btn_reply">reply</a>\
+                                                                    <a class="btn_reply" >reply</a>\
                                                                 </div>\
                                                             </div>\
                                                             <div class="clearfix"></div>\
-                                                        </article>');
+                                                        </article>';
+                        
+
                          const answer = data[index].answer;
+                         const part2 = '';
+                         const part3 = '';
                          if(answer.length > 0){
                             $.each(answer, function(index) {
-                                $(".comment-list").append(' <ol class="children">\
+                                part2 += ' <ol class="children">\
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
                                                                         <figure class="comment-author-avatar">\
@@ -192,8 +201,8 @@ $(document).ready(function(){
                                                                         </figure>\
                                                                         <div class="comment-wrap">\
                                                                             <div class="comment-author">\
-                                                                                <span class="comment-meta d-block"><span>'+DateFormat(answer[index].created_at)+  
-                                                                                '</span></span>\
+                                                                                <span class="comment-meta d-block">'+DateFormat(answer[index].created_at)+  
+                                                                                '</span>\
                                                                                 <span class="fn">'+answer[index].answerer__name+'</span>\
                                                                             </div>\
                                                                             <p>'+answer[index].answer_content+'</p>\
@@ -201,13 +210,11 @@ $(document).ready(function(){
                                                                         <div class="clearfix"></div>\
                                                                     </article>\
                                                                 </li>\
-                                                            </ol>');
+                                                            </ol>';
 
                             });
                          }
-
-                       
-                         $(".comment-list").append('<ol class="children reply-comment d-none">\
+                         part3 += '<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
                                                                 <form action="javascript:void(0);" class="comment-form">\
                                                                     <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
@@ -216,7 +223,9 @@ $(document).ready(function(){
                                                                 </form>\
                                                             </li>\
                                                         </ol>\
-                                                </li>');
+                                                </li>';
+
+                         $(".comment-list").append(part1+part2+part3);
                     });
                     //ol.addClass("d-none");
                     $.LoadingOverlay("hide");

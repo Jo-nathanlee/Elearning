@@ -160,7 +160,7 @@ $(document).ready(function(){
                 data: { answer:answer,question_id:question_id },
                 dataType: 'json',
                 success: function(data) {
-                    console.log($(this).parents(".reply-comment").siblings(".answer-ol").html());
+                    console.log(ol.siblings(".answer-ol").html());
                     $(".comments-number").html("此課程有"+data.length+"個問題");
 
                     $(".comment-list").empty();

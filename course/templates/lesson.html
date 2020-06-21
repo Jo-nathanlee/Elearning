@@ -130,6 +130,7 @@ $(document).ready(function(){
 
     //顯示回覆textarea
     $(".btn_reply").click(function() { 
+        console.log("123");
         if($(this).parents("li").find(".reply-comment").hasClass("d-none")){
             $(this).parents("li").find(".reply-comment").removeClass("d-none");
             $('html,body').animate({

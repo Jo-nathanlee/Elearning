@@ -188,23 +188,23 @@ $(document).ready(function(){
                                     <li class="comment">
                                         <article class="comment-body">
                                             <figure class="comment-author-avatar">
-                                                <img src="{{review.reviewer__pic}}" alt="">
+                                                <img src="{{r.reviewer__pic}}" alt="">
                                             </figure><!-- .comment-author-avatar -->
 
                                             <div class="comment-wrap">
                                                 <div class="comment-author">
                                                     <span class="comment-meta d-block">
                                                     {% language 'en-GB' %}
-                                                        <a href="#">{{review.created_at|date:'d-M-Y'}}</a>
+                                                        <a href="#">{{r.created_at|date:'d-M-Y'}}</a>
                                                     {% endlanguage %}
                                                     </span><!-- .comment-meta -->
 
                                                     <span class="fn">
-                                                        <a href="#">{{review.reviewer__name}}</a>
+                                                        <a href="#">{{r.reviewer__name}}</a>
                                                     </span><!-- .fn -->
                                                 </div><!-- .comment-author -->
 
-                                                <p>{{review.review}}</p>
+                                                <p>{{r.review}}</p>
                                             </div><!-- .comment-wrap -->
 
                                             <div class="clearfix"></div>

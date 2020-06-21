@@ -165,11 +165,13 @@ $(document).ready(function(){
                         </div><!-- .instructor-short-info -->
                     </div><!-- .instructors-info -->
                     <!-- Review -->
-                    {% if review == 0  %}
+                    
+                    
                     <div class="instructors-info mt-5">
                         <div class="comments-form">
                             <div class="comment-respond">
                                 <h3 class="comment-reply-title">Review</h3>
+                                {% if if_review == 0  %}
                                 <input type="number" name="course_rating" id="course_rating" class="rating" data-empty-value="0" data-icon-lib="" data-active-icon="fas fa-star" data-inactive-icon="far fa-star" value="0"/>  
                                 <form action="{% url 'review' %}" method="post" class="comment-form">
                                     {% csrf_token %}
@@ -178,10 +180,39 @@ $(document).ready(function(){
                                     <textarea rows="4" name="review" placeholder="評論"></textarea>
                                     <button id="comment_submit" >送出</button>
                                 </form><!-- .comment-form -->
+                                {% endif %}
+                                <ol class="comment-list" id="comment-list">
+                                    {% for r in review %}
+                                    <li class="comment">
+                                        <article class="comment-body">
+                                            <figure class="comment-author-avatar">
+                                                <img src="{{review.reviewer__pic}}" alt="">
+                                            </figure><!-- .comment-author-avatar -->
+
+                                            <div class="comment-wrap">
+                                                <div class="comment-author">
+                                                    <span class="comment-meta d-block">
+                                                    {% language 'en-GB' %}
+                                                        <a href="#">{{review.created_at|date:'d-M-Y'}}</a>
+                                                    {% endlanguage %}
+                                                    </span><!-- .comment-meta -->
+
+                                                    <span class="fn">
+                                                        <a href="#">{{review.reviewer__name}}</a>
+                                                    </span><!-- .fn -->
+                                                </div><!-- .comment-author -->
+
+                                                <p>{{review.review}}</p>
+                                            </div><!-- .comment-wrap -->
+
+                                            <div class="clearfix"></div>
+                                        </article><!-- .comment-body -->
+                                    </li>
+                                    {% endfor %}
+                                </ol>
                             </div><!-- .comment-respond -->
                         </div><!-- .comments-form -->
                     </div>
-                    {% endif %}
                     <!-- Review end -->
 
                 </div><!-- .single-course-wrap -->

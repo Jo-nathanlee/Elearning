@@ -193,7 +193,7 @@ def category(request,category):
 
     return render(request,'courses.html',locals())
 
-# page after clicking course
+# single course page
 def course_page(request,course_id):
     course_id = course_id
     course = models.Course.objects.get(course_id=course_id)
@@ -207,7 +207,8 @@ def course_page(request,course_id):
     user_course = models.UserCourse.objects.filter(course=course)
     category = get_language()
 
-    review = models.Review.objects.filter(reviewer=user,course=course).count()
+    if_review = models.Review.objects.filter(reviewer=user,course=course).count()
+    review = models.Review.objects.filter(course=course)
     teacher_rating = models.Review.objects.filter(course__teacher=course.teacher).aggregate(Avg('rating'))
     if teacher_rating['rating__avg'] != None:
         teacher_rating = format(teacher_rating['rating__avg'], '.1f')

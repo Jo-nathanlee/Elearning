@@ -110,7 +110,7 @@ $(document).ready(function(){
                             });
                          }
                        
-                         $(".comment-list").append('<ol class="children reply-comment d-none">\
+                         /*$(".comment-list").append('<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
                                                                 <form action="javascript:void(0);" class="comment-form">\
                                                                     <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
@@ -119,7 +119,7 @@ $(document).ready(function(){
                                                                 </form>\
                                                             </li>\
                                                         </ol>\
-                                                </li>');
+                                                </li>');*/
                     });
                     $.LoadingOverlay("hide");
                 },
@@ -218,7 +218,7 @@ $(document).ready(function(){
                                                         </ol>\
                                                 </li>');
                     });
-                    ol.addClass("d-none");
+                    //ol.addClass("d-none");
                     $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {

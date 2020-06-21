@@ -91,7 +91,7 @@ $(document).ready(function(){
                          var part2 = '';
                          if(answer.length > 0){
                             $.each(answer, function(index) {
-                                part2 += ' <ol class="children">\
+                                part2 += ' <ol class="children answer-ol">\
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
                                                                         <figure class="comment-author-avatar">\
@@ -160,6 +160,7 @@ $(document).ready(function(){
                 data: { answer:answer,question_id:question_id },
                 dataType: 'json',
                 success: function(data) {
+                    console.log($(this).parents(".answer-ol").html());
                     $(".comments-number").html("此課程有"+data.length+"個問題");
 
                     $(".comment-list").empty();
@@ -191,7 +192,7 @@ $(document).ready(function(){
                          var part2 = '';
                          if(answer.length > 0){
                             $.each(answer, function(index) {
-                                part2 += ' <ol class="children">\
+                                part2 += ' <ol class="children answer-ol">\
                                                                 <li class="comment">\
                                                                     <article class="comment-body">\
                                                                         <figure class="comment-author-avatar">\
@@ -411,7 +412,7 @@ $(document).ready(function(){
                                     </article><!-- .comment-body -->
 
                                     {% for answer in question.answer %}
-                                    <ol class="children">
+                                    <ol class="children answer-ol">
                                         <li class="comment">
                                             <article class="comment-body">
                                                 <figure class="comment-author-avatar">

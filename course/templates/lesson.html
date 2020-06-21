@@ -89,7 +89,6 @@ $(document).ready(function(){
 
                          const answer = data[index].answer;
                          const part2 = '';
-                         const part3 = '';
                          if(answer.length > 0){
                             $.each(answer, function(index) {
                                 part2 += ' <ol class="children">\
@@ -113,11 +112,12 @@ $(document).ready(function(){
 
                             });
                          }
-                         part3 = '<ol class="children reply-comment d-none">\
+                         var part3 = '<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
                                                                 <form action="javascript:void(0);" class="comment-form">\
-                                                                    <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
-                                                                    <input type="text" class="reply_text" placeholder="回覆">\
+                                                                    <input type="hidden" class="question_id" value="';
+                                                                    part3 += data[index].question_id;
+                                                                    part3 += '"><input type="text" class="reply_text" placeholder="回覆">\
                                                                     <button class="reply_submit" >留言</button>\
                                                                 </form>\
                                                             </li>\

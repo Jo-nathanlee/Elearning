@@ -64,7 +64,7 @@ $(document).ready(function(){
 
                     $(".comment-list").empty();
                     $.each(data, function(index) {
-                        const part1 = '<li class="comment">\
+                        var part1 = '<li class="comment">\
                                                         <article class="comment-body">\
                                                             <figure class="comment-author-avatar">\
                                                                 <img src="'+data[index].questioner__pic+'" alt="">\
@@ -115,9 +115,8 @@ $(document).ready(function(){
                          var part3 = '<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
                                                                 <form action="javascript:void(0);" class="comment-form">\
-                                                                    <input type="hidden" class="question_id" value="';
-                                                                    part3 += data[index].question_id;
-                                                                    part3 += '"><input type="text" class="reply_text" placeholder="回覆">\
+                                                                    <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
+                                                                    <input type="text" class="reply_text" placeholder="回覆">\
                                                                     <button class="reply_submit" >留言</button>\
                                                                 </form>\
                                                             </li>\
@@ -165,7 +164,7 @@ $(document).ready(function(){
 
                     $(".comment-list").empty();
                     $.each(data, function(index) {
-                        const part1 = '<li class="comment">\
+                        var part1 = '<li class="comment">\
                                                         <article class="comment-body">\
                                                             <figure class="comment-author-avatar">\
                                                                 <img src="'+data[index].questioner__pic+'" alt="">\
@@ -216,9 +215,8 @@ $(document).ready(function(){
                          var part3 = '<ol class="children reply-comment d-none">\
                                                             <li class="comment">\
                                                                 <form action="javascript:void(0);" class="comment-form">\
-                                                                    <input type="hidden" class="question_id" value="';
-                                                                    part3 += data[index].question_id;
-                                                                    part3 += '"><input type="text" class="reply_text" placeholder="回覆">\
+                                                                    <input type="hidden" class="question_id" value="'+data[index].question_id+'">\
+                                                                    <input type="text" class="reply_text" placeholder="回覆">\
                                                                     <button class="reply_submit" >留言</button>\
                                                                 </form>\
                                                             </li>\

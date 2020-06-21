@@ -130,7 +130,7 @@ $(document).ready(function(){
     });
 
     //顯示回覆textarea
-    $(document).on('click', 'a.btn_reply', function() {
+    $(document).on('click', '.btn_reply', function() {
         if($(this).parents("li").find(".reply-comment").hasClass("d-none")){
             $(this).parents("li").find(".reply-comment").removeClass("d-none");
             $('html,body').animate({
@@ -143,7 +143,7 @@ $(document).ready(function(){
     });
 
     //點擊回覆留言
-    $(document).on('click', 'a.reply_submit', function() {
+    $(document).on('click', '.reply_submit', function() {
         $.LoadingOverlay("show");
         const answer = $(this).prev().val();
         const question_id = $(this).prev().prev().val();

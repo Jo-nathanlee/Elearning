@@ -131,7 +131,7 @@ $(document).ready(function(){
 
     //顯示回覆textarea
     $('#comment-list').on('click', '.btn_reply', function() {
-        if($(this).children('.').parents("li").find(".reply-comment").hasClass("d-none")){
+        if($(this).parents("li").find(".reply-comment").hasClass("d-none")){
             $(this).parents("li").find(".reply-comment").removeClass("d-none");
             $('html,body').animate({
                 scrollTop: ($(this).parents("li").find(".reply-comment").offset().top)-300
@@ -213,7 +213,7 @@ $(document).ready(function(){
                                                         </ol>\
                                                 </li>');
                     });
-                    //ol.addClass("d-none");
+                    ol.addClass("d-none");
                     $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {

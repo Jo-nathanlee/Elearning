@@ -443,6 +443,7 @@ def reply(request):
         question_id = request.POST['question_id']
         question = models.Question.objects.get(question_id=question_id)
         user = request.user
+        lesson = question['lesson']
 
         answer = models.Answer.objects.create(
             question=question,
@@ -452,7 +453,7 @@ def reply(request):
 
         answer.save()
 
-        questions = models.Question.objects.filter(question_id=question_id).values('question_id', 'questioner__name','lesson__lesson_id',
+        questions = models.Question.objects.filter(lesson=lesson).order_by('-created_at').values('question_id', 'questioner__name','lesson__lesson_id',
         'question_content','created_at','questioner__pic')   
         for question in questions:
             answer = models.Answer.objects.filter(question=question['question_id']).values('answer_id', 'answer_content',

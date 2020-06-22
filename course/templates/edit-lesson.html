@@ -54,7 +54,17 @@
                     附件
                     <input type="file" class="filepond"  name="filepond"  data-max-file-size="5MB"/>
                     <input type="hidden" name="course_id" value="{{ course_id }}">
-                    Python線上編譯器<br>
+                    線上編譯器<br>
+                    {% if lesson.if_compiler %}
+                    <label class="radio-inline ">
+                        <input type="radio" name="if_compiler" value="False" />
+                        否
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="if_compiler" value="True" checked="checked"/>
+                        是
+                    </label>
+                    {% else %}
                     <label class="radio-inline ">
                         <input type="radio" name="if_compiler" value="False" checked="checked"/>
                         否
@@ -63,6 +73,7 @@
                         <input type="radio" name="if_compiler" value="True" />
                         是
                     </label>
+                    {% endif %}
                     <div class="col-lg-12 text-center align-self-center mt-3">
                         <input type="submit" class="account-submit" value="儲存">  
                     </div>

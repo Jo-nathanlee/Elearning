@@ -342,6 +342,10 @@ $(document).ready(function(){
                 <!-- 內容區 -->
                 <div class="col-10 col-lg-10 offset-lg-1 teaching-content tab_index"> 
                     {{ lesson.lesson_content|safe}}
+
+                    {% if compiler_url != None %}
+                    <iframe height="400px" width="100%" style="margin-top: 50px;" src="{{compiler_url}}" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+                    {% endif %}
                 </div><!-- .col -->
                 <!-- 內容區end -->
                 <!-- 作業區 -->

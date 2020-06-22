@@ -391,6 +391,11 @@ def lesson_page(request,lesson_id,lesson_index):
         if course.teacher.email == request.user.email:
             is_teacher = True
             homework = models.Homework.objects.filter(lesson=lesson_id)
+        
+        compiler_url = None
+        if lesson.if_compiler:
+            compiler_url = lesson.course.category.complier_url
+
 
 
         tab = "index"

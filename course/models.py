@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator 
 
 class Category(models.Model):
     category_name = models.CharField(max_length=255)
@@ -116,7 +117,7 @@ class Review(models.Model):
         on_delete=models.CASCADE
     )
     review = models.TextField(null=True,blank=True)
-    rating = models.IntegerField(default=0)
+    rating = models.IntegerField(default=0,validators=[MinValueValidator(0), MaxValueValidator(5)])
     created_at = models.DateTimeField(auto_now_add=True)
 
 

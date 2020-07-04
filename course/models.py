@@ -40,7 +40,7 @@ class Lesson(models.Model):
     lesson_content =  models.TextField(default='')
     lesson_name = models.CharField(max_length=255)
     lesson_video = models.TextField(default='')
-    homework_title = models.CharField(max_length=255,null=True,blank=True)
+    homework_title = models.CharField(max_length=255,null=True,blank=True,default='')
     homework_description = models.TextField(default='',null=True,blank=True)
     homework_attachment = models.FileField(null=True,blank=True)
     if_compiler = models.BooleanField(default=False)

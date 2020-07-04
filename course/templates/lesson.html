@@ -332,7 +332,7 @@ $(document).ready(function(){
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="index"><span>內容</span></a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業</a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
-                        {% comment %} <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">隨堂筆記</a></li> {% endcomment %}
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">隨堂筆記</a></li>
                     </ul>
                     <hr width="106%" style="margin-top: -5px;">          
                 </div><!-- .col -->
@@ -469,6 +469,28 @@ $(document).ready(function(){
                     </div><!-- .post-comments-wrap -->
                 </div>
                 <!-- 問答區end -->
+                 <!-- 筆記區 -->
+                 <div class="col-10 col-lg-10 offset-lg-1 teaching-content tab_note"> 
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">學生</th>
+                            <th scope="col">筆記</th>
+                            <th scope="col">日期</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for note in note_all %}
+                        <tr>
+                            <th scope="row">{{ note.student.name }}</th>
+                            <td>{{}}</td>
+                            <td>{{ note.created_at|date:'Y-m-d' }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- .col -->
+                <!-- 筆記區end -->
             </div><!--.row -->
         </div><!-- .container -->
     </div><!--.lesson-content -->

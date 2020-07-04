@@ -387,6 +387,8 @@ def lesson_page(request,lesson_id,lesson_index):
         all_questions = list(questions) 
         homework = models.Homework.objects.filter(lesson=lesson_id,student=request.user).first()
         note = models.Note.objects.filter(lesson=lesson_id,student=request.user).first()
+        note_all = models.Note.objects.filter(lesson=lesson_id)
+
 
         if course.teacher.email == request.user.email:
             is_teacher = True
@@ -412,18 +414,25 @@ def lesson_tab(request):
     if request.method == 'POST':
         tab = request.POST['tab']
         lesson_id = request.POST['lesson_id']
+        lesson = models.Lesson.objects.get(lesson_id=lesson_id)
         if tab == "index":
             data = {}
             return JsonResponse(data,safe=False)
 
         if tab == 'homework':
-            lesson = models.Lesson.objects.filter(lesson_id=lesson_id)
-            data = serializers.serialize("json",lesson)
+            #lesson = models.Lesson.objects.filter(lesson_id=lesson_id)
+            #data = serializers.serialize("json",lesson)
+            data = {}
 
             return JsonResponse(data,safe=False)
 
         if tab == "qa":
             data = {}
+            return JsonResponse(data,safe=False)
+
+        if tab == "note":
+            data = {}
+
             return JsonResponse(data,safe=False)
 
 # lesson comment

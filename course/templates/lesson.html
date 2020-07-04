@@ -483,7 +483,7 @@ $(document).ready(function(){
                         {% for note in note_all %}
                         <tr>
                             <th scope="row">{{ note.student.name }}</th>
-                            <td>{{}}</td>
+                            <td>{{ note.note|shorten_text }}</td>
                             <td>{{ note.created_at|date:'Y-m-d' }}</td>
                         </tr>
                         {% endfor %}

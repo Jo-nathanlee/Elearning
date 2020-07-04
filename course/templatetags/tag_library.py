@@ -22,6 +22,6 @@ def shorten_text(value):
     if len(value) <= 10:
         return value
     sliced_word = value[:11]
-    returned_text = sliced_word + " ...<a href='/course/lesson/'>More</a>"
+    returned_text = sliced_word + " ..."
 
-    return mark_safe(returned_text)
+    return returned_text + mark_safe("<a href='/course/lesson/'>More</a>")

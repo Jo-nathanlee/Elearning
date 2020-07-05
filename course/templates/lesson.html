@@ -36,7 +36,6 @@ $(document).ready(function(){
     });
 
     $(".browse_note").click(function() {
-        e.preventDefault();
         var note_id = $(this).siblings(".note_id").val();
         console.log(note_id);
         $.ajax({

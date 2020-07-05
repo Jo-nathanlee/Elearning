@@ -36,6 +36,7 @@ $(document).ready(function(){
     });
 
     $(".browse_note").click(function() {
+        console.log("123");
         var note_id = $(this).siblings(".note_id").val();
         $.ajax({
             url: "{% url 'browse_note' %}",

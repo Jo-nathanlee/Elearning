@@ -17,11 +17,3 @@ def youtube_url(value):
     if value != '':
         return 'https://www.youtube.com/watch?v='+value
     return value
-@register.filter
-def shorten_text(value):
-    if len(value) <= 10:
-        return value
-    sliced_word = value[:11]
-    returned_text = sliced_word + " ..."
-
-    return returned_text + mark_safe("<a href='/course/lesson/'>More</a>")

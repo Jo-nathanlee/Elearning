@@ -1803,13 +1803,18 @@ ul.black-doted {
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
-    background-color: #f1f1f1;
-    color: black;
+    background-color: #19c880;
+    color: white;
+    border-color: #19c880;
+    border-radius: 3px;
 }
 
 .btn_previous:hover {
-    background-color: rgb(233, 230, 230);
-    color: black;
+    text-decoration: none;
+    background-color:#108655;
+    border-color:#108655;
+    color: white;
+    border-radius: 3px;
   }
 
 .single-course-cont-section ul.black-doted li {

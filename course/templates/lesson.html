@@ -483,7 +483,7 @@ $(document).ready(function(){
                     <tbody>
                     {% for note in note_all %}
                     <tr>
-                        <td><a href=""><i class="fas fa-file-word"></i>瀏覽筆記</a></td>
+                        <td><a href=""><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a></td>
                         <td>{{ note.student.name }}</td>
                         <td>{{ note.created_at|date:'Y-m-d' }}</td>
                     </tr>

@@ -498,7 +498,7 @@ $(document).ready(function(){
                     <tbody>
                     {% for note in note_all %}
                     <tr>
-                        <td><a class="browse_note" href=""><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a>
+                        <td><a class="browse_note" href="#"><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a>
                         <input type="hidden" class="note_id" value="{{ note.id }}">
                         </td>
                         <td>{{ note.student.name }}</td>

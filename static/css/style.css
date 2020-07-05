@@ -1762,6 +1762,7 @@ a.btn:hover {
     font-weight: 400;
     color: #383749;
     border-bottom: 1px solid #ebebeb;
+    padding-bottom: 16px;
 }
 
 ul.green-ticked {
@@ -1823,6 +1824,7 @@ ul.black-doted {
     font-weight: 400;
     color: #383749;
     border-bottom: 1px solid #ebebeb;
+    padding-bottom: 16px;
 }
 
 .single-course-accordion-cont .number-of-lectures,

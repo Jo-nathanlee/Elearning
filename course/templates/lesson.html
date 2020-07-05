@@ -28,21 +28,36 @@ $(document).ready(function(){
         $(this).html("<span>"+content+"</span>");
         var current_tab = $("#input_tab").val();
         var clicked_tab = $(this).attr("id");
+
+        $(".tab_"+current_tab).addClass("d-none");
+        $(".tab_"+clicked_tab).removeClass("d-none");
+        $("#input_tab").val(clicked_tab);
+        
+    });
+
+    $(".browse_note").click(function() {
+        var note_id = $(this).siblings(".note_id").val();
         $.ajax({
-            url: "{% url 'lesson_tab' %}",
+            url: "{% url 'browse_note' %}",
             type: 'POST',
-            data: { tab:clicked_tab,lesson_id:{{ lesson_id }}  },
+            data: { note_id:note_id },
             dataType: 'json',
             success: function(data) {
-                $(".tab_"+current_tab).addClass("d-none");
-                $(".tab_"+clicked_tab).removeClass("d-none");
-
-                $("#input_tab").val(clicked_tab);
+                $(".tab_note").addClass("d-none");
+                $(".note_sharing").removeClass("d-none");
+                $(".note_sharing").find("img").attr("src",data.student__pic);
+                $(".note_sharing").find(".author-name").html(data.student__name);
+                $(".note_sharing").find(".div_note").html(data.note);
             },
             error: function(XMLHttpRequest, status, error) {
                 //console.log(XMLHttpRequest.responseText);
             }
         });
+    });
+
+    $(".note_previous").click(function() {
+        $(".note_sharing").addClass("d-none");
+        $(".tab_note").removeClass("d-none");
     });
 
 
@@ -273,7 +288,7 @@ $(document).ready(function(){
     <div class="ball-clip-rotate"><div></div></div>
     <div id="sidebarCollapse" class="custom-menu"></div>
 
-    <span class="logo">筆記分享</span>
+    <span class="logo">隨堂筆記</span>
     <div class="div_editor">
         <div id="editor">
             {{ note.note  |safe }}
@@ -332,7 +347,7 @@ $(document).ready(function(){
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="index"><span>內容</span></a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業</a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
-                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">隨堂筆記</a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">筆記分享</a></li>
                     </ul>
                     <hr width="106%" style="margin-top: -5px;">          
                 </div><!-- .col -->
@@ -395,12 +410,12 @@ $(document).ready(function(){
                                             <div class="comment-author">
                                                 <span class="comment-meta d-block">
                                                 {% language 'en-GB' %}
-                                                    <a href="#">{{question.created_at|date:'d-M-Y'}}</a>
+                                                    {{question.created_at|date:'d-M-Y'}}
                                                 {% endlanguage %}
                                                 </span><!-- .comment-meta -->
 
                                                 <span class="fn">
-                                                    <a href="#">{{question.questioner__name}}</a>
+                                                    <span>{{question.questioner__name}}</span>
                                                 </span><!-- .fn -->
                                             </div><!-- .comment-author -->
 
@@ -426,12 +441,12 @@ $(document).ready(function(){
                                                     <div class="comment-author">
                                                         <span class="comment-meta d-block">
                                                         {% language 'en-GB' %}
-                                                            <a href="#">{{answer.created_at|date:'d-M-Y'}}</a>
+                                                            {{answer.created_at|date:'d-M-Y'}}
                                                         {% endlanguage %}
                                                         </span><!-- .comment-meta -->
 
                                                         <span class="fn">
-                                                            <a href="#">{{answer.answerer__name}}</a>
+                                                            <span>{{answer.answerer__name}}</span>
                                                         </span><!-- .fn -->
                                                     </div><!-- .comment-author -->
 
@@ -483,7 +498,9 @@ $(document).ready(function(){
                     <tbody>
                     {% for note in note_all %}
                     <tr>
-                        <td><a href=""><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a></td>
+                        <td><a class="browse_note" href=""><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a>
+                        <input type="hidden" class="note_id" value="{{ note.id }}">
+                        </td>
                         <td>{{ note.student.name }}</td>
                         <td>{{ note.created_at|date:'Y-m-d' }}</td>
                     </tr>
@@ -491,6 +508,25 @@ $(document).ready(function(){
                     </tbody>
                 </table>
             </div><!-- .col -->
+            <!-- 瀏覽筆記區 -->
+            <div class="col-10 col-lg-10 offset-lg-1 d-none note_sharing"> 
+                <div class="single-course-wrap">
+                    <a class="note_previous" href = "#"><i class="fas fa-caret-square-left" style="font-size: 30px;"></i></a>
+                    <div class="course-info flex flex-wrap align-items-center">
+                        <div class="course-author flex flex-wrap align-items-center mt-3">
+                            <img src="" alt="">
+
+                            <div class="author-wrap">
+                                <label class="m-0">作者</label>
+                                <div class="author-name"></div>
+                            </div><!-- .author-wrap -->
+                        </div><!-- .course-author -->
+                    </div><!-- .course-info -->
+                    <div class="div_note">
+
+                    </div>
+                </div>
+            </div>
             <!-- 筆記區end -->
         </div><!-- .container -->
     </div><!--.lesson-content -->

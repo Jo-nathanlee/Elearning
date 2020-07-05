@@ -582,6 +582,14 @@ def update_note(request):
     except Exception as e:
         pass
 
+def browse_note(request):
+    note_id = request.POST['note_id']
+    note = models.Note.objects.get(id=note_id).values('student__pic','student__name','note') 
+      
+
+    data = list(note) 
+    return JsonResponse(data, safe=False) 
+
 def review(request):
     rating = request.POST['rating']
     review = request.POST['review']

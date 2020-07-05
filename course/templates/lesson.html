@@ -36,6 +36,7 @@ $(document).ready(function(){
     });
 
     $(".browse_note").click(function() {
+        e.preventDefault();
         var note_id = $(this).siblings(".note_id").val();
         console.log(note_id);
         $.ajax({
@@ -57,6 +58,7 @@ $(document).ready(function(){
     });
 
     $(".note_previous").click(function() {
+        e.preventDefault();
         $(".note_sharing").addClass("d-none");
         $(".tab_note").removeClass("d-none");
     });

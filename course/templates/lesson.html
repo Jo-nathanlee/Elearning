@@ -475,15 +475,15 @@ $(document).ready(function(){
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col"></th>
-                        <th scope="col">學生</th>
+                        <th></th>
+                        <th scope="col">作者</th>
                         <th scope="col">日期</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for note in note_all %}
                     <tr>
-                        <th scope="row"><a href="">瀏覽筆記</a></th>
+                        <td><a href=""><i class="fa fa-file-text" aria-hidden="true"></i>瀏覽筆記</a></td>
                         <td>{{ note.student.name }}</td>
                         <td>{{ note.created_at|date:'Y-m-d' }}</td>
                     </tr>

@@ -58,7 +58,6 @@ $(document).ready(function(){
     });
 
     $(".note_previous").click(function() {
-        e.preventDefault();
         $(".note_sharing").addClass("d-none");
         $(".tab_note").removeClass("d-none");
     });
@@ -501,7 +500,7 @@ $(document).ready(function(){
                     <tbody>
                     {% for note in note_all %}
                     <tr>
-                        <td><a class="browse_note" href="#"><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a>
+                        <td><a class="browse_note" href="javascript:void();"><i class="fas fa-file-word" style="font-size: 20px;margin-right: 5px;"></i>瀏覽筆記</a>
                         <input type="hidden" class="note_id" value="{{ note.id }}">
                         </td>
                         <td>{{ note.student.name }}</td>
@@ -514,7 +513,7 @@ $(document).ready(function(){
             <!-- 瀏覽筆記區 -->
             <div class="col-10 col-lg-10 offset-lg-1 d-none note_sharing"> 
                 <div class="single-course-wrap">
-                    <a class="note_previous" href = "#"><i class="fas fa-caret-square-left" style="font-size: 30px;"></i></a>
+                    <a class="note_previous" href = "javascript:void();"><i class="fas fa-caret-square-left" style="font-size: 30px;"></i></a>
                     <div class="course-info flex flex-wrap align-items-center">
                         <div class="course-author flex flex-wrap align-items-center mt-3">
                             <img src="" alt="">

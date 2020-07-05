@@ -584,7 +584,7 @@ def update_note(request):
 
 def browse_note(request):
     note_id = request.POST['note_id']
-    note = models.Note.objects.get(id=note_id).values('student__pic','student__name','note') 
+    note = models.Note.objects.filter(id=note_id).values('student__pic','student__name','note') 
       
 
     data = list(note) 

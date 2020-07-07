@@ -1806,6 +1806,7 @@ ul.black-doted {
     color: white;
     border-color: #19c880;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .btn_previous:hover {

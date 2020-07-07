@@ -1809,8 +1809,8 @@ ul.black-doted {
 }
 
 .btn_previous:hover {
-    background-color:#108655;
-    border-color:#108655;
+    background-color:rgb(23, 179, 114);
+    border-color:rgb(23, 179, 114);
     color: white;
     border-radius: 3px;
   }

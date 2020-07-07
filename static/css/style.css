@@ -1799,7 +1799,7 @@ ul.black-doted {
     border:1px solid rgba(34,36,38,0.15)
 }
 
-.btn_previous {
+a.btn_previous {
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
@@ -1809,7 +1809,7 @@ ul.black-doted {
     border-radius: 3px;
 }
 
-.btn_previous:hover {
+a.btn_previous:hover {
     text-decoration: none;
     background-color:#108655;
     border-color:#108655;

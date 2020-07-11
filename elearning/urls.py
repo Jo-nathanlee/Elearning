@@ -26,3 +26,6 @@ urlpatterns = [
     path('index/', include('index.urls')),
     path('', index_views.index),
 ]
+
+
+

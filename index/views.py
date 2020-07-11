@@ -20,7 +20,7 @@ def teacher(request):
 
     teacher_course_count = Course.objects.filter(teacher=teacher).count()
     teacher_student_count = UserCourse.objects.filter(course__teacher=teacher).count()
-
+    teacher_rating = models.Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
     
 
     try:

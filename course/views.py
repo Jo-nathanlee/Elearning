@@ -230,7 +230,7 @@ def course_edit(request,course_id):
 
     # updating course
     if request.method == "POST":
-        try:
+        #try:
             category_name = request.POST['category']
             model_category = models.Category.objects.get(category_name=category_name)  
             course.course_name = request.POST['course_name']
@@ -240,8 +240,8 @@ def course_edit(request,course_id):
             course.save()
             messages.add_message(request, messages.INFO, '編輯成功！')
             return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
-        except Exception as e:
-            messages.add_message(request, messages.ERROR, '編輯失敗！')
+        #except Exception as e:
+            #messages.add_message(request, messages.ERROR, '編輯失敗！')
     # showing edit page
     return render(request,'edit-course.html',locals())
 

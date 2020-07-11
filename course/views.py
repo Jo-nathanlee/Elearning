@@ -343,13 +343,14 @@ def edit_lesson(request,course_id,lesson_id):
         
         
             homework_file = request.POST['filepond']
-
-            arr_json = json.loads(homework_file)
-            file_data = arr_json['data']
-            file_name = arr_json['name']
-            if file_name not in str(lesson.homework_attachment):
-                file_data = ContentFile(base64.b64decode(file_data))  
-                lesson.homework_attachment.save(file_name, file_data, save=True)
+            if homework_file is not None:
+                arr_json = json.loads(homework_file)
+                file_data = arr_json['data']
+                file_name = arr_json['name']
+                if file_name not in str(lesson.homework_attachment):
+                    file_data = ContentFile(base64.b64decode(file_data))  
+                    lesson.homework_attachment.save(file_name, file_data, save=True)
+            
             lesson.save()
 
             messages.add_message(request, messages.INFO, '編輯成功！')

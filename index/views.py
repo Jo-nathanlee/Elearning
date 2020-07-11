@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from account.models import User
 from course.models import Course,UserCourse,Category,Review
+from django.db.models import Avg
 
 # Get programming language categories
 def get_language():

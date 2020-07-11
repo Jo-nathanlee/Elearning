@@ -2,7 +2,12 @@
 {% block head %}
 {% load i18n %}
 {% load tag_library %}
-<script src="https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/19.0.0/classic/ckeditor.js"></script>
+
+<link href="https://cdn.ckeditor.com/4.14.1/full-all/plugins/codesnippet/lib/highlight/styles/default.css" rel="stylesheet">
+<script src="https://cdn.ckeditor.com/4.14.1/full-all/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 <script>
 function DateFormat(strdate){
     const time = Date.parse(strdate);

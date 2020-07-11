@@ -330,7 +330,7 @@ def edit_lesson(request,course_id,lesson_id):
 
     #editing lesson
     if request.method == 'POST':
-        #try:
+        try:
             lesson.lesson_name = request.POST['lesson_name']
             lesson_video = request.POST['lesson_video']
             # 擷取youtube id
@@ -356,8 +356,8 @@ def edit_lesson(request,course_id,lesson_id):
             messages.add_message(request, messages.INFO, '編輯成功！')
             return HttpResponseRedirect('/course/edit/'+str(course_id)+'/')
 
-        #except Exception as e:
-            #messages.add_message(request, messages.ERROR, '編輯失敗！') 
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '編輯失敗！') 
 
     # showing editing page
     return render(request,'edit-lesson.html',locals())

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from account.models import User
-from course.models import Course,UserCourse,Category
+from course.models import Course,UserCourse,Category,Review
 
 # Get programming language categories
 def get_language():
@@ -20,7 +20,7 @@ def teacher(request):
 
     teacher_course_count = Course.objects.filter(teacher=teacher).count()
     teacher_student_count = UserCourse.objects.filter(course__teacher=teacher).count()
-    teacher_rating = models.Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
+    teacher_rating = Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
     
 
     try:

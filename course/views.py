@@ -343,7 +343,7 @@ def edit_lesson(request,course_id,lesson_id):
         
         
             homework_file = request.POST['filepond']
-            if homework_file is not None:
+            if homework_file != '':
                 arr_json = json.loads(homework_file)
                 file_data = arr_json['data']
                 file_name = arr_json['name']

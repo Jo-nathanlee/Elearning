@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script src="https://cdn.ckeditor.com/4.13.1/full-all/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.14.1/full-all/ckeditor.js"></script>
 <style>
     .form-control { margin-bottom: 10px; }
 
@@ -96,9 +96,7 @@
     
     
     <script>
-    CKEDITOR.replace( 'text-editor', {
-        extraPlugins: 'codesnippet','markdown'
-    });
+    CKEDITOR.replace( 'text-editor');
     CKEDITOR.replace( 'homework_description' );
 
     FilePond.registerPlugin(

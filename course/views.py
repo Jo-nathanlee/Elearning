@@ -282,8 +282,13 @@ def new_lesson(request,course_id):
             lesson_name = request.POST['lesson_name']
             lesson_video = request.POST['lesson_video']
             # 擷取youtube id
-            temp = lesson_video.split('watch?v=')
-            lesson_video = temp[1]
+            try:
+                temp = lesson_video.split('v=')
+                url = temp[1]
+                temp = url.split('&')
+                url = temp[0]
+            except Exception as e:
+                lesson_video = ''
             lesson_content = request.POST['text-editor']
             homework_title = request.POST['homework_title']
             homework_description = request.POST['homework_description']
@@ -296,7 +301,7 @@ def new_lesson(request,course_id):
             lesson = models.Lesson.objects.create(
                 course=course,
                 lesson_name=lesson_name,
-                lesson_video=lesson_video,
+                lesson_video=url,
                 lesson_content=lesson_content,
                 homework_title=homework_title,
                 homework_description=homework_description,

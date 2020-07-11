@@ -39,7 +39,7 @@
                     教材標題
                     <input class="form-control" name="lesson_name" placeholder="輸入您的教材標題" type="text" required autofocus value="{{ lesson.lesson_name }}"/>
                     Youtube影片上傳
-                    <input class="form-control" name="lesson_video" placeholder="輸入您的教材影片網址" type="text" required autofocus value="{{ lesson.lesson_video|youtube_url }}"/>
+                    <input class="form-control" name="lesson_video" placeholder="輸入您的教材影片網址" type="text" autofocus value="{{ lesson.lesson_video|youtube_url }}"/>
                     教材內容
                     <textarea name="text-editor">
                         {{ lesson.lesson_content }}

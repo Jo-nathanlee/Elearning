@@ -96,7 +96,8 @@
     
     
     <script>
-    CKEDITOR.replace( 'text-editor');
+    CKEDITOR.replace( 'text-editor', {
+        extraPlugins: 'codesnippet'});
     CKEDITOR.replace( 'homework_description' );
 
     FilePond.registerPlugin(

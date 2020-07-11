@@ -350,6 +350,9 @@ def edit_lesson(request,course_id,lesson_id):
                 if file_name not in str(lesson.homework_attachment):
                     file_data = ContentFile(base64.b64decode(file_data))  
                     lesson.homework_attachment.save(file_name, file_data, save=True)
+            else:
+                if lesson.homework_attachment != None:
+                    lesson.homework_attachment.delete()
             
             lesson.save()
 

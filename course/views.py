@@ -283,10 +283,14 @@ def new_lesson(request,course_id):
             lesson_video = request.POST['lesson_video']
             # 擷取youtube id
             try:
-                temp = lesson_video.split('v=')
-                url = temp[1]
-                temp = url.split('&')
-                url = temp[0]
+                if 'youtu.be/' in lesson_video:
+                    temp = lesson_video.split('be/')
+                    url = temp[1]
+                else:
+                    temp = lesson_video.split('v=')
+                    url = temp[1]
+                    temp = url.split('&')
+                    url = temp[0]
             except Exception as e:
                 lesson_video = ''
             lesson_content = request.POST['text-editor']

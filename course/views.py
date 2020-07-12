@@ -203,7 +203,7 @@ def course_page(request,course_id):
     is_teacher = True if teacher.email == request.user.email else False
     teacher_course_count = models.Course.objects.filter(teacher=course.teacher).count()
     teacher_student_count = models.UserCourse.objects.filter(course__teacher=course.teacher).count()
-    lesson = models.Lesson.objects.filter(course=course)
+    lesson = models.Lesson.objects.filter(course=course).order_by('created_at')
     user_course = models.UserCourse.objects.filter(course=course)
     category = get_language()
 
@@ -226,7 +226,7 @@ def course_page(request,course_id):
 def course_edit(request,course_id):
     course = models.Course.objects.get(course_id=course_id)
     category = get_language()
-    lesson = models.Lesson.objects.filter(course=course)
+    lesson = models.Lesson.objects.filter(course=course).order_by('created_at')
 
     # updating course
     if request.method == "POST":
@@ -343,7 +343,17 @@ def edit_lesson(request,course_id,lesson_id):
             lesson.lesson_name = request.POST['lesson_name']
             lesson_video = request.POST['lesson_video']
             # 擷取youtube id
-            temp = lesson_video.split('watch?v=')
+            try:
+                if 'youtu.be/' in lesson_video:
+                    temp = lesson_video.split('be/')
+                    url = temp[1]
+                else:
+                    temp = lesson_video.split('v=')
+                    url = temp[1]
+                    temp = url.split('&')
+                    url = temp[0]
+            except Exception as e:
+                lesson_video = ''
             lesson.lesson_video = temp[1]
             lesson.lesson_content = request.POST['text-editor']
             lesson.homework_title = request.POST['homework_title']

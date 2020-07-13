@@ -20,7 +20,9 @@ body {
     font-family: MyCustomFont!important;
     font-weight: 700;
 }
-
+span {
+    font-family: MyCustomFont!important;
+}
 img {
     vertical-align: baseline;
 }

@@ -1614,7 +1614,7 @@ a.btn:hover {
     left: -320px;
     width: 320px; */
     height: 100%;
-    overflow-x: scroll;
+  
     padding: 30px 15px;
     transition: all 0.35s;
 }

@@ -99,7 +99,8 @@
     CKEDITOR.replace( 'text-editor', {
         extraPlugins: 'codesnippet,widget,dialog,lineutils',
         height: '500px'});
-    CKEDITOR.replace( 'homework_description' );
+    CKEDITOR.replace( 'homework_description', {
+        extraPlugins: 'codesnippet,widget,dialog,lineutils'} );
 
     FilePond.registerPlugin(
         // encodes the file as base64 data

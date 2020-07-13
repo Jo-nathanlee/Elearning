@@ -17,7 +17,7 @@ body {
     color: #383749;
     font-size: 16px;
     line-height: 1.8;
-    font-family: MyCustomFont;
+    font-family: MyCustomFont!important;
     font-weight: 700;
 }
 

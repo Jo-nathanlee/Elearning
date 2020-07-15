@@ -358,7 +358,10 @@ def edit_lesson(request,course_id,lesson_id):
             lesson.lesson_content = request.POST['text-editor']
             lesson.homework_title = request.POST['homework_title']
             lesson.homework_description = request.POST['homework_description']
-            lesson.if_compiler = eval(request.POST['if_compiler'])
+            if request.POST['if_compiler'] == 'False':
+                lesson.if_compiler = False
+            else:
+                lesson.if_compiler = True
         
         
             homework_file = request.POST['filepond']

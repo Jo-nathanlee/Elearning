@@ -358,7 +358,7 @@ def edit_lesson(request,course_id,lesson_id):
             lesson.lesson_content = request.POST['text-editor']
             lesson.homework_title = request.POST['homework_title']
             lesson.homework_description = request.POST['homework_description']
-            lesson.if_compiler = bool(request.POST['if_compiler'])
+            lesson.if_compiler = eval(request.POST['if_compiler'])
         
         
             homework_file = request.POST['filepond']

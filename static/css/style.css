@@ -3325,7 +3325,7 @@ p.footer-copyright {
     
 }
 .chapter-col{
-    overflow-y:scroll;
+    overflow-y:auto;
 }
 .scrollbar::-webkit-scrollbar { -webkit-appearance: none; }
 .scrollbar::-webkit-scrollbar:vertical { width: 5px; }

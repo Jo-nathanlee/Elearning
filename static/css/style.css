@@ -3324,6 +3324,9 @@ p.footer-copyright {
     z-index:999;
     
 }
+.chapter-col{
+    overflow-y:scroll;
+}
 .scrollbar::-webkit-scrollbar { -webkit-appearance: none; }
 .scrollbar::-webkit-scrollbar:vertical { width: 5px; }
 .scrollbar::-webkit-scrollbar-thumb { border-radius: 8px; border: 1px solid #ADADAD; background-color: #ADADAD; }
@@ -3393,6 +3396,3 @@ display: block; }
         -webkit-transform: scale(1);
         transform: scale(1); } }
 
-.chapter-col{
-    overflow-y:scroll;
-}

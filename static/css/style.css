@@ -3392,3 +3392,7 @@ display: block; }
     100% {
         -webkit-transform: scale(1);
         transform: scale(1); } }
+
+.lesson-title-col{
+    overflow-y:scroll;
+}

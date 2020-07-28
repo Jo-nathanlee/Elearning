@@ -10,7 +10,7 @@ def new(request):
     if request.method == "POST":
         try:
             members = request.POST.getlist('members')
-            teacher = User.objects.get(email=request.user.email) 
+            teacher = models.User.objects.get(email=request.user.email) 
 
             new_group = models.Group.objects.create(
                 teacher=teacher,
@@ -31,5 +31,6 @@ def new(request):
     return render(request, 'new-group.html',locals())
 
 def index(request):
+    teacher = User.objects.get(email=request.user.email)
     groups = models.Group.objects.all().order_by('-created_at')
     return render(request, 'group-index.html',locals())

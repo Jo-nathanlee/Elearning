@@ -5,7 +5,7 @@ class Group(models.Model):
     member = models.ManyToManyField('account.User')
     teacher = models.ForeignKey(
         'account.User',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,related_name='group_teacher'
     )
     project = models.FileField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

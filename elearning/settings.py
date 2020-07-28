@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'account',
     'index',
     'course',
-    'storages'
+    'storages',
     'group',
 ]
 

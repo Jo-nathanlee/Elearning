@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . import models
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 # create a new group

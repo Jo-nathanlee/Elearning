@@ -3217,6 +3217,11 @@ p.footer-copyright {
     color:white;
 }
 
+.btn-new:hover{
+    background: #ca5050;
+    border-color: #ca5050;
+}
+
 .btn-enter{
     background: #1971af;
     border-color: #1971af;
@@ -3238,10 +3243,7 @@ p.footer-copyright {
     border-color: #50575c9a;
 }
 
-.btn-new:hover{
-    background: #ca5050;
-    border-color: #ca5050;
-}
+
 
 .account-submit{
     margin-left: 10px;

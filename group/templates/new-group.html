@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-12">
                         <header class="entry-header">
-                            <h1>Edit</h1>
+                            <h1>組別建立/編輯</h1>
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
                 </div><!-- .row -->
@@ -21,16 +21,13 @@
     <div class="container">
         <div class="row">
             <div class="m-auto p-4 col-xs-12 col-sm-12 col-md-10 well well-sm card shadow" style="margin-top: 5vh!important;">
-                <legend class="text-left"></a>組別建立/編輯</legend>
+                <legend class="text-left"></a>編輯組別成員</legend>
                 <form action="" method="post" class="form" role="form">
                 {% csrf_token %}
-                    加入組別成員
                     {% for user in all_users %}
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="members" value="{{ user.id }}" id="Check{{ forloop.counter }}">
-                        <label class="form-check-label" for="Check{{ forloop.counter }}">
-                          {{user.name}}( {{user.email}} )
-                        </label>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="Check{{ forloop.counter }}" value="{{ user.id }}" name="members" >
+                        <label class="custom-control-label" for="Check{{ forloop.counter }}">{{user.name}}( {{user.email}} )</label>
                     </div>
                     {% endfor %}
                     <div class="col-lg-12 text-center align-self-center mt-3">

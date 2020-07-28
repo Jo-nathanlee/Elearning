@@ -19,6 +19,6 @@ def youtube_url(value):
         return 'https://www.youtube.com/watch?v='+value
     return value
 
-@register.inclusion_tag("course/all_categories.html")
+@register.inclusion_tag("all_categories.html")
 def get_categories():
     return {'categories': Category.objects.all() }

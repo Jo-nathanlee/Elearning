@@ -1,80 +1,109 @@
 {% extends "base.html" %}
 {% block head %}
 <style>
-.checkbox {
-    padding-left: 20px;
-    position: relative;
-    display: block;
-  
-    input {
-      opacity: 0;
-      position: absolute;
-      z-index: 1;
-      cursor: pointer;
-      margin-left: 20px;
-  
-      &:checked {
-          &::after {
-            content: '';
-            display: inline-block;
-            position: absolute;
-            width: 13px;
-            height: 13px;
-            left: 2px;
-            top: 4px;
-            margin-left: 20px;
-            border: 1px solid #19c880;
-            border-radius: 50%;
-            background-color: #19c880;
-          }
-        }
-      }
-    }
-  
-    label {
-      display: inline-block;
-      position: relative;
-      padding-left: 5px;
-  
-      &::before {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        width: 17px;
-        height: 17px;
-        left: 0;
-        top: 2px;
-        margin-left: 20px;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-        background-color: #fff;
-      }
-    }
-  
-  
-  .checkbox {
-    input {
-      &:checked {
-        + label {
-                  &::before {
-            border-color: #19c880;
-            background-color: #19c880;
-          }
-          &::after {
-            content: "\f00c";
-            font-family: FontAwesome;
-            font-size: 13px;
-            color: #fff;
-            top: 0;
-            left: 1px;
-            border-color: transparent;
-            background-color: transparent;
-          }
-        }
-      }
-    }
+@theme-color:               #19c880;
 
+@font-size:                 13px;
+
+@btn-link-disabled-color:   #ccc;
+@input-border:              #ccc;
+@padding-large-horizontal:  20px;
+@border-radius-small:       2px;
+
+.radio,
+.checkbox {
+  padding-left: @padding-large-horizontal;
+  position: relative;
+  display: block;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    margin-left: -@padding-large-horizontal;
+
+    &:checked {
+      + label {
+				&::before {
+          border-color: @theme-color;
+        }
+        &::after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          width: 13px;
+          height: 13px;
+          left: 2px;
+          top: 4px;
+          margin-left: -@padding-large-horizontal;
+          border: 1px solid @theme-color;
+          border-radius: 50%;
+          background-color: @theme-color;
+        }
+      }
+    }
   }
+
+  label {
+    display: inline-block;
+    position: relative;
+    padding-left: 5px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 0;
+			top: 2px;
+      margin-left: -@padding-large-horizontal;
+      border: 1px solid @input-border;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+  }
+	
+	&.disabled {
+    label {
+      color: @btn-link-disabled-color;
+
+      &::before {
+        opacity: .54;
+        border-color: @btn-link-disabled-color;
+      }
+    }
+  }
+}
+
+.checkbox {
+  input {
+    &:checked {
+      + label {
+				&::before {
+          border-color: @theme-color;
+          background-color: @theme-color;
+        }
+        &::after {
+          content: "\f00c";
+          font-family: FontAwesome;
+					font-size: @font-size;
+          color: #fff;
+          top: 0;
+          left: 1px;
+          border-color: transparent;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  label {
+    &::before {
+      border-radius: @border-radius-small;
+    }
+  }
+}
 </style>
 {% endblock %}
 {% block body %}

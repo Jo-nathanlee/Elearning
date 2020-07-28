@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . import models
+from account.models import User
 from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
@@ -10,7 +11,7 @@ def new(request):
     if request.method == "POST":
         try:
             members = request.POST.getlist('members')
-            teacher = models.User.objects.get(email=request.user.email) 
+            teacher = User.objects.get(email=request.user.email) 
 
             new_group = models.Group.objects.create(
                 teacher=teacher,
@@ -27,10 +28,10 @@ def new(request):
         
 
     #showing creating page
-    all_users = models.User.objects.exclude(email=request.user.email)
+    all_users = User.objects.exclude(email=request.user.email)
     return render(request, 'new-group.html',locals())
 
 def index(request):
-    teacher = models.User.objects.get(email=request.user.email)
+    teacher = User.objects.get(email=request.user.email)
     groups = models.Group.objects.all().order_by('-created_at')
     return render(request, 'group-index.html',locals())

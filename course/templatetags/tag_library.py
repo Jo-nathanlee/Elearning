@@ -1,6 +1,6 @@
 from django import template
 from django.utils.safestring import mark_safe
-from .models import Category
+from course.models import Category
 
 register = template.Library()
 

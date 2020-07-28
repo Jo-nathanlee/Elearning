@@ -1,3 +1,4 @@
+{% load tag_library %}
 <div class="page-header">
     <header class="site-header">
         <div class="top-header-bar">
@@ -13,9 +14,7 @@
                                     </button>
                                 </button>
                                 <div class="dropdown-menu" >
-                                    {% for c in category %}
-                                    <a class="dropdown-item" href="/course/category/{{c.category_name}}/">{{c.category_name}}</a>
-                                    {% endfor %}
+                                    {% get_categories %}
                                 </div>
                             </a>
                         </div><!-- .header-bar-email -->

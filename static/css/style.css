@@ -3217,6 +3217,27 @@ p.footer-copyright {
     color:white;
 }
 
+.btn-enter{
+    background: #1971af;
+    border-color: #1971af;
+    color:white;
+}
+
+.btn-enter:hover{
+    background: #1970afdc;
+    border-color: #1970afdc;
+}
+.btn-grouping{
+    background: #50575c;
+    border-color: #50575c;
+    color:white;
+}
+
+.btn-grouping:hover{
+    background: #50575c9a;
+    border-color: #50575c9a;
+}
+
 .btn-new:hover{
     background: #ca5050;
     border-color: #ca5050;

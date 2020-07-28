@@ -46,49 +46,31 @@ $(document).ready(function(){
         <div class="container-fluid my-5 justify-content-center">
             <div class="row mt-2">
                 <div class="col-5 offset-lg-1 col-lg-5 text-left d-flex">
-                    <div class="header-bar-search" style="margin-top: -8px;margin-left: 0px;">
-                        <form class="flex align-items-stretch">
-                            <input type="search" placeholder="搜尋課程">
-                            <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
-                        </form>
-                    </div>
-                    <div class="dropdown show">
-                        <a class=" dropdown-toggle btn-sort" href="?sort=newest" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {% if sort == 'newest' %}
-                                最新
-                            {% else %}
-                                最舊
-                            {% endif %}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <a class="dropdown-item" href="?sort=oldest">最舊</a>
-                          <a class="dropdown-item" href="?sort=newest">最新</a>
-                        </div>
-                    </div>
+                    <a href="/index/teacher"><button type="button" class="btn  btn-new">返回課程管理</button></a>
                 </div>
                 <div class="offset-lg-3 col-lg-2 text-right">
-                    <a href="/group/"><button type="button" class="btn  btn-grouping">分組</button></a>
-                    <a href="/course/new"><button type="button" class="btn  btn-new">新課程</button></a>
+                    <a href="/group/new"><button type="button" class="btn  btn-new">建立組別</button></a>
                 </div>
             </div>
-            {% for c in mycourse %}
+            {% for group in groups %}
             <div class="row mt-5">
                 <div class="col-10 offset-lg-1 col-lg-10">
                     <div class="card card-2">
                         <div class="card-body">
                             <div class="media">
-                                <div class="sq align-self-center teacher-index"> <a href="/course/{{ c.course_id }}"><img class="img-fluid my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" src="{{c.course_pic}}" width="135" height="70" /></a> </div>
+                                <div class="sq align-self-center teacher-index">  </div>
                                 <div class="media-body my-auto text-right">
                                     <div class="row my-auto flex-column flex-md-row">
                                         <div class="col my-auto text-left">
-                                            <a style="text-decoration:none;" href="/course/{{ c.course_id }}"><h5 class="mb-0">{{c.course_name}}</h5></a>
+                                            <a style="text-decoration:none;" href="/group/{{ group.id }}"><h5 class="mb-0">第{{group.id}}組</h5></a>
                                         </div>
                                         <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
                                         <div class="col my-auto"> <small>Size : M</small></div>
                                         <div class="col my-auto"> <small>Qty : 1</small></div> -->
                                         <div class="col my-auto">
-                                            <a href="/course/edit/{{ c.course_id }}"><button type="button" class="btn btn-edit">編輯</button></a>
-                                            <a href="#"><button type="button" class="btn btn-dark" url="/course/delete/{{ c.course_id }}">刪除</button></a>
+                                            <a href="/group/{{ group.id }}"><button type="button" class="btn btn-enter">進入討論區</button></a>
+                                            <a href="/group/edit/{{ group.id }}"><button type="button" class="btn btn-edit">編輯</button></a>
+                                            <a href="#"><button type="button" class="btn btn-dark" url="/group/delete/{{ group.id }}">刪除</button></a>
                                         </div>
                                     </div>
                                 </div>

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'index',
     'course',
     'storages'
+    'group',
 ]
 
 MIDDLEWARE = [

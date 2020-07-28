@@ -24,6 +24,7 @@ urlpatterns = [
     path('user/', include('account.urls')),
     path('course/', include('course.urls')),
     path('index/', include('index.urls')),
+    path('group/', include('group.urls')),
     path('', index_views.index),
 ]
 

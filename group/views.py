@@ -27,10 +27,10 @@ def new(request):
         
 
     #showing creating page
-    all_users = User.objects.exclude(email=request.user.email)
+    all_users = models.User.objects.exclude(email=request.user.email)
     return render(request, 'new-group.html',locals())
 
 def index(request):
-    teacher = User.objects.get(email=request.user.email)
+    teacher = models.User.objects.get(email=request.user.email)
     groups = models.Group.objects.all().order_by('-created_at')
     return render(request, 'group-index.html',locals())

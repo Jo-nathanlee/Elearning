@@ -1,45 +1,9 @@
 {% extends "base.html" %}
 {% block head %}
 <style>
-.checkbox label:after {
-  content: '';
-  display: table;
-  clear: both;
-}
-
-.checkbox .cr {
-  position: relative;
-  display: inline-block;
-  border: 1px solid #a9a9a9;
-  border-radius: .25em;
-  width: 1.3em;
-  height: 1.3em;
-  float: left;
-  margin-right: .5em;
-}
-
-.checkbox .cr .cr-icon {
-  position: absolute;
-  font-size: .8em;
-  line-height: 0;
-  top: 50%;
-  left: 15%;
-}
-
-.checkbox label input[type="checkbox"] {
-  display: none;
-}
-
-.checkbox label input[type="checkbox"]+.cr>.cr-icon {
-  opacity: 0;
-}
-
-.checkbox label input[type="checkbox"]:checked+.cr>.cr-icon {
-  opacity: 1;
-}
-
-.checkbox label input[type="checkbox"]:disabled+.cr {
-  opacity: .5;
+.custom-control-input:checked~.custom-control-label::before {
+    color: white !important;
+    background-color: green !important;
 }
 </style>
 {% endblock %}
@@ -68,13 +32,11 @@
                 <form action="" method="post" class="form" role="form">
                 {% csrf_token %}
                     {% for user in all_users %}
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="{{ user.id }}" name="members" >
-                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                            {{user.name}}( {{user.email}} )
-                        </label>
-                    </div>
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ user.id }}" name="members">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-label">{{user.name}}( {{user.email}} )</span>
+                    </label>
                     {% endfor %}
                     <div class="col-lg-12 text-center align-self-center mt-3">
                         <input type="submit" class="account-submit" value="儲存">  

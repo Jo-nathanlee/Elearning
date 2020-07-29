@@ -60,9 +60,18 @@
                                 {% for member in group.member.all %}
                                 <div class="form-check">
                                     <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ member.id }}" name="members">
+                                        <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ member.id }}" name="members" checked>
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-label">{{member.name}}( {{member.email}} )</span>
+                                    </label>
+                                </div>
+                                {% endfor %}
+                                {% for user in other_users %}
+                                <div class="form-check">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ user.id }}" name="members">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-label">{{user.name}}( {{user.email}} )</span>
                                     </label>
                                 </div>
                                 {% endfor %}

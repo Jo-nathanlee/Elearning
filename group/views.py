@@ -29,7 +29,7 @@ def new(request):
         
 
     #showing creating page
-    all_users = User.objects.exclude(email=request.user.email)
+    all_users = User.objects.filter(email=request.user.email)
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -47,8 +47,9 @@ def edit(request,group_id):
             return HttpResponseRedirect('/group/')
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！')
-
+    group_members = group.member.all()
     #showing edit page
+    other_users = User.objects.exclude(id__in=group_members)
     return render(request, 'edit-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )

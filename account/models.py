@@ -33,14 +33,14 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser): 
     name = models.CharField(max_length=255)
-    email = models.EmailField(unique = True)
+    email = models.EmailField()
     department = models.CharField(null=True,max_length=255,default='' )
     language_learnt = models.CharField(max_length=100,default='',null=True,blank=True)
     pic = models.TextField(blank=True,null=True,default='https://www.pinclipart.com/picdir/middle/8-82428_profile-clipart-generic-user-gender-neutral-head-icon.png')
     self_introduction = models.TextField(default='')
 
     objects = UserManager()
-    USERNAME_FIELD = 'email' 
+    #USERNAME_FIELD = 'email' 
     REQUIRED_FIELDS = []
 
     

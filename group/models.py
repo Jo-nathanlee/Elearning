@@ -12,6 +12,9 @@ class Group(models.Model):
 
     def __str__(self):
         return 'Group '+self.course_name
+    
+    def get_members(self):
+        return "\n".join([member.name for member in self.member.all()])
 
 class GroupPost(models.Model):
     group = models.ForeignKey(

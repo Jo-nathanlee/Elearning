@@ -17,6 +17,7 @@ class UserManager(BaseUserManager):
         """Create and save a regular User with the given email and password."""
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('username', email)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
@@ -40,10 +41,10 @@ class User(AbstractUser):
     pic = models.TextField(blank=True,null=True,default='https://www.pinclipart.com/picdir/middle/8-82428_profile-clipart-generic-user-gender-neutral-head-icon.png')
     self_introduction = models.TextField(default='')
 
-    objects = UserManager()
+    
     USERNAME_FIELD = 'email' 
     REQUIRED_FIELDS = []
-
+    objects = UserManager()
     
 
     def __str__(self):

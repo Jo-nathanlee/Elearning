@@ -3399,6 +3399,12 @@ display: block; }
     -webkit-animation: rotate 0.75s 0s linear infinite;
     animation: rotate 0.75s 0s linear infinite; }
 
+.div-members {
+    height: 400px;
+    overflow-y: auto;
+    
+}
+
 @keyframes rotate {
     0% {
         -webkit-transform: rotate(0deg) scale(1);

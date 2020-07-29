@@ -34,12 +34,11 @@ def new(request):
 
 @permission_required('course.can_access', raise_exception = True )
 def edit(request,group_id):
+    group = models.Group.objects.get(id=group_id)
     if request.method == "POST":
         try:
             members = request.POST.getlist('members')
-            teacher = User.objects.get(email=request.user.email) 
-
-            group = models.Group.objects.get(id=group_id)
+            
             group.member_set.clear()
             for member_id in members:
                 group.member.add(int(member_id))
@@ -48,6 +47,9 @@ def edit(request,group_id):
             return HttpResponseRedirect('/group/')
         except Exception as e:
             messages.add_message(request, messages.ERROR, '編輯失敗！')
+
+    #showing edit page
+    return render(request, 'edit-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
 def delete(request,group_id):

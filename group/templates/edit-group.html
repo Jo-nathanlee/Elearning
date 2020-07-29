@@ -57,7 +57,7 @@
                         <form action="" method="post" class="form" role="form">
                             {% csrf_token %}
                             <div class="col-lg-12 mt-3 ">
-                                {% for member in group.member %}
+                                {% for member in group.member.all %}
                                 <div class="form-check">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ member.id }}" name="members">

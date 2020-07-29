@@ -29,7 +29,7 @@ class UserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2','username'),
+            'fields': ('email', 'password1', 'password2'),
         }),
     )
     list_display = ['id','name','email','password','department','language_learnt','pic','is_staff', 'is_active', 'is_superuser']

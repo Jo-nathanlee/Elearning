@@ -95,7 +95,7 @@ def register(request):
                     if email in i:
                         raise forms.ValidationError('帳號已存在，請重新輸入！')
             
-                model_user = models.User.objects.create(username=email,name=name,email=email,password=make_password(password),language_learnt=language_learnt)
+                model_user = models.User.objects.create(name=name,email=email,password=make_password(password),language_learnt=language_learnt)
                 model_user.save()
 
                 user = auth.authenticate(email=email,password=password)

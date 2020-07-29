@@ -4,23 +4,19 @@
 .custom-control-input:checked~.custom-control-label::before {
     color: white !important;
     background-color: green !important;
-    box-shadow:none !important;
 }
 
 .custom-control-input:checked ~ .custom-control-indicator
 {
     color: white !important;
     background-color: #19c880 !important;
-    box-shadow:none !important;
+    box-shadow: 0 0 0 0.2rem rgba(25, 200, 128, 0.5) !important;
 }
 .custom-control-input ~ .custom-control-indicator
 {
-    box-shadow:none !important;
+    box-shadow: 0 0 0 0.2rem rgba(25, 200, 128, 0.5) !important;
 }
 
-.custom-control-input:focus ~ .custom-control-label::before {
-    box-shadow:none !important;
-}
 </style>
 {% endblock %}
 {% block body %}

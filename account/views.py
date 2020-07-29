@@ -110,7 +110,7 @@ def register(request):
     #         messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
     # if request.user.is_authenticated:
     #     return redirect('/index/',locals())
-    # return render(request, 'register.html')
+    return render(request, 'register.html')
 
 # login account
 def login(request):

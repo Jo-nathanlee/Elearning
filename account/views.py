@@ -79,37 +79,38 @@ def account_tab(request,tab):
 
 # register account
 def register(request):
-    category = get_language()
-    if request.method == "POST":
-        # validate form field type
-        accountForm = forms.AccountForm(request.POST)
-        if accountForm.is_valid():
-            #try:
-                name = request.POST['name']
-                email = request.POST['email']
-                password = request.POST['password']
-                language_learnt = request.POST['language_learnt']
+    update = models.User.objects.raw("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'User'")
+    # category = get_language()
+    # if request.method == "POST":
+    #     # validate form field type
+    #     accountForm = forms.AccountForm(request.POST)
+    #     if accountForm.is_valid():
+    #         #try:
+    #             name = request.POST['name']
+    #             email = request.POST['email']
+    #             password = request.POST['password']
+    #             language_learnt = request.POST['language_learnt']
 
-                user_email = list(models.User.objects.all().values_list('email'))
-                for i in user_email:
-                    if email in i:
-                        raise forms.ValidationError('帳號已存在，請重新輸入！')
+    #             user_email = list(models.User.objects.all().values_list('email'))
+    #             for i in user_email:
+    #                 if email in i:
+    #                     raise forms.ValidationError('帳號已存在，請重新輸入！')
             
-                model_user = models.User.objects.create(name=name,email=email,password=make_password(password),language_learnt=language_learnt)
-                model_user.save()
+    #             model_user = models.User.objects.create(name=name,email=email,password=make_password(password),language_learnt=language_learnt)
+    #             model_user.save()
 
-                user = auth.authenticate(email=email,password=password)
-                if user is not None:
-                    auth.login(request,user)
-                    messages.add_message(request, messages.INFO, '註冊成功！')
-                    return redirect('/index/')
-            #except Exception as e:
-                #messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
-        else:
-            messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
-    if request.user.is_authenticated:
-        return redirect('/index/',locals())
-    return render(request, 'register.html')
+    #             user = auth.authenticate(email=email,password=password)
+    #             if user is not None:
+    #                 auth.login(request,user)
+    #                 messages.add_message(request, messages.INFO, '註冊成功！')
+    #                 return redirect('/index/')
+    #         #except Exception as e:
+    #             #messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
+    #     else:
+    #         messages.add_message(request, messages.ERROR, '欄位格式錯誤！')
+    # if request.user.is_authenticated:
+    #     return redirect('/index/',locals())
+    # return render(request, 'register.html')
 
 # login account
 def login(request):

@@ -32,6 +32,34 @@ def new(request):
     all_users = User.objects.exclude(email=request.user.email)
     return render(request, 'new-group.html',locals())
 
+@permission_required('course.can_access', raise_exception = True )
+def edit(request,group_id):
+    if request.method == "POST":
+        try:
+            members = request.POST.getlist('members')
+            teacher = User.objects.get(email=request.user.email) 
+
+            group = models.Group.objects.get(id=group_id)
+            group.member_set.clear()
+            for member_id in members:
+                group.member.add(int(member_id))
+
+            messages.add_message(request, messages.INFO, '編輯成功！')
+            return HttpResponseRedirect('/group/')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '編輯失敗！')
+
+@permission_required('course.can_access', raise_exception = True )
+def delete(request,group_id):
+    try:
+        group = models.Group.objects.get(id=group_id)
+        group.delete()
+        messages.add_message(request, messages.INFO, '刪除成功！')
+    except Exception as e:
+        messages.add_message(request, messages.ERROR, '刪除失敗！')
+    return HttpResponseRedirect('/group/')
+
+@permission_required('course.can_access', raise_exception = True )
 def index(request):
     teacher = User.objects.get(email=request.user.email)
     groups = models.Group.objects.all().order_by('-created_at')

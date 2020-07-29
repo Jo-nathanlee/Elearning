@@ -17,7 +17,7 @@
 }
 .custom-checkbox
 {
-    display:block;
+    display:inline-block;
 }
 .custom-control-input:focus ~ .custom-control-indicator{
     box-shadow: 0 0 0 0.2rem rgba(25, 200, 128, 0.5) !important;
@@ -58,11 +58,13 @@
                             {% csrf_token %}
                             <div class="col-lg-12 mt-3 ">
                                 {% for user in all_users %}
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ user.id }}" name="members">
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-label">{{user.name}}( {{user.email}} )</span>
-                                </label>
+                                <div class="form-check">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" id="checkbox" class="custom-control-input" value="{{ user.id }}" name="members">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-label">{{user.name}}( {{user.email}} )</span>
+                                    </label>
+                                </div>
                                 {% endfor %}
                             </div>
                     </div>

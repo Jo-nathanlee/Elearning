@@ -3410,15 +3410,7 @@ display: block; }
     overflow-y: auto;
     
 }
-.forum-card:hover {
-    cursor: pointer;
-}
-.forum-card:hover .post-title{
-    color:black;
-}
-.forum-card:hover .post-creator{
-    color:black;
-}
+
 
 @keyframes rotate {
     0% {

@@ -1,5 +1,17 @@
 {% extends "base.html" %}
-
+{% block head %}
+<style>
+.forum-card:hover {
+    cursor: pointer;
+}
+.forum-card:hover .post-title{
+    color:black;
+}
+.forum-card:hover .post-creator{
+    color:black;
+}
+</style>
+{% endblock %}
 {% block body %}
 {% load tag_library %}
 

@@ -2,15 +2,6 @@
 
 {% block body %}
 {% load tag_library %}
-<script>
-$(document).ready(function(){
-    $(".teacher-index.btn-dark").click(function() { 
-        const url = $(this).attr("url");
-        alertify.confirm('Warning', '是否確定刪除？', function(){ window.location.replace(url); }
-                , function(){ });
-    });
-});
-</script>
 
 <body class="contact-page">
 {% endblock %}
@@ -36,26 +27,26 @@ $(document).ready(function(){
                     <h3><b>討論區</b></h3>
                 </div>
                 <div class="offset-lg-5 col-lg-2 text-right">
-                    <a href="/group/post/new/{{ group_id }}"><button type="button" class="btn  btn-edit">建立討論</button></a>
+                    <a href="/group/post/new/{{ group_id }}"><button type="button" class="btn  btn-new">建立討論</button></a>
                 </div>
             </div>
             {% for post in posts %}
             <div class="row mt-2">
                 <div class="col-10 offset-lg-1 col-lg-10">
-                    <div class="card card-2">
+                    <div class="card card-2" onclick=" location.href='/group/post/{{ post.id }}'; ">
                         <div class="card-body">
                             <div class="media">
                                 <div class="sq align-self-center teacher-index">  </div>
                                 <div class="media-body my-auto text-right">
                                     <div class="row my-auto flex-column flex-md-row">
                                         <div class="col my-auto text-left">
-                                            <a style="text-decoration:none;" href="/group/post/{{ post.id }}"><h5 class="mb-0">{{post.title}}</h5></a>
+                                            <h5 class="mb-0">標題：{{post.title}}</h5>
                                         </div>
                                         <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
                                         <div class="col my-auto"> <small>Size : M</small></div>
                                         <div class="col my-auto"> <small>Qty : 1</small></div> -->
                                         <div class="col my-auto">
-                                            <a href="/group/post/{{ post.id }}"><button type="button" class="btn btn-enter">進入</button></a>
+                                            <h5 class="mb-0">創建者：{{post.creator.name}}</h5>
                                         </div>
                                     </div>
                                 </div>

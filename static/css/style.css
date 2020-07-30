@@ -3405,6 +3405,10 @@ display: block; }
     
 }
 
+.forum-card:hover .post-title{
+    color:#19c880;
+}
+
 @keyframes rotate {
     0% {
         -webkit-transform: rotate(0deg) scale(1);

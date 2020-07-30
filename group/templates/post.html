@@ -38,15 +38,14 @@
                 <div class="col-12 col-lg-11 offset-lg-1 ">
                     <div class="col-lg-12 video-col"> 
                          <!-- Title -->
-                        <h1 class="mt-4">{{post.title}}</h1>
+                        <h1 class="mt-4">標題：{{post.title}}</h1>
                         <!-- Author -->
                         <p class="lead">
-                        by
-                        <a href="#">{{post.creator.name}}</a>
+                        創建者：{{post.creator.name}}
                         </p>
                         <hr>
                         <!-- Date/Time -->
-                        <p>{{post.created_at|date:'Y-m-d'}}</p>
+                        <p>發布時間：{{post.created_at|date:'Y-m-d'}}</p>
                         <hr>
                         <!-- Post Content -->
                         <p class="lead">
@@ -62,7 +61,7 @@
         <div class="container-fluid">
             <div class="row justify-content-start">
                 <!-- 問答區 -->
-                <div class="col-8 col-lg-8 offset-lg-1 d-none tab_qa">
+                <div class="col-8 col-lg-8 offset-lg-1 tab_qa">
                     <div class="comments-form">
                         <div class="comment-respond">
                             <h3 class="comment-reply-title">Leave a comment</h3>
@@ -74,7 +73,7 @@
                     </div><!-- .comments-form -->
                     <div class="post-comments-wrap">
                         <div class="post-comments mt-1">
-                            <h3 class="comments-title"><span class="comments-number">此課程有{{ comments|length  }}個問題</span></h3>
+                            <h3 class="comments-title"><span class="comments-number">此議題有{{ comments|length  }}個回覆</span></h3>
 
                             <ol class="comment-list" id="comment-list">
                                 {% for comment in comments %}

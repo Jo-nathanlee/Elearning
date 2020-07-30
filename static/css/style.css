@@ -3416,6 +3416,15 @@ display: block; }
 .post-creator {
     color:rgba(0, 0, 0, 0.671);
 }
+.card-body:hover {
+    cursor: pointer;
+}
+.card-body:hover .post-title {
+    color:black;
+}
+.card-body:hover .post-creator {
+    color:black;
+}
 
 @keyframes rotate {
     0% {

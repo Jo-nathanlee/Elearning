@@ -21,6 +21,7 @@ body {
     font-weight: 700;
 }
 
+
 img {
     vertical-align: baseline;
 }
@@ -41,8 +42,13 @@ a:visited {
 a:hover, a:focus, a:active {
     color: #383749;
 }
+a:hover {
+    cursor: pointer;
+}
 
-
+button:hover{
+    cursor: pointer;
+}
 
 a:hover, a:active {
     outline: 0;

@@ -1,5 +1,5 @@
 from django.db import models
-
+from datetime import datetime    
 # Create your models here.
 class Group(models.Model):
     member = models.ManyToManyField('account.User')
@@ -28,7 +28,7 @@ class GroupPost(models.Model):
     )
     title = models.CharField(max_length=255,default='')
     content = models.TextField(default='')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now, blank=True)
     
 class GroupComment(models.Model):
     post = models.ForeignKey(
@@ -41,4 +41,4 @@ class GroupComment(models.Model):
         null=True,
     )
     content = models.TextField(default='')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now, blank=True)

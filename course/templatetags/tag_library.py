@@ -28,15 +28,15 @@ def teacher(email):
     teacher = User.objects.get(email=email)
     teacher_course_count = Course.objects.filter(teacher=teacher).count()
     if int(teacher_course_count) > 1:
-        text_course = teacher_course_count+' Courses'
+        text_course = str(teacher_course_count)+' Courses'
     else:
-        text_course = teacher_course_count+' Course'
+        text_course = str(teacher_course_count)+' Course'
 
     teacher_student_count = UserCourse.objects.filter(course__teacher=teacher).count()
     if int(teacher_student_count) > 1:
-        text_student = teacher_student_count+' Students'
+        text_student = str(teacher_student_count)+' Students'
     else:
-        text_student = teacher_student_count+' Student'
+        text_student = str(teacher_student_count)+' Student'
 
     teacher_rating = Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
     teacher_rating = teacher_rating['rating__avg']

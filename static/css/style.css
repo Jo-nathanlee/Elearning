@@ -3408,7 +3408,10 @@ display: block; }
     cursor: pointer;
 }
 .forum-card:hover .post-title{
-    font-weight:bold;
+    color:black;
+}
+.forum-card:hover .post-creator{
+    color:black;
 }
 
 @keyframes rotate {

@@ -1,6 +1,6 @@
 <div class="instructors-stats">
-    <img src="{{teacher.0.pic}}" class="img-fluid" alt="">
-    <p>Teacher:{{teacher.0.name}}</p>
+    <img src="{{teacher.pic}}" class="img-fluid" alt="">
+    <p>Teacher:{{teacher.name}}</p>
     <ul class="p-0 m-0 mt-3">
        <li><i class="fa fa-star"></i> {{teacher_rating}}  Average rating</li>
         <li><i class="fa fa-user"></i> {% if teacher_student_count|to_int > 1 %}{{teacher_student_count}} Students

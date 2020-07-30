@@ -87,7 +87,7 @@ def new_post(request,group_id):
             model_post = models.GroupPost.objects.create(
                 title=title,
                 content=content,
-                creator=creator,
+                creator_id=creator,
             )
             model_post.save()
 
@@ -106,7 +106,6 @@ def edit_post(request,post_id):
         try:
             title = request.POST['title']
             content = request.POST['text-editor']
-            creator = request.user.id
 
             post.title = title
             post.content = content

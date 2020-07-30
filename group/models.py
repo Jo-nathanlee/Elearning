@@ -21,12 +21,22 @@ class GroupPost(models.Model):
         'Group',
         on_delete=models.CASCADE
     )
+    creator =  models.ForeignKey(
+        'account.User',
+        on_delete=models.CASCADE,
+        null=True,
+    )
     title = models.CharField(max_length=255,default='')
     content = models.TextField(default='')
     
 class GroupComment(models.Model):
     post = models.ForeignKey(
-        'GroupPost',
+        'account.User',
         on_delete=models.CASCADE
+    )
+    creator =  models.ForeignKey(
+        'GroupPost',
+        on_delete=models.CASCADE,
+        null=True,
     )
     content = models.TextField(default='')

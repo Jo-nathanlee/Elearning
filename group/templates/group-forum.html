@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% load tag_library %}
+<script>
+$(document).ready(function(){
+    $(".teacher-index.btn-dark").click(function() { 
+        const url = $(this).attr("url");
+        alertify.confirm('Warning', '是否確定刪除？', function(){ window.location.replace(url); }
+                , function(){ });
+    });
+});
+</script>
+
+<body class="contact-page">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="entry-header">
+                        <h1>第{{ group_id }}組討論區</h1>
+                    </header><!-- .entry-header -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="teacher-content">
+        <div class="container-fluid my-5 justify-content-center">
+            <div class="row mt-2">
+                <div class="offset-lg-9 col-lg-2 text-right">
+                    <a href="/group/post/new/{{ group_id }}"><button type="button" class="btn  btn-new">建立討論</button></a>
+                </div>
+            </div>
+            {% for post in posts %}
+            <div class="row mt-5">
+                <div class="col-10 offset-lg-1 col-lg-10">
+                    <div class="card card-2">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="sq align-self-center teacher-index">  </div>
+                                <div class="media-body my-auto text-right">
+                                    <div class="row my-auto flex-column flex-md-row">
+                                        <div class="col my-auto text-left">
+                                            <a style="text-decoration:none;" href="/group/post/{{ post.id }}"><h5 class="mb-0">{{post.title}}</h5></a>
+                                        </div>
+                                        <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
+                                        <div class="col my-auto"> <small>Size : M</small></div>
+                                        <div class="col my-auto"> <small>Qty : 1</small></div> -->
+                                        <div class="col my-auto">
+                                            <a href="/group/post/{{ post.id }}"><button type="button" class="btn btn-enter">進入</button></a>
+                                            <a href="#"><button type="button" class="btn btn-dark" url="/group/delete/{{ group.id }}">刪除</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

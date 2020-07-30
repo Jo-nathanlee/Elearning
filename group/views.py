@@ -30,7 +30,7 @@ def new(request):
         
 
     #showing creating page
-    all_users = User.objects.filter(email=request.user.email).exclude(email='test@gmail.com')
+    all_users = User.objects.exclude(email='test@gmail.com')
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -69,3 +69,15 @@ def index(request):
     teacher = User.objects.get(email=request.user.email)
     groups = models.Group.objects.all().order_by('-created_at')
     return render(request, 'group-index.html',locals())
+
+def forum(request,group_id):
+    group_id=group_id
+    posts = models.GroupPost.filter(group=group_id)
+
+    return render(request, 'group-forum.html',locals())
+
+def new_post(request,group_id):
+    pass
+
+def post(request,post_id):
+    pass

@@ -82,12 +82,13 @@ def new_post(request,group_id):
         #try:
             title = request.POST['title']
             content = request.POST['text-editor']
-            creator = User.objects.get(email=request.user.email)
+            creator_id = request.user.id
 
             model_post = models.GroupPost.objects.create(
                 title=title,
                 content=content,
-                creator=creator,
+                creator_id=creator_id,
+                group_id=group_id,
             )
             model_post.save()
 

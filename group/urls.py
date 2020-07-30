@@ -8,5 +8,7 @@ urlpatterns = [
     path('delete/<int:group_id>/', views.delete),
     path('<int:group_id>/', views.forum),
     path('post/new/<int:group_id>/', views.new_post), 
+    path('post/edit/<int:post_id>/', views.edit_post), 
+    path('post/delete/<int:post_id>/', views.delete_post), 
     path('post/<int:post_id>/', views.post), 
 ]

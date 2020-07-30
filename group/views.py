@@ -77,7 +77,57 @@ def forum(request,group_id):
     return render(request, 'group-forum.html',locals())
 
 def new_post(request,group_id):
-    pass
+    # creating
+    if request.method == "POST":
+        try:
+            title = request.POST['title']
+            content = request.POST['text-editor']
+            creator = request.user.id
+
+            model_post = models.GroupPost.objects.create(
+                title=title,
+                content=content,
+                creator=creator,
+            )
+            model_post.save()
+
+            messages.add_message(request, messages.INFO, '新增成功！')
+            return HttpResponseRedirect('/group/{{ group_id }}')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '新增失敗！')
+
+    #showing creating page
+    return render(request, 'edit-post.html',locals())
+
+def edit_post(request,post_id):
+    post = models.GroupPost.objects.get(id=post_id)
+     # creating
+    if request.method == "POST":
+        try:
+            title = request.POST['title']
+            content = request.POST['text-editor']
+            creator = request.user.id
+
+            post.title = title
+            post.content = content
+            post.save()
+
+            messages.add_message(request, messages.INFO, '編輯成功！')
+            return HttpResponseRedirect('/group/post/{{ post_id }}')
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '編輯失敗！')
+
+    #showing creating page
+    return render(request, 'edit-post.html',locals())
+
+def delete_post(request,post_id):
+    try:
+        post = models.GroupPost.objects.get(id=post_id)
+        post.delete()
+        messages.add_message(request, messages.INFO, '刪除成功！')
+    except Exception as e:
+        messages.add_message(request, messages.ERROR, '刪除失敗！')
+    return HttpResponseRedirect('/group/{{ group_id }}')
 
 def post(request,post_id):
     pass

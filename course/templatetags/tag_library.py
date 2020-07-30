@@ -2,6 +2,7 @@ from django import template
 from django.utils.safestring import mark_safe
 from course.models import Category,Course,UserCourse,Review
 from account.models import User
+from django.db.models import Avg
 
 register = template.Library()
 

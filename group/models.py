@@ -11,7 +11,7 @@ class Group(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Group '+self.course_name
+        return 'Group '+self.id
     
     def get_members(self):
         return "\n".join([member.name for member in self.member.all()])

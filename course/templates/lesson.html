@@ -406,8 +406,17 @@ $(document).ready(function(){
                 <!-- 作業區end -->
                 <!-- 問答區 -->
                 <div class="col-8 col-lg-8 offset-lg-1 d-none tab_qa">
+                    <div class="comments-form">
+                        <div class="comment-respond">
+                            <h3 class="comment-reply-title">Ask a question</h3>
+                            <form action="javascript:void(0);" class="comment-form">
+                                <textarea rows="4" id="comment_question" placeholder="問題"></textarea>
+                                <button id="comment_submit" >留言</button>
+                            </form><!-- .comment-form -->
+                        </div><!-- .comment-respond -->
+                    </div><!-- .comments-form -->
                     <div class="post-comments-wrap">
-                        <div class="post-comments">
+                        <div class="post-comments mt-1">
                             <h3 class="comments-title"><span class="comments-number">此課程有{{ all_questions|length  }}個問題</span></h3>
 
                             <ol class="comment-list" id="comment-list">
@@ -484,15 +493,7 @@ $(document).ready(function(){
                             </ol>
                               
 
-                        <div class="comments-form">
-                            <div class="comment-respond">
-                                <h3 class="comment-reply-title">Ask a question</h3>
-                                <form action="javascript:void(0);" class="comment-form">
-                                    <textarea rows="4" id="comment_question" placeholder="問題"></textarea>
-                                    <button id="comment_submit" >留言</button>
-                                </form><!-- .comment-form -->
-                            </div><!-- .comment-respond -->
-                        </div><!-- .comments-form -->
+                        
                     </div><!-- .post-comments-wrap -->
                 </div>
             </div>

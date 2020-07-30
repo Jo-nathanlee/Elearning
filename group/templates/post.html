@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block head %}
+<script src="https://cdn.ckeditor.com/ckeditor5/19.0.0/classic/ckeditor.js"></script>
+
+<link href="https://cdn.ckeditor.com/4.14.1/full-all/plugins/codesnippet/lib/highlight/styles/default.css" rel="stylesheet">
+<script src="https://cdn.ckeditor.com/4.14.1/full-all/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<style>
+    span {
+        font-family: MyCustomFont!important;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<body>
+<div class="single-courses-page">
+{% endblock %}
+
+{% block content %}
+        <div class="page-header-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <header class="entry-header">
+                            <h1 class="entry-title">第{{ group_id }}組討論區</h1>
+                        </header><!-- .entry-header -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="lesson-video">
+        <div class="container-fluid">
+            <div class="row justify-content-start">
+                <div class="col-12 col-lg-11 offset-lg-1 ">
+                    <div class="col-lg-12 video-col"> 
+                         <!-- Title -->
+                        <h1 class="mt-4">{{post.title}}</h1>
+                        <!-- Author -->
+                        <p class="lead">
+                        by
+                        <a href="#">{{post.creator.name}}</a>
+                        </p>
+                        <hr>
+                        <!-- Date/Time -->
+                        <p>{{post.created_at|date:'Y-m-d'}}</p>
+                        <hr>
+                        <!-- Post Content -->
+                        <p class="lead">
+                            {{post.content|safe}}
+                        </p>
+                    </div>                  
+                </div><!-- .col -->
+            </div><!--.row -->
+        </div><!-- .container -->
+    </div><!--.lesson-video -->
+
+    <div class="lesson-content">
+        <div class="container-fluid">
+            <div class="row justify-content-start">
+                <!-- 問答區 -->
+                <div class="col-8 col-lg-8 offset-lg-1 d-none tab_qa">
+                    <div class="comments-form">
+                        <div class="comment-respond">
+                            <h3 class="comment-reply-title">Leave a comment</h3>
+                            <form action="javascript:void(0);" class="comment-form">
+                                <textarea rows="4" id="comment_question" placeholder="留言..."></textarea>
+                                <button id="comment_submit" >留言</button>
+                            </form><!-- .comment-form -->
+                        </div><!-- .comment-respond -->
+                    </div><!-- .comments-form -->
+                    <div class="post-comments-wrap">
+                        <div class="post-comments mt-1">
+                            <h3 class="comments-title"><span class="comments-number">此課程有{{ comments|length  }}個問題</span></h3>
+
+                            <ol class="comment-list" id="comment-list">
+                                {% for comment in comments %}
+                                <li class="comment">
+                                    <article class="comment-body">
+                                        <figure class="comment-author-avatar">
+                                            <img src="{{comment.creator.pic}}" alt="">
+                                        </figure><!-- .comment-author-avatar -->
+
+                                        <div class="comment-wrap">
+                                            <div class="comment-author">
+                                                <span class="comment-meta d-block">
+                                                {% language 'en-GB' %}
+                                                    {{comment.created_at|date:'d-M-Y'}}
+                                                {% endlanguage %}
+                                                </span><!-- .comment-meta -->
+
+                                                <span class="fn">
+                                                    <span>{{comment.creator.name}}</span>
+                                                </span><!-- .fn -->
+                                            </div><!-- .comment-author -->
+
+                                            <p>{{comment.content}}</p>
+                                        </div><!-- .comment-wrap -->
+
+                                        <div class="clearfix"></div>
+                                    </article><!-- .comment-body -->
+                                {% endfor %}
+                            </ol>
+                    </div><!-- .post-comments-wrap -->
+                </div>
+            </div>
+            <!-- 問答區end -->
+        </div><!-- .container -->
+    </div><!--.lesson-content -->
+   
+    {% endblock %}

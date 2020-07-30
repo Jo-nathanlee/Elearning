@@ -28,6 +28,7 @@ class GroupPost(models.Model):
     )
     title = models.CharField(max_length=255,default='')
     content = models.TextField(default='')
+    created_at = models.DateTimeField(auto_now_add=True)
     
 class GroupComment(models.Model):
     post = models.ForeignKey(
@@ -40,3 +41,4 @@ class GroupComment(models.Model):
         null=True,
     )
     content = models.TextField(default='')
+    created_at = models.DateTimeField(auto_now_add=True)

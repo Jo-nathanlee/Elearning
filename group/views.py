@@ -130,4 +130,8 @@ def delete_post(request,post_id):
     return HttpResponseRedirect('/group/{{ group_id }}')
 
 def post(request,post_id):
-    pass
+    post = models.GroupPost.objects.get(id=post_id)
+    group_id = post.group.id
+    comments = models.GroupComment.objects.filter(post_id=post_id)
+
+    return render(request, 'post.html',locals())

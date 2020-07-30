@@ -30,4 +30,4 @@ def teacher(email):
     teacher_student_count = UserCourse.objects.filter(course__teacher=teacher).count()
     teacher_rating = Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
     teacher_rating = teacher_rating['rating__avg']
-    return {'teacher': teacher,'teacher_course_count': teacher_course_count,'teacher_student_count': teacher_student_count,'teacher_rating': teacher_rating }
+    return {'teacher': teacher,'teacher_course_count': teacher_course_count,'teacher_student_count': int(teacher_student_count),'teacher_rating': teacher_rating }

@@ -4,7 +4,7 @@
 {% load tag_library %}
 <script>
 $(document).ready(function(){
-    $(".btn-dark").click(function() { 
+    $(".teacher-index.btn-dark").click(function() { 
         const url = $(this).attr("url");
         alertify.confirm('Warning', '是否確定刪除？', function(){ window.location.replace(url); }
                 , function(){ });

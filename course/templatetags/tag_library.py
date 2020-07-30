@@ -23,8 +23,8 @@ def youtube_url(value):
 def get_categories():
     return {'categories': Category.objects.all() }
 @register.inclusion_tag("teacher.html")
-def teacher():
-    teacher = User.objects.get(email=request.user.email)
+def teacher(email):
+    teacher = User.objects.get(email=email)
     teacher_course_count = Course.objects.filter(teacher=teacher).count()
     teacher_student_count = UserCourse.objects.filter(course__teacher=teacher).count()
     teacher_rating = Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))

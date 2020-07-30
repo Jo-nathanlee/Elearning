@@ -3410,7 +3410,12 @@ display: block; }
     overflow-y: auto;
     
 }
-
+.post-title {
+    color:rgba(0, 0, 0, 0.671);
+}
+.post-creator {
+    color:rgba(0, 0, 0, 0.671);
+}
 
 @keyframes rotate {
     0% {

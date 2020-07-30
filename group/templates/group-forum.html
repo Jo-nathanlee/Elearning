@@ -4,7 +4,7 @@
 .card-body:hover {
     cursor: pointer;
 }
-div.card-body:hover .post-title{
+.card-body:hover .post-title {
     color:black;
 }
 </style>
@@ -42,20 +42,20 @@ div.card-body:hover .post-title{
             {% for post in posts %}
             <div class="row mt-2">
                 <div class="col-10 offset-lg-1 col-lg-10">
-                    <div class="card card-2" onclick=" location.href='/group/post/{{ post.id }}'; ">
+                    <div class="card card-2" onclick=" location.href='/group/post/{{ post.id }}';">
                         <div class="card-body forum-card">
                             <div class="media">
                                 <div class="sq align-self-center teacher-index">  </div>
                                 <div class="media-body my-auto text-right">
                                     <div class="row my-auto flex-column flex-md-row">
                                         <div class="col my-auto text-left">
-                                            <h5 class="mb-0 post-title" style="color:rgba(0, 0, 0, 0.671);"><b>標題：{{post.title}}</b></h5>
+                                            <h5 class="mb-0 post-title"><b>標題：{{post.title}}</b></h5>
                                         </div>
                                         <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
                                         <div class="col my-auto"> <small>Size : M</small></div>
                                         <div class="col my-auto"> <small>Qty : 1</small></div> -->
                                         <div class="col my-auto">
-                                            <h5 class="mb-0 post-creator" style="color:rgba(0, 0, 0, 0.671);"><b>創建者：{{post.creator.name}}</b></h5>
+                                            <h5 class="mb-0 post-creator"><b>創建者：{{post.creator.name}}</b></h5>
                                         </div>
                                     </div>
                                 </div>

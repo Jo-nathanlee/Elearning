@@ -79,7 +79,7 @@ def forum(request,group_id):
 def new_post(request,group_id):
     # creating
     if request.method == "POST":
-        try:
+        #try:
             title = request.POST['title']
             content = request.POST['text-editor']
             creator = request.user.id
@@ -93,8 +93,8 @@ def new_post(request,group_id):
 
             messages.add_message(request, messages.INFO, '新增成功！')
             return HttpResponseRedirect('/group/{{ group_id }}')
-        except Exception as e:
-            messages.add_message(request, messages.ERROR, '新增失敗！')
+        #except Exception as e:
+            #messages.add_message(request, messages.ERROR, '新增失敗！')
 
     #showing creating page
     return render(request, 'edit-post.html',locals())

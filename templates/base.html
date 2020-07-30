@@ -64,8 +64,8 @@
                 {% endfor %}
             {% endif %}
 
-            {% if request.path == '/index/teacher' or 'group' in request.path or request.path == '/course/new_lesson' 
-               or request.path == '/course/edit_lesson'  or request.path == '/course/edit' or request.path == '/course/new'  %}
+            {% if request.path == '/index/teacher' || 'group' in request.path || request.path == '/course/new_lesson' 
+               || request.path == '/course/edit_lesson'  || request.path == '/course/edit' || request.path == '/course/new'  %}
                  $(".nav-ul li").each(function(){
                     $(this).removeClass('current-menu-item');
                 });

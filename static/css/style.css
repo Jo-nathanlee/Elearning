@@ -3404,9 +3404,11 @@ display: block; }
     overflow-y: auto;
     
 }
-
+.forum-card:hover {
+    cursor: pointer;
+}
 .forum-card:hover .post-title{
-    color:#19c880;
+    font-weight:bold;
 }
 
 @keyframes rotate {

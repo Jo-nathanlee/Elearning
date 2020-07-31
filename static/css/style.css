@@ -2687,7 +2687,6 @@ ul.author-social-profile li:hover .fa {
 
 .post-comments-wrap .comment-author .fn {
     display: block;
-    margin-top: 4px;
 }
 
 .post-comments-wrap .comment-author .fn span {
@@ -2711,7 +2710,6 @@ ul.author-social-profile li:hover .fa {
 }
 
 .post-comments-wrap p {
-    margin-top: 5px;
     color: #757686;
 }
 

@@ -49,7 +49,7 @@ def has_group(context):
     request = context['request']
     group_id = ''
     courses = Course.objects.distinct('teacher')
-    group = Group.objects.exclude(creator__id__in=[course.teacher.id for course in courses])
+    group = Group.objects.exclude(teacher__id__in=[course.teacher.id for course in courses])
     if request.user in group.member.all():
         my_group = Group.objects.filter(member=request.user).first()
         group_id = my_group.id

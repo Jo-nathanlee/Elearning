@@ -34,7 +34,7 @@ def new(request):
     courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
     all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses])
-    all_users = all_users.exclude(id__in=groups.member_set.all())
+    all_users = all_users.exclude(id__in=groups.member.values_list('id', flat=True))
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -56,7 +56,7 @@ def edit(request,group_id):
     #showing edit page
     courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
-    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.id for group in groups.member.all()])
+    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=groups.member.values_list('id', flat=True))
     
     return render(request, 'edit-group.html',locals())
 

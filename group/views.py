@@ -142,7 +142,7 @@ def comment(request,post_id):
         post_id = request.POST['post_id']
 
         model_comment = models.GroupComment.objects.create(
-            post_id=post_id,
+            post=post_id,
             content=comment,
             creator=request.user,
         )

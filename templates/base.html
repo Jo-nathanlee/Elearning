@@ -72,11 +72,14 @@
             {% endif %}
             {% if 'group' in request.path %}
                 {% if if_teacher == True %}
+                console.log({% if_teacher %});
                     $(".nav-ul li").each(function(){
                         $(this).removeClass('current-menu-item');
                     });
                     $('.li-teacher').addClass('current-menu-item');
                 {% else %}
+                console.log("bbb");
+                console.log({% if_teacher %});
                     $(".nav-ul li").each(function(){
                         $(this).removeClass('current-menu-item');
                     });

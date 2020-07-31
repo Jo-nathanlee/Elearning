@@ -51,9 +51,8 @@ def has_group(context):
     courses = Course.objects.values('teacher').distinct()
     group = Group.objects.exclude(creator__id__in=[course.teacher.id for course in courses])
     if request.user in group.member.all():
-        has_group = True
         my_group = Group.objects.filter(member=request.user).first()
         group_id = my_group.id
 
-    return returnlist
+    return group_id
 

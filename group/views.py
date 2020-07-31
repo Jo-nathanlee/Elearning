@@ -34,7 +34,7 @@ def new(request):
     courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
     all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses])
-    all_users = all_users.exclude(id__in=[group.member.all() for group in groups])
+    all_users = all_users.exclude(id__in=groups.member_set.all())
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )

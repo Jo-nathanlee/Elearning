@@ -48,7 +48,6 @@ def teacher(email):
 def has_group(context):
     request = context['request']
     group_id = ''
-    courses = Course.objects.distinct('teacher')
     groups = Group.objects.all()
     for group in groups:
         if request.user in group.member.all():
@@ -56,4 +55,14 @@ def has_group(context):
             group_id = my_group.id
 
     return group_id
+
+@register.simple_tag( takes_context=True)
+def if_teacher(context):
+    request = context['request']
+    courses = Course.objects.distinct('teacher')
+    if_teacher = Course.objects.filter(teacher=request.user).count()
+    if if_teacher>0:
+        return True
+    else:
+        return False
 

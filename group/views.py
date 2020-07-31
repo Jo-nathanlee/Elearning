@@ -41,23 +41,23 @@ def new(request):
 def edit(request,group_id):
     group = models.Group.objects.get(id=group_id)
     if request.method == "POST":
-        try:
+        #try:
             members = request.POST.getlist('members')
             
-            group.member_set.clear()
+            group.member.clear()
             for member_id in members:
                 group.member.add(int(member_id))
 
             messages.add_message(request, messages.INFO, '編輯成功！')
             return HttpResponseRedirect('/group/')
-        except Exception as e:
-            messages.add_message(request, messages.ERROR, '編輯失敗！')
+        #except Exception as e:
+            #messages.add_message(request, messages.ERROR, '編輯失敗！')
     group_members = group.member.all()
     #showing edit page
     courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
-    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.member.values_list('id', flat=True) for group in groups])
-    
+    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses])
+    other_users = other_users.exclude(id__in=[group.member.values_list('id', flat=True) for group in groups])
     return render(request, 'edit-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )

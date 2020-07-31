@@ -79,7 +79,7 @@
                     $('.li-teacher').addClass('current-menu-item');
                 {% else %}
                 console.log("bbb");
-                console.log({% if_teacher %});
+                console.log({{ if_teacher }});
                     $(".nav-ul li").each(function(){
                         $(this).removeClass('current-menu-item');
                     });

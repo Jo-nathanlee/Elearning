@@ -62,6 +62,7 @@ def has_group(context):
 def if_teacher(context):
     request = context['request']
     if_teacher = Course.objects.filter(teacher=request.user).count()
+    return HttpResponse(if_teacher)
     if if_teacher>0:
         return True
     else:

@@ -44,7 +44,7 @@ def teacher(email):
     return {'teacher': teacher,'text_course': text_course,'text_student': text_student,'teacher_rating': teacher_rating }
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def has_group(context):
     request = context['request']
     has_group = False

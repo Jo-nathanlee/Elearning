@@ -135,3 +135,23 @@ def post(request,post_id):
     comments = models.GroupComment.objects.filter(post_id=post_id)
 
     return render(request, 'post.html',locals())
+
+def comment(request,post_id):
+    if request.method == 'POST':
+        comment = request.POST['comment'']
+        post_id = request.POST['post_id']
+
+        model_comment = models.GroupComment.objects.create(
+            post_id=post_id,
+            content=comment,
+            creator=request.user,
+        )
+
+        model_comment.save()
+
+
+        comments = models.GroupComment.objects.filter(post=post_id).order_by('-created_at').values('id', 'creator__name',
+        'content','created_at','creator__pic')   
+
+        data = list(comments) 
+        return JsonResponse(data, safe=False) 

@@ -136,13 +136,13 @@ def post(request,post_id):
 
     return render(request, 'post.html',locals())
 
-def comment(request,post_id):
+def comment(request):
     if request.method == 'POST':
         comment = request.POST['comment']
         post_id = request.POST['post_id']
 
         model_comment = models.GroupComment.objects.create(
-            post=post_id,
+            post_id=post_id,
             content=comment,
             creator=request.user,
         )

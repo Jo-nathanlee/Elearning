@@ -71,7 +71,7 @@
                 $('.li-teacher').addClass('current-menu-item');
             {% endif %}
             {% if 'group' in request.path %}
-                {% if if_teacher %}
+                {% if if_teacher == True %}
                     $(".nav-ul li").each(function(){
                         $(this).removeClass('current-menu-item');
                     });

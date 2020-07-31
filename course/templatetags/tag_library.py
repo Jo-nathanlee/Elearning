@@ -55,5 +55,7 @@ def has_group(context):
         has_group = True
         my_group = Group.objects.filter(creator=request.user).first()
 
+    
+
     return {'has_group': has_group,'group_id': my_group.id}
 

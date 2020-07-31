@@ -69,7 +69,7 @@
                             <ul class="flex flex-column flex-lg-row justify-content-lg-end align-content-center nav-ul">
                                 <li class="current-menu-item li-home" ><a href="/index/">Home</a></li>
                                 {% if perms.course.can_access %}
-                                <li class="li-teacher"><a href="{% url 'teacher' %}">講師</a></li>
+                                <li class="li-teacher"><a href="{% url 'teacher' %}">{{has_group.has_group}}</a></li>
                                 {% endif %}
 
                                 {% if has_group.has_group %}

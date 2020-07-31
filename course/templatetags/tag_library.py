@@ -4,6 +4,8 @@ from course.models import Category,Course,UserCourse,Review
 from account.models import User
 from group.models import Group
 from django.db.models import Avg
+from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
+
 
 register = template.Library()
 
@@ -58,10 +60,12 @@ def has_group(context):
 
 @register.simple_tag( takes_context=True)
 def if_teacher(context):
-    teacher = None
     request = context['request']
     if_teacher = Course.objects.filter(teacher=request.user).count()
+    return HttpResponse(if_teacher)
     if if_teacher>0:
-        teacher = 'True'
-    return teacher
+        return True
+    else:
+        return False
+
 

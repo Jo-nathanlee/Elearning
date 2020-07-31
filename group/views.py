@@ -33,7 +33,7 @@ def new(request):
     #showing creating page
     courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
-    all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.member.id for group in groups])
+    all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.id for group in groups.member.all()])
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -53,9 +53,9 @@ def edit(request,group_id):
             messages.add_message(request, messages.ERROR, '編輯失敗！')
     group_members = group.member.all()
     #showing edit page
-    courses = Course.objects.values('teacher').distinct()
+    courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
-    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.member.id for group in groups])
+    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.id for group in groups.member.all()])
     
     return render(request, 'edit-group.html',locals())
 

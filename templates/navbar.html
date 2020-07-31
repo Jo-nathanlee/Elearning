@@ -73,7 +73,7 @@
                                 {% endif %}
 
                                 {% if has_group != "" %}
-                                <li class="li-group"><a href="/group/{{ has_group }}">小組討論區</a></li>
+                                <li class="li-group"><a href="/group/{% has_group %}">小組討論區</a></li>
                                 {% endif %}
                                 <li class="li-course" ><a href="{% url 'my_course' %}">我的課程</a></li>
                             </ul> 

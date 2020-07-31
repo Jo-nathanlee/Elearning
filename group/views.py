@@ -138,7 +138,7 @@ def post(request,post_id):
 
 def comment(request,post_id):
     if request.method == 'POST':
-        comment = request.POST['comment'']
+        comment = request.POST['comment']
         post_id = request.POST['post_id']
 
         model_comment = models.GroupComment.objects.create(

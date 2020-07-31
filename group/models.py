@@ -32,11 +32,11 @@ class GroupPost(models.Model):
     
 class GroupComment(models.Model):
     post = models.ForeignKey(
-        'account.User',
+        'GroupPost',
         on_delete=models.CASCADE
     )
     creator =  models.ForeignKey(
-        'GroupPost',
+        'account.User',
         on_delete=models.CASCADE,
         null=True,
     )

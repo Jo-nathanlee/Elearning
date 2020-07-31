@@ -48,7 +48,7 @@ def teacher(email):
 def has_group(context):
     request = context['request']
     group_id = ''
-    courses = Course.objects.values('teacher').distinct()
+    courses = Course.objects.distinct('teacher')
     group = Group.objects.exclude(creator__id__in=[course.teacher.id for course in courses])
     if request.user in group.member.all():
         my_group = Group.objects.filter(member=request.user).first()

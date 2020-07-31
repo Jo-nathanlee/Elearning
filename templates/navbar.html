@@ -28,7 +28,7 @@
                                 <button type="submit" value="" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
                             </form>
                         </div><!-- .header-bar-search -->
-
+                        {% if_teacher %}
                         {% if user.is_authenticated %}
                         <div class="header-bar-profile">
                             <ul class="nav navbar-nav ml-auto">

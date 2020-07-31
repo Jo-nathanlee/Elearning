@@ -72,7 +72,7 @@
                                 <li class="li-teacher"><a href="{% url 'teacher' %}">講師</a></li>
                                 {% endif %}
 
-                                {% if has_group != "" %}
+                                {% if has_group is not None %}
                                 <li class="li-group"><a href="/group/{% has_group %}">小組討論區</a></li>
                                 {% endif %}
                                 <li class="li-course" ><a href="{% url 'my_course' %}">我的課程</a></li>

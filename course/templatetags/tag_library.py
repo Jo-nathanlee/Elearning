@@ -47,7 +47,7 @@ def teacher(email):
 @register.simple_tag(takes_context=True)
 def has_group(context):
     request = context['request']
-    group_id = ''
+    group_id = None
     groups = Group.objects.all()
     for group in groups:
         if request.user in group.member.all():

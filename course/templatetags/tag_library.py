@@ -58,11 +58,11 @@ def has_group(context):
 
     return group_id
 
-@register.simple_tag( takes_context=True)
+@register.simple_tag(takes_context=True)
 def if_teacher(context):
     request = context['request']
     if_teacher = Course.objects.filter(teacher=request.user).count()
-    return HttpResponse(if_teacher)
+    return if_teacher
     if if_teacher>0:
         return True
     else:

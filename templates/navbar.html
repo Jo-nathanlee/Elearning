@@ -1,4 +1,22 @@
 {% load tag_library %}
+<script>
+    $(document).ready(function(){
+        {% if_teacher as teacher %}
+            {% if 'group' in request.path %}
+                {% if teacher %}
+                    $(".nav-ul li").each(function(){
+                        $(this).removeClass('current-menu-item');
+                    });
+                    $('.li-teacher').addClass('current-menu-item');
+                {% else %}
+                    $(".nav-ul li").each(function(){
+                        $(this).removeClass('current-menu-item');
+                    });
+                    $('.li-group').addClass('current-menu-item');
+                {% endif %}
+            {% endif %}
+    });
+</script>
 <div class="page-header">
     <header class="site-header">
         <div class="top-header-bar">

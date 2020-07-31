@@ -43,12 +43,14 @@ def teacher(email):
     teacher_rating = teacher_rating['rating__avg']
     return {'teacher': teacher,'text_course': text_course,'text_student': text_student,'teacher_rating': teacher_rating }
 
-@register.filter
-def has_group(user_id):
+
+@register.assignment_tag(takes_context=True)
+def has_group(context):
+    request = context['request']
     has_group = False
     courses = Course.objects.values('teacher').distinct()
     group = Group.objects.exclude(creator__id__in=[course.teacher.id for course in courses])
-    if user_id in group.member.all():
+    if request.user in group.member.all():
         has_group = True
 
     return has_group

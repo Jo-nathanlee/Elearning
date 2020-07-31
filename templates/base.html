@@ -71,20 +71,7 @@
                 });
                 $('.li-teacher').addClass('current-menu-item');
             {% endif %}
-            {% if 'group' in request.path %}
-                {% if_teacher as teacher %}
-                {% if teacher %}
-                    $(".nav-ul li").each(function(){
-                        $(this).removeClass('current-menu-item');
-                    });
-                    $('.li-teacher').addClass('current-menu-item');
-                {% else %}
-                    $(".nav-ul li").each(function(){
-                        $(this).removeClass('current-menu-item');
-                    });
-                    $('.li-group').addClass('current-menu-item');
-                {% endif %}
-            {% endif %}
+        
             {% if request.path == '/course/my_course' %}
                 $(".nav-ul li").each(function(){
                     $(this).removeClass('current-menu-item');

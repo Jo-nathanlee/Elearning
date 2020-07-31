@@ -48,16 +48,15 @@ def teacher(email):
 
 @register.simple_tag(takes_context=True)
 def has_group(context):
-    # request = context['request']
-    # group_id = None
-    # groups = Group.objects.all()
-    # for group in groups:
-    #     if request.user in group.member.all():
-    #         my_group = Group.objects.filter(member=request.user).first()
-    #         group_id = my_group.id
+    request = context['request']
+    group_id = None
+    groups = Group.objects.all()
+    for group in groups:
+        if request.user in group.member.all():
+            my_group = Group.objects.filter(member=request.user).first()
+            group_id = my_group.id
 
-    # return group_id
-    return None
+    return group_id
 
 @register.simple_tag(takes_context=True)
 def if_teacher(context):

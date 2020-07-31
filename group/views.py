@@ -31,7 +31,7 @@ def new(request):
         
 
     #showing creating page
-    courses = Course.objects.values('teacher').distinct()
+    courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
     all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses]).exclude(id__in=[group.member.id for group in groups])
     return render(request, 'new-group.html',locals())

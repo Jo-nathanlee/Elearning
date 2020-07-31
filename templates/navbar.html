@@ -71,6 +71,9 @@
                                 {% if perms.course.can_access %}
                                 <li class="li-teacher"><a href="{% url 'teacher' %}">講師</a></li>
                                 {% endif %}
+                                {% if user.id|has_group }}
+                                <li class="li-group"><a href="{% url 'teacher' %}">小組討論區</a></li>
+                                {% endif %}
                                 <li class="li-course" ><a href="{% url 'my_course' %}">我的課程</a></li>
                             </ul> 
                         </nav><!-- .site-navigation -->

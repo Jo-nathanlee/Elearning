@@ -2,6 +2,7 @@ from django import template
 from django.utils.safestring import mark_safe
 from course.models import Category,Course,UserCourse,Review
 from account.models import User
+from group.models import Group
 from django.db.models import Avg
 
 register = template.Library()
@@ -41,3 +42,13 @@ def teacher(email):
     teacher_rating = Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
     teacher_rating = teacher_rating['rating__avg']
     return {'teacher': teacher,'text_course': text_course,'text_student': text_student,'teacher_rating': teacher_rating }
+
+@register.filter
+def has_group(user_id):
+    has_group = False
+    courses = Course.objects.values('teacher').distinct()
+    group = Group.objects.exclude(creator__id__in=[course.teacher.id for course in courses])
+    if user_id in group.member.all():
+        has_group = True
+
+    return has_group

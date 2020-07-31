@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . import models
+from course.models import Course
 from account.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
@@ -30,7 +31,8 @@ def new(request):
         
 
     #showing creating page
-    all_users = User.objects.exclude(email='test@gmail.com')
+    courses = Course.objects.values('teacher').distinct()
+    all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses])
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )

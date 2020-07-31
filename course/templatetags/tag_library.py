@@ -47,15 +47,13 @@ def teacher(email):
 @register.simple_tag(takes_context=True)
 def has_group(context):
     request = context['request']
-    has_group = False
     group_id = ''
     courses = Course.objects.values('teacher').distinct()
     group = Group.objects.exclude(creator__id__in=[course.teacher.id for course in courses])
     if request.user in group.member.all():
         has_group = True
-        my_group = Group.objects.filter(creator=request.user).first()
-
-    returnlist = {'has_group': has_group,'group_id': my_group.id}
+        my_group = Group.objects.filter(member=request.user).first()
+        group_id = my_group.id
 
     return returnlist
 

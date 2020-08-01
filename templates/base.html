@@ -71,7 +71,7 @@
                 });
                 $('.li-teacher').addClass('current-menu-item');
             {% endif %}
-            {% if request.path == '/my_course' %}
+            {% if '/my_course' in request.path %}
                 $(".nav-ul li").each(function(){
                     $(this).removeClass('current-menu-item');
                 });

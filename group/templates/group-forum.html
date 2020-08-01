@@ -2,7 +2,7 @@
 {% block head %}
 <script>
 $(document).ready(function(){
-    $(".homework_submit").click(function(){
+    $("#homework_submit").click(function(){
         console.log("123");
         $.LoadingOverlay("show");
         const input_file = $("input[name='filepond']");
@@ -87,7 +87,7 @@ $(document).ready(function(){
                     <div>
                         <h3><b>作業繳交區</b></h3>
                         <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-                        <input type="submit" class="btn homework_submit" value="繳交">  
+                        <input type="submit" id="homework_submit" class="btn homework_submit" value="繳交">  
                     </div>
                 </div>            
             </div>

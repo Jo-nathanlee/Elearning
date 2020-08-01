@@ -56,7 +56,112 @@
                 </div>
             </div>
             {% endfor %}
+            <div class="row mt-2">
+                <div class="offset-lg-1 col-lg-3 pt-2 text-left">
+                    <h3><b>專案繳交區</b></h3>
+                </div>
+                <div class="offset-lg-5 col-lg-2 text-right">
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-10 col-lg-10 offset-lg-1 " >
+                    <div style="max-width: 50em;">
+                        <label>作業繳交區</label>
+                            <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
+                        <input type="submit" class="btn homework_submit" value="繳交">  
+                    </div>
+                </div>            
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
+{% block footer %}
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    
+    
+    <script>
+    FilePond.registerPlugin(
+	  // encodes the file as base64 data
+        FilePondPluginFileEncode,
+        
+        // validates files based on input type
+        FilePondPluginFileValidateType,
+
+        // validates the size of the file
+        FilePondPluginFileValidateSize,
+        
+        // corrects mobile image orientation
+        FilePondPluginImageExifOrientation,
+        
+        // previews dropped images
+        FilePondPluginImagePreview,
+
+        // crops the image to a certain aspect ratio
+        FilePondPluginImageCrop,
+
+        // resizes the image to fit a certain size
+        FilePondPluginImageResize,
+
+        // applies crop and resize information on the client
+        FilePondPluginImageTransform
+    );
+    
+    // Select the file input and use create() to turn it into a pond
+    const pond = FilePond.create(
+        document.querySelector('.input_homework'),
+        {
+             {% if group.project != None and group.project != '' %} 
+                files: [
+                    {
+                        source: '{{ group.project }}',
+                        options: {
+                            type: 'local',
+                        
+                        }
+                    }
+                ],
+                server: {
+                    load: (source, load, error, progress, abort, headers) => {
+                        var myRequest = new Request(source);
+                        fetch(myRequest).then(function(response) {
+                        response.blob().then(function(myBlob) {
+                            load(myBlob);
+                        });
+                        });         
+                    },
+                    process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                        load();
+                    },
+                    revert: null,
+                },
+             {% endif %}
+            labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
+
+        }
+    );
+
+    const pond2 = document.querySelector('.input_homework');
+    pond2.addEventListener('FilePond:removefile', e => {
+            pond.server = null;
+            pond.files = null;
+        
+    });
+    </script>
+    {% endblock %}
+
+
+
+
+    
+    
+    

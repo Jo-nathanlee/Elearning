@@ -78,6 +78,7 @@ def index(request):
 
 def forum(request,group_id):
     group_id=group_id
+    group = models.Group.objects.get(id=group_id)
     posts = models.GroupPost.objects.filter(group=group_id)
 
     return render(request, 'group-forum.html',locals())

@@ -3,6 +3,7 @@
 <script>
 $(document).ready(function(){
     $(".homework_submit").click(function(){
+        console.log("123");
         $.LoadingOverlay("show");
         const input_file = $("input[name='filepond']");
         if(input_file.attr('type') == 'hidden'){
@@ -16,7 +17,7 @@ $(document).ready(function(){
                     alertify.success('繳交成功！');
                 },
                 error: function(XMLHttpRequest, status, error) {
-                    //console.log(XMLHttpRequest.responseText);
+                    console.log(XMLHttpRequest.responseText);
                 }
             });
         }

@@ -357,8 +357,11 @@ $(document).ready(function(){
                 <div class="col-9 col-lg-10 offset-lg-1 "> 
                     <ul class="flex justify-content-start align-items-center py-2 pt-md-0 lesson-ul">
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="index"><span>內容</span></a></li>
-                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業</a></li>
+                        {% if is_teacher is not True%}
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="upload">作業繳交</a></li>
+                        {% endif %}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業分享</a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">筆記分享</a></li>
                     </ul>
                     <hr width="106%" style="margin-top: -5px;">          
@@ -544,7 +547,7 @@ $(document).ready(function(){
         </div><!-- .container -->
     </div><!--.lesson-content -->
     {% if is_teacher is not True%}
-    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework homework_upload" >
+    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_upload homework_upload" >
         <div style="max-width: 50em;">
             <label>作業繳交區</label>
                 <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  

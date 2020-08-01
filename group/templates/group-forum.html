@@ -1,4 +1,29 @@
 {% extends "base.html" %}
+{% block head %}
+<script>
+$(document).ready(function(){
+    $(".homework_submit").click(function(){
+        $.LoadingOverlay("show");
+        const input_file = $("input[name='filepond']");
+        if(input_file.attr('type') == 'hidden'){
+            $.ajax({
+                url: "{% url 'upload_homework' %}",
+                type: 'POST',
+                data: { file:input_file.val(),lesson_id:{{ lesson_id }}},
+                dataType: 'json',
+                success: function(data) {
+                    $.LoadingOverlay("hide");
+                    alertify.success('繳交成功！');
+                },
+                error: function(XMLHttpRequest, status, error) {
+                    //console.log(XMLHttpRequest.responseText);
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}
 
 {% block body %}
 {% load tag_library %}
@@ -56,11 +81,11 @@
                 </div>
             </div>
             {% endfor %}
-            <div class="row mt-2">
+            <div class="row mt-4">
                 <div class="col-10 col-lg-10 offset-lg-1 " >
                     <div>
-                        <label>作業繳交區</label>
-                            <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
+                        <h3><b>作業繳交區</b></h3>
+                        <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
                         <input type="submit" class="btn homework_submit" value="繳交">  
                     </div>
                 </div>            

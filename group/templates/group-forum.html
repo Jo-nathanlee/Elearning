@@ -8,9 +8,9 @@ $(document).ready(function(){
         const input_file = $("input[name='filepond']");
         if(input_file.attr('type') == 'hidden'){
             $.ajax({
-                url: "{% url 'upload_homework' %}",
+                url: "{% url 'upload_project' %}",
                 type: 'POST',
-                data: { file:input_file.val(),lesson_id:{{ lesson_id }}},
+                data: { file:input_file.val(),group_id:{{ group_id }} },
                 dataType: 'json',
                 success: function(data) {
                     $.LoadingOverlay("hide");

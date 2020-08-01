@@ -199,8 +199,10 @@ def course_page(request,course_id):
     course = models.Course.objects.get(course_id=course_id)
     teacher = User.objects.get(email=course.teacher)
     user = User.objects.get(email=request.user.email)
-    
+    user_course = models.UserCourse.objects.filter(course=course,user=user).count()
     is_teacher = True if teacher.email == request.user.email else False
+    registered = True if user_course > 0 else False
+
     teacher_course_count = models.Course.objects.filter(teacher=course.teacher).count()
     teacher_student_count = models.UserCourse.objects.filter(course__teacher=course.teacher).count()
     lesson = models.Lesson.objects.filter(course=course).order_by('created_at')

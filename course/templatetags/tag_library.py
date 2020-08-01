@@ -48,23 +48,29 @@ def teacher(email):
 
 @register.simple_tag(takes_context=True)
 def has_group(context):
-    request = context['request']
-    group_id = None
-    groups = Group.objects.all()
-    for group in groups:
-        if request.user in group.member.all():
-            my_group = Group.objects.filter(member=request.user).first()
-            group_id = my_group.id
+    try:
+        request = context['request']
+        group_id = None
+        groups = Group.objects.all()
+        for group in groups:
+            if request.user in group.member.all():
+                my_group = Group.objects.filter(member=request.user).first()
+                group_id = my_group.id
 
-    return group_id
+        return group_id
+    except:
+        return None
 
 @register.simple_tag(takes_context=True)
 def if_teacher(context):
-    request = context['request']
-    if_teacher = Course.objects.filter(teacher=request.user).count()
-    if if_teacher>0:
-        return True
-    else:
-        return False
+    try:
+        request = context['request']
+        if_teacher = Course.objects.filter(teacher=request.user).count()
+        if if_teacher>0:
+            return True
+        else:
+            return False
+    except:
+        return None
 
 

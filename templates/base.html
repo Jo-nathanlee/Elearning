@@ -65,13 +65,13 @@
                 {% endfor %}
             {% endif %}
 
-            {% if request.path == '/index/teacher' or '/course/new_lesson' in request.path or '/course/edit_lesson' in request.path  or '/course/edit' in request.path or '/course/new'   %}
+            {% if request.path == '/index/teacher' or '/course/new_lesson' in request.path or '/course/edit_lesson' in request.path  or '/course/edit' in request.path or '/course/new' in request.path   %}
                  $(".nav-ul li").each(function(){
                     $(this).removeClass('current-menu-item');
                 });
                 $('.li-teacher').addClass('current-menu-item');
             {% endif %}
-            {% if request.path == '/course/my_course' %}
+            {% if request.path == '/my_course' %}
                 $(".nav-ul li").each(function(){
                     $(this).removeClass('current-menu-item');
                 });

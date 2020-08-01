@@ -5,6 +5,9 @@ from account.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
+import base64
+import json
+from django.core.files.base import ContentFile
 
 # Create your views here.
 # create a new group
@@ -164,7 +167,7 @@ def comment(request):
         return JsonResponse(data, safe=False) 
 
 def upload_project(request):
-    try:
+    #try:
         project = request.POST['file']
         group_id = request.POST['group_id']
 
@@ -183,5 +186,5 @@ def upload_project(request):
 
         data = {}
         return JsonResponse(data,safe=False)
-    except Exception as e:
-        pass
+   # except Exception as e:
+        #pass

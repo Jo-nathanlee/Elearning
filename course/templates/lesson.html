@@ -266,21 +266,26 @@ $(document).ready(function(){
     $(".homework_submit").click(function(){
         $.LoadingOverlay("show");
         const input_file = $("input[name='filepond']");
+        const homework_url = $("input[name='homework_url']");
+        const file_data = '';
         if(input_file.attr('type') == 'hidden'){
-            $.ajax({
-                url: "{% url 'upload_homework' %}",
-                type: 'POST',
-                data: { file:input_file.val(),lesson_id:{{ lesson_id }}},
-                dataType: 'json',
-                success: function(data) {
-                    $.LoadingOverlay("hide");
-                    alertify.success('繳交成功！');
-                },
-                error: function(XMLHttpRequest, status, error) {
-                    //console.log(XMLHttpRequest.responseText);
-                }
-            });
+            file_data = input_file.val();
         }
+        
+        $.ajax({
+            url: "{% url 'upload_homework' %}",
+            type: 'POST',
+            data: { file:file_data,lesson_id:{{ lesson_id }},homework_url:homework_url },
+            dataType: 'json',
+            success: function(data) {
+                $.LoadingOverlay("hide");
+                alertify.success('繳交成功！');
+            },
+            error: function(XMLHttpRequest, status, error) {
+                //console.log(XMLHttpRequest.responseText);
+            }
+        });
+        
     });
 
     $('#sidebarCollapse').on('click', function () {
@@ -551,8 +556,13 @@ $(document).ready(function(){
         <div style="max-width: 50em;">
             <label>作業繳交區</label>
                 <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-            <input type="submit" class="btn homework_submit" value="繳交">  
+            
         </div>
+        <div>
+            <label>作業連結</label>
+            <input class="form-control" name="homework_url" placeholder="輸入您的作業連結url" type="text" autofocus value="{{ homework.homework_url }}"/>
+        </div>
+        <input type="submit" class="btn homework_submit" value="繳交">  
     </div>
     {% endif %}
    

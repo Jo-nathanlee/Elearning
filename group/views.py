@@ -167,7 +167,7 @@ def comment(request):
         return JsonResponse(data, safe=False) 
 
 def upload_project(request):
-    #try:
+    try:
         project = request.POST['file']
         group_id = request.POST['group_id']
 
@@ -186,5 +186,5 @@ def upload_project(request):
 
         data = {}
         return JsonResponse(data,safe=False)
-   # except Exception as e:
-        #pass
+   except Exception as e:
+        pass

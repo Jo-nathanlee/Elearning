@@ -306,20 +306,7 @@ $(document).ready(function(){
 
     $('#if_share').change(function() {
         $('.ball-clip-rotate').show();
-        $.ajax({
-            url: "{% url 'update_note' %}",
-            type: 'POST',
-            data: { lesson_id:{{ lesson_id }},if_share:if_share  },
-            dataType: 'json',
-            success: function(data) {
-                $('.ball-clip-rotate').hide();
-            },
-            error: function(XMLHttpRequest, status, error) {
-                console.log(XMLHttpRequest.responseText);
-                alertify.error('發生錯誤！')
-                $('.ball-clip-rotate').hide();
-            }
-        });    
+       
     });
     
         

@@ -543,39 +543,28 @@ def upload_homework(request):
     try:
         homework = request.POST['file']
         lesson_id = request.POST['lesson_id']
-        homework_url = request.POST['homework_url']
 
+
+        arr_json = json.loads(homework)
+        file_data = arr_json['data']
+        file_name = arr_json['name']
+        file_data = ContentFile(base64.b64decode(file_data))  
+
+        lesson = models.Lesson.objects.get(lesson_id=lesson_id)
+        student = User.objects.get(email=request.user.email) 
+
+        
         model = models.Homework.objects.filter(lesson=lesson,student=student).first()
         if model == None:
-            if homework != '':
-                arr_json = json.loads(homework)
-                file_data = arr_json['data']
-                file_name = arr_json['name']
-                file_data = ContentFile(base64.b64decode(file_data))  
-                             
-                hw = models.Homework.objects.create(
-                    lesson=lesson_id,
-                    student=request.user.id,
-                    homework_url = homework_url,
-                )
-                hw.homework.save(file_name, file_data, save=True)
-                hw.save()
-            else:
-                hw = models.Homework.objects.create(
-                    lesson=lesson_id,
-                    student=request.user.id,
-                    homework_url = homework_url,
-                )
-                hw.save()
-
+            hw = models.Homework.objects.create(
+                lesson=lesson,
+                student=student,
+            )
+            hw.homework.save(file_name, file_data, save=True)
+            hw.save()
         else:
-            if homework != '':
-                model.homework.save(file_name, file_data, save=True)
-                model.homework_url = homework_url
-                model.save()
-            else:
-                model.homework_url = homework_url
-                model.save()
+            model.homework.save(file_name, file_data, save=True)
+            model.save()
 
     
 

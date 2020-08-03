@@ -613,7 +613,10 @@ def update_note(request):
     #try:
         note = request.POST['note']
         lesson_id = request.POST['lesson_id']
-        if_share = strtobool(request.POST['if_share'])
+        if request.POST['if_share'] == 'true':
+            if_share = True
+        else:
+            if_share = False
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
         student = User.objects.get(email=request.user.email) 
         

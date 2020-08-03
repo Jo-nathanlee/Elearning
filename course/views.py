@@ -545,7 +545,7 @@ def upload_homework(request):
         lesson_id = request.POST['lesson_id']
         homework_url = request.POST['homework_url']
 
-        model = models.Homework.objects.filter(lesson=lesson,student=student).first()
+        model = models.Homework.objects.filter(lesson=lesson_id,student=request.user.id).first()
         if model == None:
             if homework != '':
                 arr_json = json.loads(homework)

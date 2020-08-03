@@ -21,7 +21,7 @@ class HomeworkAdmin(admin.ModelAdmin):
     list_display = ['lesson','student','homework','created_at']
 
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ['lesson','student','note','created_at']
+    list_display = ['lesson','student','note','if_share','created_at']
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['course','reviewer','review','rating','created_at']

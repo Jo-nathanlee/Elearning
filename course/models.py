@@ -96,6 +96,7 @@ class Homework(models.Model):
     homework = models.FileField(null=True,blank=True)
     homework_url = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Note(models.Model):
     lesson = models.ForeignKey(
@@ -108,6 +109,7 @@ class Note(models.Model):
     )
     note = models.TextField(null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Review(models.Model):
     course = models.ForeignKey(

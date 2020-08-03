@@ -410,8 +410,8 @@ $(document).ready(function(){
                             <tr>
                                 <th scope="row">{{ hw.student.name }}</th>
                                 <td><a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a></td>
-                                <td><a href="{{ hw.homework_url }}">作業連結</a></td>
-                                <td>{{ hw.created_at|date:'Y-m-d' }}</td>
+                                <td><a href="{{ hw.homework_url }}" target="_blank">作業連結</a></td>
+                                <td>{{ hw.updated_at|date:'Y-m-d' }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -530,7 +530,7 @@ $(document).ready(function(){
                         <input type="hidden" class="note_id" value="{{ note.id }}">
                         </td>
                         <td>{{ note.student.name }}</td>
-                        <td>{{ note.created_at|date:'Y-m-d' }}</td>
+                        <td>{{ note.updated_at|date:'Y-m-d' }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>

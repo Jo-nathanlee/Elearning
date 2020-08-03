@@ -166,3 +166,5 @@ def comment(request):
         data = list(comments) 
         return JsonResponse(data, safe=False) 
 
+def upload_project(request):
+    pass

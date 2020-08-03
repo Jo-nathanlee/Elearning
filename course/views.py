@@ -415,7 +415,7 @@ def lesson_page(request,lesson_id,lesson_index):
         all_questions = list(questions) 
         homework = models.Homework.objects.filter(lesson=lesson_id,student=request.user).first()
         note = models.Note.objects.filter(lesson=lesson_id,student=request.user).first()
-        note_all = models.Note.objects.filter(lesson=lesson_id)
+        note_all = models.Note.objects.filter(lesson=lesson_id).exclude(if_share=True)
 
 
         if course.teacher.email == request.user.email:

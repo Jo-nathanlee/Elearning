@@ -48,7 +48,6 @@ $(document).ready(function(){
 
     $(".browse_note").click(function() {
         var note_id = $(this).siblings(".note_id").val();
-        console.log(note_id);
         $.ajax({
             url: "{% url 'browse_note' %}",
             type: 'POST',
@@ -62,7 +61,8 @@ $(document).ready(function(){
                 $(".note_sharing").find(".div_note").html(data[0].note);
             },
             error: function(XMLHttpRequest, status, error) {
-                console.log(XMLHttpRequest.responseText);
+                //console.log(XMLHttpRequest.responseText);
+                alertify.error('發生錯誤！')
             }
         });
     });
@@ -155,8 +155,9 @@ $(document).ready(function(){
                     $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {
-                    console.log(XMLHttpRequest.responseText);
+                    //console.log(XMLHttpRequest.responseText);
                     $.LoadingOverlay("hide");
+                    alertify.error('發生錯誤！')
                 }
             });
         }
@@ -256,7 +257,9 @@ $(document).ready(function(){
                     $.LoadingOverlay("hide");
                 },
                 error: function(XMLHttpRequest, status, error) {
-                    console.log(XMLHttpRequest.responseText);
+                    $.LoadingOverlay("hide");
+                    //console.log(XMLHttpRequest.responseText);
+                    alertify.error('發生錯誤！')
                 }
         });
 
@@ -284,7 +287,7 @@ $(document).ready(function(){
             error: function(XMLHttpRequest, status, error) {
                 $.LoadingOverlay("hide");
                 alertify.error('繳交失敗！');
-                console.log(XMLHttpRequest.responseText);
+                //console.log(XMLHttpRequest.responseText);
             }
         });
         
@@ -596,7 +599,7 @@ $(document).ready(function(){
 		detectFocusOut(editor);
 	})
     .catch( error => {
-        console.error( error );
+        //console.error( error );
     } );
 
 	function detectFocusOut(editor) {
@@ -623,6 +626,7 @@ $(document).ready(function(){
                     },
                     error: function(XMLHttpRequest, status, error) {
                         //console.log(XMLHttpRequest.responseText);
+                        alertify.error('發生錯誤！')
                     }
                 });
     }

@@ -268,7 +268,7 @@ $(document).ready(function(){
         var input_file = $("input[name='filepond']");
         var homework_url = $("input[name='homework_url']").val();
         var file_data = '';
-        if(input_file.attr('type') == 'hidden'){
+        if(input_file.attr('type') == 'hidden' && input_file.val()!={{ homework.homework.name }}){
             file_data = input_file.val();
         }
         

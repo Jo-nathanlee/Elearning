@@ -298,7 +298,7 @@ $(document).ready(function(){
             $('#div_fixed').toggleClass('active');
     });
 
-    if({{note.if_share}}){
+    if("{{note.if_share}}"=='True'){
         $("#if_share").prop("checked", true);
     } else {
         $("#if_share").prop("checked", false);

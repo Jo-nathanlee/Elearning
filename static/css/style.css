@@ -3384,10 +3384,11 @@ p.footer-copyright {
 }
 
 #div_fixed .logo {
-color: #fff;
-font-size: 36px;
-padding: 30px 30px;
-display: block; }
+    color: #fff;
+    font-size: 36px;
+    padding: 20px 26px;
+    display: block; 
+}
 
 .ball-clip-rotate > div {
     background-color: #fff;

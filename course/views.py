@@ -612,12 +612,13 @@ def update_note(request):
     try:
         note = request.POST['note']
         lesson_id = request.POST['lesson_id']
+        if_share = request.POST['if_share']
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
         student = User.objects.get(email=request.user.email) 
         
         models.Note.objects.update_or_create(
             lesson=lesson, student=student,
-            defaults={'note': note},
+            defaults={'note': note,'if_share':if_share},
         )
         data = {}
         return JsonResponse(data,safe=False)

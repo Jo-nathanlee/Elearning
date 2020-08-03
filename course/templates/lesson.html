@@ -310,8 +310,11 @@ $(document).ready(function(){
     <div class="ball-clip-rotate"><div></div></div>
     <div id="sidebarCollapse" class="custom-menu"></div>
 
-    <span class="logo">隨堂筆記</span>
+    <span class="logo">隨堂筆記   
+    </span>
     <div class="div_editor">
+        <input type="checkbox" id="if_share" name="if_share" value="">
+        <label for="if_share" style="font-size: 16px;color:white">是否分享</label><br>
         <div id="editor">
             {{ note.note  |safe }}
         </div>
@@ -616,21 +619,26 @@ $(document).ready(function(){
     }
 
     function update_note(note) {
-                alertify.success("Saving...");
-                $('.ball-clip-rotate').show();
-                $.ajax({
-                    url: "{% url 'update_note' %}",
-                    type: 'POST',
-                    data: { note:note,lesson_id:{{ lesson_id }}  },
-                    dataType: 'json',
-                    success: function(data) {
-                        $('.ball-clip-rotate').hide();
-                    },
-                    error: function(XMLHttpRequest, status, error) {
-                        //console.log(XMLHttpRequest.responseText);
-                        alertify.error('發生錯誤！')
-                    }
-                });
+        if($('#if_share').checked) {
+            var if_share = true;
+        } else {
+            var if_share = false;
+        }
+        alertify.success("Saving...");
+        $('.ball-clip-rotate').show();
+        $.ajax({
+            url: "{% url 'update_note' %}",
+            type: 'POST',
+            data: { note:note,lesson_id:{{ lesson_id }},if_share:if_share  },
+            dataType: 'json',
+            success: function(data) {
+                $('.ball-clip-rotate').hide();
+            },
+            error: function(XMLHttpRequest, status, error) {
+                console.log(XMLHttpRequest.responseText);
+                alertify.error('發生錯誤！')
+            }
+        });
     }
 
     function detectTextChanges(editor) {

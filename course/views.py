@@ -15,6 +15,7 @@ import os
 from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.db.models import Avg
+from distutils.util import strtobool
 
 # Get programming language categories
 def get_language():
@@ -415,7 +416,7 @@ def lesson_page(request,lesson_id,lesson_index):
         all_questions = list(questions) 
         homework = models.Homework.objects.filter(lesson=lesson_id,student=request.user).first()
         note = models.Note.objects.filter(lesson=lesson_id,student=request.user).first()
-        note_all = models.Note.objects.filter(lesson=lesson_id).exclude(if_share=True)
+        note_all = models.Note.objects.filter(lesson=lesson_id).exclude(if_share=False)
 
 
         if course.teacher.email == request.user.email:
@@ -612,7 +613,7 @@ def update_note(request):
     #try:
         note = request.POST['note']
         lesson_id = request.POST['lesson_id']
-        if_share = json.loads(request.POST['if_share'].lower())
+        if_share = strtobool(request.POST['if_share'])
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
         student = User.objects.get(email=request.user.email) 
         

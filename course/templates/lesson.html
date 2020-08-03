@@ -266,7 +266,7 @@ $(document).ready(function(){
     $(".homework_submit").click(function(){
         $.LoadingOverlay("show");
         var input_file = $("input[name='filepond']");
-        var homework_url = $("input[name='homework_url']");
+        var homework_url = $("input[name='homework_url']").val();
         var file_data = '';
         if(input_file.attr('type') == 'hidden'){
             file_data = input_file.val();

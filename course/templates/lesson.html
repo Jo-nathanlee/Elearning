@@ -625,11 +625,12 @@ $(document).ready(function(){
     }
 
     function update_note(note) {
-        if($('#if_share').checked) {
+        if($('#if_share').is(':checked')) {
             var if_share = true;
         } else {
             var if_share = false;
         }
+        console.log(if_share);
         alertify.success("Saving...");
         $('.ball-clip-rotate').show();
         $.ajax({

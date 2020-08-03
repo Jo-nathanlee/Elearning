@@ -570,6 +570,10 @@ def upload_homework(request):
 
         else:
             if homework != '':
+                arr_json = json.loads(homework)
+                file_data = arr_json['data']
+                file_name = arr_json['name']
+                file_data = ContentFile(base64.b64decode(file_data))  
                 model.homework.save(file_name, file_data, save=True)
                 model.homework_url = homework_url
                 model.save()

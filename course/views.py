@@ -540,7 +540,7 @@ def register(request):
 
 # upload homework in lesson page
 def upload_homework(request):
-    #try:
+    try:
         homework = request.POST['file']
         lesson_id = request.POST['lesson_id']
         homework_url = request.POST['homework_url']
@@ -585,8 +585,8 @@ def upload_homework(request):
 
         data = {}
         return JsonResponse(data,safe=False)
-    #except Exception as e:
-        #pass
+    except Exception as e:
+        pass
 
 def upload_pic(request):
     try:

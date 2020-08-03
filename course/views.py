@@ -609,7 +609,7 @@ def upload_pic(request):
         pass
 
 def update_note(request):
-    try:
+    #try:
         note = request.POST['note']
         lesson_id = request.POST['lesson_id']
         if_share = request.POST['if_share']
@@ -623,8 +623,8 @@ def update_note(request):
         data = {}
         return JsonResponse(data,safe=False)
         
-    except Exception as e:
-        pass
+    #except Exception as e:
+        #pass
 
 def browse_note(request):
     note_id = request.POST['note_id']

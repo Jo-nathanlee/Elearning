@@ -401,6 +401,7 @@ $(document).ready(function(){
                             <tr>
                                 <th scope="col">學生</th>
                                 <th scope="col">繳交檔案</th>
+                                <th scope="col">作業連結</th>
                                 <th scope="col">繳交日期</th>
                             </tr>
                             </thead>
@@ -409,6 +410,7 @@ $(document).ready(function(){
                             <tr>
                                 <th scope="row">{{ hw.student.name }}</th>
                                 <td><a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a></td>
+                                <td><a href="{{ hw.homework_url }}">作業連結</a></td>
                                 <td>{{ hw.created_at|date:'Y-m-d' }}</td>
                             </tr>
                             {% endfor %}

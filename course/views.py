@@ -614,17 +614,17 @@ def update_note(request):
     lesson_id = request.POST['lesson_id']
     if_share = strtobool(request.POST['if_share'])
 
-    if 'note' in request.POST:
-        note = request.POST['note']
-        models.Note.objects.update_or_create(
-            lesson=lesson_id, student=request.user.id,
-            defaults={'note': note,'if_share':if_share},
-        )
-    else:
-        models.Note.objects.update_or_create(
-            lesson=lesson_id, student=request.user.id,
-            defaults={'if_share':if_share},
-        )
+    # if 'note' in request.POST:
+    #     note = request.POST['note']
+    #     models.Note.objects.update_or_create(
+    #         lesson=lesson_id, student=request.user.id,
+    #         defaults={'note': note,'if_share':if_share},
+    #     )
+    # else:
+    #     models.Note.objects.update_or_create(
+    #         lesson=lesson_id, student=request.user.id,
+    #         defaults={'if_share':if_share},
+    #     )
     data = {}
     return JsonResponse(data,safe=False)
         

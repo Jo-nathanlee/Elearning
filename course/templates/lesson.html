@@ -297,6 +297,12 @@ $(document).ready(function(){
             //   $('#sidebar').toggleClass('active');
             $('#div_fixed').toggleClass('active');
     });
+
+    if({{note.if_share}}){
+        $("#if_share").prop("checked", true);
+    } else {
+        $("#if_share").prop("checked", false);
+    }
     
         
   

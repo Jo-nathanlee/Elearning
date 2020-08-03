@@ -612,7 +612,7 @@ def update_note(request):
     #try:
         note = request.POST['note']
         lesson_id = request.POST['lesson_id']
-        if_share = request.POST['if_share']
+        if_share = json.loads(request.POST['if_share'].lower())
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
         student = User.objects.get(email=request.user.email) 
         

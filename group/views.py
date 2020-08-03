@@ -167,4 +167,24 @@ def comment(request):
         return JsonResponse(data, safe=False) 
 
 def upload_project(request):
-    pass
+    try:
+        project = request.POST['file']
+        group_id = request.POST['group_id']
+
+
+        arr_json = json.loads(project)
+        file_data = arr_json['data']
+        file_name = arr_json['name']
+        file_data = ContentFile(base64.b64decode(file_data))  
+
+        group = models.Group.objects.get(id=group_id)
+        
+        group.project.save(file_name, file_data, save=True)
+        group.save()
+
+
+
+        data = {}
+        return JsonResponse(data,safe=False)
+    except Exception as e:
+        pass

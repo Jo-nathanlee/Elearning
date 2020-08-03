@@ -305,6 +305,11 @@ $(document).ready(function(){
     }
 
     $('#if_share').change(function() {
+        if($('#if_share').is(':checked')) {
+            var if_share = true;
+        } else {
+            var if_share = false;
+        }
         $('.ball-clip-rotate').show();
         $.ajax({
             url: "{% url 'update_note' %}",

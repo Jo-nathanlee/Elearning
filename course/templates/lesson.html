@@ -315,10 +315,12 @@ $(document).ready(function(){
                 $('.ball-clip-rotate').hide();
             },
             error: function(XMLHttpRequest, status, error) {
-                //console.log(XMLHttpRequest.responseText);
+                console.log(XMLHttpRequest.responseText);
                 alertify.error('發生錯誤！')
+                $('.ball-clip-rotate').hide();
             }
-        });    });
+        });    
+    });
     
         
   

@@ -710,7 +710,7 @@ $(document).ready(function(){
              {% if homework.homework != None and homework.homework != '' %} 
                 files: [
                     {
-                        source: '{{ homework.homework.url }}',
+                        source: '{{ homework.homework }}',
                         options: {
                             type: 'local',
                         

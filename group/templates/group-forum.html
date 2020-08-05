@@ -96,7 +96,7 @@ $(document).ready(function(){
                     </div>
                 </div>    
                 <div class="col-1 col-lg-1 text-right offset-lg-3 pt-4" >
-                    <a href="{{ group.project }}"><i class="fa fa-download" style="font-size: 26px;"></i></a>
+                    <a href="{{ group.project.url }}"><i class="fa fa-download" style="font-size: 26px;"></i></a>
                 </div>        
             </div>
         </div>
@@ -150,7 +150,7 @@ $(document).ready(function(){
              {% if group.project != None and group.project != '' %} 
                 files: [
                     {
-                        source: '{{ group.project.url }}',
+                        source: '{{ group.project }}',
                         options: {
                             type: 'local',
                         

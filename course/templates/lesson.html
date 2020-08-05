@@ -442,7 +442,7 @@ $(document).ready(function(){
                             <tr>
                                 <th scope="row">{{ hw.student.name }}</th>
                                 <td><a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a></td>
-                                <td><a href="{{ hw.homework_url }}" target="_blank">作業連結</a></td>
+                                <td>{% if hw.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
                                 <td>{{ hw.updated_at|date:'Y-m-d' }}</td>
                             </tr>
                             {% endfor %}

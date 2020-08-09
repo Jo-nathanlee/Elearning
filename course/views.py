@@ -548,8 +548,9 @@ def upload_homework(request):
         lesson_id = request.POST['lesson_id']
         homework_url = request.POST['homework_url']
         if_share = strtobool(request.POST['if_share'])
+        lesson = models.Lesson.objects.get(lesson_id=lesson_id)
 
-        model = models.Homework.objects.filter(lesson=lesson_id,student=request.user.id).first()
+        model = models.Homework.objects.filter(lesson__id=lesson__id,student=request.user.id).first()
         if model == None:
             if homework != '':
                 arr_json = json.loads(homework)
@@ -558,7 +559,7 @@ def upload_homework(request):
                 file_data = ContentFile(base64.b64decode(file_data))  
                              
                 hw = models.Homework.objects.create(
-                    lesson=lesson_id,
+                    lesson=lesson,
                     student=request.user.id,
                     homework_url = homework_url,
                     if_share=if_share,
@@ -567,7 +568,7 @@ def upload_homework(request):
                 hw.save()
             else:
                 hw = models.Homework.objects.create(
-                    lesson=lesson_id,
+                    lesson=lesson,
                     student=request.user.id,
                     homework_url = homework_url,
                     if_share=if_share,

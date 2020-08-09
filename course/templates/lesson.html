@@ -723,6 +723,7 @@ $(document).ready(function(){
     const pond = FilePond.create(
         document.querySelector('.input_homework'),
         {
+            {% if homework %}
              {% if homework.homework != None and homework.homework != '' %} 
                 files: [
                     {
@@ -748,6 +749,7 @@ $(document).ready(function(){
                     revert: null,
                 },
              {% endif %}
+            {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
 
         }

@@ -550,7 +550,7 @@ def upload_homework(request):
         if_share = strtobool(request.POST['if_share'])
         lesson = models.Lesson.objects.get(lesson_id=lesson_id)
 
-        model = models.Homework.objects.filter(lesson__id=lesson__id,student=request.user.id).first()
+        model = models.Homework.objects.filter(lesson=lesson__id,student=request.user.id).first()
         if model == None:
             if homework != '':
                 arr_json = json.loads(homework)

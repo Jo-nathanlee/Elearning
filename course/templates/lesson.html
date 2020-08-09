@@ -292,7 +292,7 @@ $(document).ready(function(){
             error: function(XMLHttpRequest, status, error) {
                 $.LoadingOverlay("hide");
                 alertify.error('繳交失敗！');
-                //console.log(XMLHttpRequest.responseText);
+                console.log(XMLHttpRequest.responseText);
             }
         });
         

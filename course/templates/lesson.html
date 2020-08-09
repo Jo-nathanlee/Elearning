@@ -588,38 +588,7 @@ $(document).ready(function(){
             <!-- 筆記區end -->
         </div><!-- .container -->
     </div><!--.lesson-content -->
-    {% if is_teacher is not True%}
-    <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_upload homework_upload" >
-        {% if lesson.homework_title != "" %}
-            <h3>{{ lesson.homework_title }}</h3>
-            <p>{{ lesson.homework_description|safe }}</p>
-            {% if lesson.homework_attachment %}
-            <p>附件：<a href="{{ lesson.homework_attachment.url }}">{{ lesson.homework_attachment|to_str }}</a>
-            {% endif %}
-            <div style="max-width: 50em;" class="mt-2">
-                <label>作業繳交區</label>
-                    <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-                
-            </div>
-            <div>
-                <label>作業連結</label>
-                <input class="form-control" name="homework_url" placeholder="輸入您的作業連結url" type="text" autofocus value="{{ homework.homework_url }}" style="max-width: 50em;"/>
-            </div>
-            <div>
-                <label>是否分享</label>
-                {% if homework.if_share %}
-                <input type="checkbox" id="share_homework" name="share_homework" value="" checked="true">
-                {% else %}
-                <input type="checkbox" id="share_homework" name="share_homework" value="" >
-                {% endif %}
-            </div>
-            <input type="submit" class="btn homework_submit" value="繳交">  
-        {% else %}
-        <p>作業尚未公佈</p>
-        {% endif %}
-
-    </div>
-    {% endif %}
+   
    
     {% endblock %}
 
@@ -723,7 +692,33 @@ $(document).ready(function(){
     const pond = FilePond.create(
         document.querySelector('.input_homework'),
         {
-           
+            {% if homework %}
+             {% if homework.homework != None and homework.homework != '' %} 
+                files: [
+                    {
+                        source: '{{ homework.homework }}',
+                        options: {
+                            type: 'local',
+                        
+                        }
+                    }
+                ],
+                server: {
+                    load: (source, load, error, progress, abort, headers) => {
+                        var myRequest = new Request(source);
+                        fetch(myRequest).then(function(response) {
+                        response.blob().then(function(myBlob) {
+                            load(myBlob);
+                        });
+                        });         
+                    },
+                    process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                        load();
+                    },
+                    revert: null,
+                },
+             {% endif %}
+            {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
 
         }

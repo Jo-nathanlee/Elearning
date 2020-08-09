@@ -406,6 +406,8 @@ $(document).ready(function(){
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="index"><span>內容</span></a></li>
                         {% if is_teacher is not True%}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="upload">作業繳交</a></li>
+                        {% else %}
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="upload">學生作業</a></li>
                         {% endif %}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業分享</a></li>

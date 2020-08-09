@@ -414,7 +414,6 @@ def lesson_page(request,lesson_id,lesson_index):
 
 
         all_questions = list(questions) 
-        homework = models.Homework.objects.filter(lesson=lesson,student=request.user).first()
         note = models.Note.objects.filter(lesson=lesson,student=request.user).first()
         note_all = models.Note.objects.filter(lesson=lesson).exclude(if_share=False)
 
@@ -424,6 +423,8 @@ def lesson_page(request,lesson_id,lesson_index):
             all_homework = models.Homework.objects.filter(lesson=lesson)
         else:
             all_homework = models.Homework.objects.filter(lesson=lesson).exclude(if_share=False)
+            homework = models.Homework.objects.filter(lesson=lesson,student=request.user).first()
+
         
         compiler_url = None
         if lesson.if_compiler:

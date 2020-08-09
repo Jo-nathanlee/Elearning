@@ -421,7 +421,9 @@ def lesson_page(request,lesson_id,lesson_index):
 
         if course.teacher.email == request.user.email:
             is_teacher = True
-            homework = models.Homework.objects.filter(lesson=lesson_id)
+            all_homework = models.Homework.objects.filter(lesson=lesson_id)
+        else:
+            all_homework = models.Homework.objects.filter(lesson=lesson_id).exclude(if_share=False)
         
         compiler_url = None
         if lesson.if_compiler:
@@ -545,6 +547,7 @@ def upload_homework(request):
         homework = request.POST['file']
         lesson_id = request.POST['lesson_id']
         homework_url = request.POST['homework_url']
+        if_share = strtobool(request.POST['if_share'])
 
         model = models.Homework.objects.filter(lesson=lesson_id,student=request.user.id).first()
         if model == None:
@@ -558,6 +561,7 @@ def upload_homework(request):
                     lesson=lesson_id,
                     student=request.user.id,
                     homework_url = homework_url,
+                    if_share=if_share,
                 )
                 hw.homework.save(file_name, file_data, save=True)
                 hw.save()
@@ -566,6 +570,7 @@ def upload_homework(request):
                     lesson=lesson_id,
                     student=request.user.id,
                     homework_url = homework_url,
+                    if_share=if_share,
                 )
                 hw.save()
 
@@ -577,9 +582,11 @@ def upload_homework(request):
                 file_data = ContentFile(base64.b64decode(file_data))  
                 model.homework.save(file_name, file_data, save=True)
                 model.homework_url = homework_url
+                model.if_share = if_share
                 model.save()
             else:
                 model.homework_url = homework_url
+                model.if_share = if_share
                 model.save()
 
     

@@ -93,6 +93,7 @@ class Homework(models.Model):
         'account.User',
         on_delete=models.CASCADE
     )
+    if_share = models.BooleanField(default=False)
     homework = models.FileField(null=True,blank=True)
     homework_url = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)

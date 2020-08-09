@@ -18,7 +18,7 @@ class UserCourseAdmin(admin.ModelAdmin):
     list_display = ['user','course']
 
 class HomeworkAdmin(admin.ModelAdmin):
-    list_display = ['lesson','student','homework','created_at']
+    list_display = ['lesson','student','homework','if_share','created_at']
 
 class NoteAdmin(admin.ModelAdmin):
     list_display = ['lesson','student','note','if_share','created_at']

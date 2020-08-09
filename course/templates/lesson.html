@@ -270,6 +270,11 @@ $(document).ready(function(){
         $.LoadingOverlay("show");
         var input_file = $("input[name='filepond']");
         var homework_url = $("input[name='homework_url']").val();
+        if($('#share_homework').is(':checked')) {
+            var if_share = true;
+        } else {
+            var if_share = false;
+        }
         var file_data = '';
         if(input_file.attr('type') == 'hidden' && input_file.val()!="{{ homework.homework.name }}"){
             file_data = input_file.val();
@@ -278,7 +283,7 @@ $(document).ready(function(){
         $.ajax({
             url: "{% url 'upload_homework' %}",
             type: 'POST',
-            data: { file:file_data,lesson_id:{{ lesson_id }},homework_url:homework_url },
+            data: { file:file_data,lesson_id:{{ lesson_id }},homework_url:homework_url,if_share:if_share },
             dataType: 'json',
             success: function(data) {
                 $.LoadingOverlay("hide");
@@ -422,12 +427,6 @@ $(document).ready(function(){
                 <!-- 內容區end -->
                 <!-- 作業區 -->
                 <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_homework"> 
-                    <h3>{{ lesson.homework_title }}</h3>
-                    <p>{{ lesson.homework_description }}</p>
-                    {% if lesson.homework_attachment %}
-                    <p>附件：<a href="{{ lesson.homework_attachment.url }}">{{ lesson.homework_attachment|to_str }}</a>
-                    {% endif %}
-                    {% if is_teacher is True %}
                         <table class="table">
                             <thead class="thead-dark">
                             <tr>
@@ -438,7 +437,7 @@ $(document).ready(function(){
                             </tr>
                             </thead>
                             <tbody>
-                            {% for hw in homework %}
+                            {% for hw in all_homework %}
                             <tr>
                                 <th scope="row">{{ hw.student.name }}</th>
                                 <td><a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a></td>
@@ -448,7 +447,6 @@ $(document).ready(function(){
                             {% endfor %}
                             </tbody>
                         </table>
-                    {% endif %}
                 </div><!-- .col -->
                 <!-- 作業區end -->
                 <!-- 問答區 -->
@@ -592,16 +590,34 @@ $(document).ready(function(){
     </div><!--.lesson-content -->
     {% if is_teacher is not True%}
     <div class="col-10 col-lg-10 offset-lg-1 lesson-homework d-none tab_upload homework_upload" >
-        <div style="max-width: 50em;">
-            <label>作業繳交區</label>
-                <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-            
-        </div>
-        <div>
-            <label>作業連結</label>
-            <input class="form-control" name="homework_url" placeholder="輸入您的作業連結url" type="text" autofocus value="{{ homework.homework_url }}" style="max-width: 50em;"/>
-        </div>
-        <input type="submit" class="btn homework_submit" value="繳交">  
+        {% if lesson.homework_title != "" %}
+            <h3>{{ lesson.homework_title }}</h3>
+            <p>{{ lesson.homework_description }}</p>
+            {% if lesson.homework_attachment %}
+            <p>附件：<a href="{{ lesson.homework_attachment.url }}">{{ lesson.homework_attachment|to_str }}</a>
+            {% endif %}
+            <div style="max-width: 50em;" class="mt-2">
+                <label>作業繳交區</label>
+                    <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
+                
+            </div>
+            <div>
+                <label>作業連結</label>
+                <input class="form-control" name="homework_url" placeholder="輸入您的作業連結url" type="text" autofocus value="{{ homework.homework_url }}" style="max-width: 50em;"/>
+            </div>
+            <div>
+                <label>是否分享</label>
+                {% if homework.if_share %}
+                <input type="checkbox" id="share_homework" name="share_homework" value="" checked="true">
+                {% else %}
+                <input type="checkbox" id="share_homework" name="share_homework" value="" >
+                {% endif %}
+            </div>
+            <input type="submit" class="btn homework_submit" value="繳交">  
+        {% else %}
+        <p>作業尚未公佈</p>
+        {% endif %}
+
     </div>
     {% endif %}
    

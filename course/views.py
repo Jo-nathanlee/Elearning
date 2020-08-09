@@ -560,7 +560,7 @@ def upload_homework(request):
                              
                 hw = models.Homework.objects.create(
                     lesson=lesson,
-                    student=request.user.id,
+                    student=request.user,
                     homework_url = homework_url,
                     if_share=if_share,
                 )
@@ -569,7 +569,7 @@ def upload_homework(request):
             else:
                 hw = models.Homework.objects.create(
                     lesson=lesson,
-                    student=request.user.id,
+                    student=request.user,
                     homework_url = homework_url,
                     if_share=if_share,
                 )

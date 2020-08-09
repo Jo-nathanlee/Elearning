@@ -723,33 +723,7 @@ $(document).ready(function(){
     const pond = FilePond.create(
         document.querySelector('.input_homework'),
         {
-            {% if homework %}
-             {% if homework.homework != None and homework.homework != '' %} 
-                files: [
-                    {
-                        source: '{{ homework.homework }}',
-                        options: {
-                            type: 'local',
-                        
-                        }
-                    }
-                ],
-                server: {
-                    load: (source, load, error, progress, abort, headers) => {
-                        var myRequest = new Request(source);
-                        fetch(myRequest).then(function(response) {
-                        response.blob().then(function(myBlob) {
-                            load(myBlob);
-                        });
-                        });         
-                    },
-                    process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
-                        load();
-                    },
-                    revert: null,
-                },
-             {% endif %}
-            {% endif %}
+           
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
 
         }

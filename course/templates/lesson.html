@@ -407,10 +407,12 @@ $(document).ready(function(){
                         {% if is_teacher is not True%}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="upload">作業繳交</a></li>
                         {% else %}
-                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="upload">學生作業</a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">學生作業</a></li>
                         {% endif %}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
+                        {% if is_teacher is not True%}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">作業分享</a></li>
+                        {% endif %}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="note">筆記分享</a></li>
                     </ul>
                     <hr width="106%" style="margin-top: -5px;">          
@@ -439,17 +441,31 @@ $(document).ready(function(){
                             </tr>
                             </thead>
                             <tbody>
-                            {% for hw in all_homework %}
-                            <tr>
-                                <th scope="row">{{ hw.student.name }}</th>
-                                <td>{% if homework.homework != None and homework.homework != '' %} 
-                                    <a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a>
-                                    {% endif %}
-                                </td>
-                                <td>{% if hw.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
-                                <td>{{ hw.updated_at|date:'Y-m-d' }}</td>
-                            </tr>
-                            {% endfor %}
+                            {% if is_teacher is not True%}
+                                {% for hw in all_homework %}
+                                <tr>
+                                    <th scope="row">{{ hw.student.name }}</th>
+                                    <td>{% if hw.homework != None and hw.homework != '' %} 
+                                        <a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{% if hw.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
+                                    <td>{{ hw.updated_at|date:'Y-m-d' }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                {% for hw in all_homework %}
+                                <tr>
+                                    <th scope="row">{{ hw.user__name }}</th>
+                                    <td>{% if hw.homework.homework != None and hw.homework.homework != '' %} 
+                                        <a href="{{ hw.homework.homework.url }}">{{ hw.homework.homework|to_str }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
+                                    <td>{{ hw.homework.updated_at|date:'Y-m-d' }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
                             </tbody>
                         </table>
                 </div><!-- .col -->

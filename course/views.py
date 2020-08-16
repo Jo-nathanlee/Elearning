@@ -420,7 +420,12 @@ def lesson_page(request,lesson_id,lesson_index):
 
         if course.teacher.email == request.user.email:
             is_teacher = True
-            all_homework = models.Homework.objects.filter(lesson=lesson)
+            #all_homework = models.Homework.objects.filter(lesson=lesson)
+            students =  models.UserCourse.objects.filter(course=course).values('user__id', 'user__name','user__pic') 
+            for student in students:
+                homework = models.Homework.objects.filter(lesson=lesson,student=student['user__id']).values('homework','homework_url', 'updated_at')
+                student['homework'] = list(homework)  
+            all_homework = list(students)
         else:
             all_homework = models.Homework.objects.filter(lesson=lesson).exclude(if_share=False)
             homework = models.Homework.objects.filter(lesson=lesson,student=request.user).first()

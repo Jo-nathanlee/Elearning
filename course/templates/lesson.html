@@ -456,7 +456,7 @@ $(document).ready(function(){
                             {% else %}
                                 {% for hw in all_homework %}
                                 <tr>
-                                    <th scope="row">{{ hw['homework'].student__name }}</th>
+                                    <th scope="row">{{ hw.homework.student__name }}</th>
                                     <td>{% if hw.homework.homework != None and hw.homework.homework != '' %} 
                                         <a href="{{ hw.homework.homework.url }}">{{ hw.homework.homework|to_str }}</a>
                                         {% endif %}

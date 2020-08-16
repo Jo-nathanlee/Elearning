@@ -407,7 +407,7 @@ $(document).ready(function(){
                         {% if is_teacher is not True%}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="upload">作業繳交</a></li>
                         {% else %}
-                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">學生作業</a></li>
+                        <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="homework">學生作業區</a></li>
                         {% endif %}
                         <li><a href="javascript:void();" style="font-weight: 400;outline: none" class="a_href" id="qa">問答</a></li>
                         {% if is_teacher is not True%}
@@ -461,7 +461,7 @@ $(document).ready(function(){
                                         <a href="{{ hw.homework.homework.url }}">{{ hw.homework.homework|to_str }}</a>
                                         {% endif %}
                                     </td>
-                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
+                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
                                     <td>{{ hw.homework.updated_at|date:'Y-m-d' }}</td>
                                 </tr>
                                 {% endfor %}

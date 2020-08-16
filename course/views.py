@@ -423,7 +423,7 @@ def lesson_page(request,lesson_id,lesson_index):
             #all_homework = models.Homework.objects.filter(lesson=lesson)
             students =  models.UserCourse.objects.filter(course=course).values('user__id')
             for student in students:
-                homework = models.Homework.objects.filter(lesson=lesson,student=student).values('homework','homework_url',
+                homework = models.Homework.objects.filter(lesson=lesson,student=student['user__id']).values('homework','homework_url',
                 'updated_at','student__name')
                 student['homework'] = list(homework)
             all_homework = list(students) 

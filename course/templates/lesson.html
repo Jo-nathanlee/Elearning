@@ -458,11 +458,11 @@ $(document).ready(function(){
                                 <tr>
                                     <th scope="row">{{ hw.homework.0.student__name }}</th>
                                     <td>{% if hw.homework.0.homework != None and hw.homework.0.homework != '' %} 
-                                        <a href="{{ hw.homework.homework.url }}">{{ hw.homework.homework|to_str }}</a>
+                                        <a href="{{ hw.homework.0.homework.url }}">{{ hw.homework.0.homework|to_str }}</a>
                                         {% endif %}
                                     </td>
-                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
-                                    <td>{{ hw.homework.updated_at|date:'Y-m-d' }}</td>
+                                    <td>{% if hw.homework.0.homework_url != "" %}<a href="{{ hw.homework.0.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
+                                    <td>{{ hw.homework.0.updated_at|date:'Y-m-d' }}</td>
                                 </tr>
                                 {% endfor %}
                             {% endif %}

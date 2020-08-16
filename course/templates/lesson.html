@@ -456,13 +456,13 @@ $(document).ready(function(){
                             {% else %}
                                 {% for hw in all_homework %}
                                 <tr>
-                                    <th scope="row">{{ hw.user__name }}</th>
-                                    <td>{% if hw.homework.homework != None and hw.homework.homework != '' %} 
-                                        <a href="{{ hw.homework.homework.url }}">{{ hw.homework.homework|to_str }}</a>
+                                    <th scope="row">{{ hw.student.name }}</th>
+                                    <td>{% if hw.homework != None and hw.homework != '' %} 
+                                        <a href="{{ hw.homework.url }}">{{ hw.homework|to_str }}</a>
                                         {% endif %}
                                     </td>
-                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
-                                    <td>{{ hw.homework.updated_at|date:'Y-m-d' }}</td>
+                                    <td>{% if hw.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
+                                    <td>{{ hw.updated_at|date:'Y-m-d' }}</td>
                                 </tr>
                                 {% endfor %}
                             {% endif %}

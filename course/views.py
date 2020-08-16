@@ -422,7 +422,7 @@ def lesson_page(request,lesson_id,lesson_index):
             is_teacher = True
             #all_homework = models.Homework.objects.filter(lesson=lesson)
             students =  models.UserCourse.objects.filter(course=course)
-            all_homework = students.select_related('Homework').filter(Q(Homework__isnull=True) 
+            all_homework = students.select_related('Homework').filter(Q(Homework__isnull=True))
         else:
             all_homework = models.Homework.objects.filter(lesson=lesson).exclude(if_share=False)
             homework = models.Homework.objects.filter(lesson=lesson,student=request.user).first()

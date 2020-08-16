@@ -461,7 +461,7 @@ $(document).ready(function(){
                                         <a href="{{ hw.homework.homework.url }}">{{ hw.homework.homework|to_str }}</a>
                                         {% endif %}
                                     </td>
-                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
+                                    <td>{% if hw.homework.homework_url != "" %}<a href="{{ hw.homework.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
                                     <td>{{ hw.homework.updated_at|date:'Y-m-d' }}</td>
                                 </tr>
                                 {% endfor %}

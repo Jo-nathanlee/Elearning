@@ -674,5 +674,6 @@ def review(request):
             reviewer=reviewer,
         )
 
+    messages.add_message(request, messages.INFO, '已評論')
     return HttpResponseRedirect(request.META['HTTP_REFERER'])   
 

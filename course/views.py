@@ -566,6 +566,7 @@ def upload_homework(request):
                 if_share=if_share,
             )
             hw.save()
+            
             if homework != '':
                 arr_json = json.loads(homework)
                 file_data = arr_json['data']

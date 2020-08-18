@@ -8,6 +8,7 @@ class Group(models.Model):
         on_delete=models.CASCADE,related_name='group_teacher'
     )
     project = models.FileField(null=True,blank=True)
+    project_url = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

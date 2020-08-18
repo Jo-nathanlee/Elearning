@@ -2,26 +2,31 @@
 {% block head %}
 <script>
 $(document).ready(function(){
-    $("#homework_submit").click(function(){
+    $("#project_submit").click(function(){
         $.LoadingOverlay("show");
-        const input_file = $("input[name='filepond']");
-        if(input_file.attr('type') == 'hidden'){
-            $.ajax({
-                url: "{% url 'upload_project' %}",
-                type: 'POST',
-                data: { file:input_file.val(),group_id:{{ group_id }} },
-                dataType: 'json',
-                success: function(data) {
-                    $.LoadingOverlay("hide");
-                    alertify.success('繳交成功！');
-                },
-                error: function(XMLHttpRequest, status, error) {
-                    alertify.success('繳交失敗！');
-                    $.LoadingOverlay("hide");
-                    //console.log(XMLHttpRequest.responseText);
-                }
-            });
+        var input_file = $("input[name='filepond']");
+        var project_url = $("input[name='project_url']").val();
+        var file_data = '';
+        if(input_file.attr('type') == 'hidden' && input_file.val()!="{{ group.project.name }}"){
+            file_data = input_file.val();
         }
+
+        $.ajax({
+            url: "{% url 'upload_project' %}",
+            type: 'POST',
+            data: { file:file_data,project_url:project_url,group_id:{{ group_id }} },
+            dataType: 'json',
+            success: function(data) {
+                $.LoadingOverlay("hide");
+                alertify.success('繳交成功！');
+            },
+            error: function(XMLHttpRequest, status, error) {
+                alertify.success('繳交失敗！');
+                $.LoadingOverlay("hide");
+                //console.log(XMLHttpRequest.responseText);
+            }
+        });
+        
     });
 });
 </script>
@@ -92,14 +97,18 @@ $(document).ready(function(){
                 <div class="col-6 col-lg-6 offset-lg-1 " >
                     <div>
                         <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-                        <input type="submit" id="homework_submit" class="btn homework_submit" value="繳交">  
                     </div>
                 </div>    
                 <div class="col-1 col-lg-1 text-right offset-lg-3 pt-4" >
                     {% if group.project != None and group.project != '' %} 
                     <a href="{{ group.project.url }}"><i class="fa fa-download" style="font-size: 26px;"></i></a>
                     {% endif %}
-                </div>        
+                </div> 
+                <div class="col-10 offset-lg-1 col-lg-10">
+                    <label>專案連結</label>
+                    <input class="form-control" name="project_url" placeholder="輸入您的專案連結url" type="text" autofocus value="{{ group.project_url }}" style="max-width: 50em;"/>     
+                    <input type="submit" id="project_submit" class="btn homework_submit" value="繳交">  
+                </div>
             </div>
         </div>
     </div>

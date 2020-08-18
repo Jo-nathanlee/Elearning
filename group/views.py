@@ -77,7 +77,7 @@ def delete(request,group_id):
 def index(request):
     teacher = User.objects.get(email=request.user.email)
     groups = models.Group.objects.all().order_by('-created_at')
-    return render(request, 'group-index.html',locals())
+    return render(request, 'group-admin.html',locals())
 
 def forum(request,group_id):
     group_id=group_id
@@ -170,19 +170,20 @@ def upload_project(request):
     try:
         project = request.POST['file']
         group_id = request.POST['group_id']
-
-
-        arr_json = json.loads(project)
-        file_data = arr_json['data']
-        file_name = arr_json['name']
-        file_data = ContentFile(base64.b64decode(file_data))  
+        project_url = request.POST['project_url']
 
         group = models.Group.objects.get(id=group_id)
-        
-        group.project.save(file_name, file_data, save=True)
+        if project != '':
+            arr_json = json.loads(project)
+            file_data = arr_json['data']
+            file_name = arr_json['name']
+            file_data = ContentFile(base64.b64decode(file_data)) 
+
+            group.project.save(file_name, file_data, save=True)
+            group.save()
+
+        group.project_url = project_url
         group.save()
-
-
 
         data = {}
         return JsonResponse(data,safe=False)

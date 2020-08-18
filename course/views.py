@@ -559,14 +559,14 @@ def upload_homework(request):
 
         model = models.Homework.objects.filter(lesson=lesson_id,student=request.user.id).first()
         if model == None:
-             hw = models.Homework.objects.create(
+            hw = models.Homework.objects.create(
                 lesson=lesson,
                 student=request.user,
                 homework_url = homework_url,
                 if_share=if_share,
             )
             hw.save()
-            
+
             if homework != '':
                 arr_json = json.loads(homework)
                 file_data = arr_json['data']

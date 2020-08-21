@@ -8,3 +8,7 @@ def get_filename(value):
 
 def to_int(value):
     return int(value)
+
+@register.filter
+def to_str(value):
+    return str(value)

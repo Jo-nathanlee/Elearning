@@ -16,6 +16,9 @@ $(document).ready(function(){
                 if(data.success){
                     $("#student_count").html(data.student_count);
                     alertify.success('註冊成功！');
+                    setTimeout(function(){// wait for 5 secs(2)
+                        location.reload(); // then reload the page.(3)
+                    }, 3000); 
                 }else{
                     alertify.error('註冊失敗！');
                 }
@@ -101,7 +104,7 @@ $(document).ready(function(){
                         {% if is_teacher or registered %}
                             <button class="btn btn-register" disabled>註冊</button>
                         {% else %}
-                            <a class="btn btn-register" href="#">註冊</a>
+                            <a class="btn btn-register" href="">註冊</a>
                         {% endif %}
                         </div><!-- .buy-course -->
                     </div><!-- .course-info -->

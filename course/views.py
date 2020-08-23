@@ -684,9 +684,8 @@ def download_homework(request):
     )
     bucket_name = settings.AWS_STORAGE_BUCKET_NAME
     url = s3.generate_presigned_url('get_object', Params = {'Bucket': bucket_name, 'Key': homework.homework.name}, ExpiresIn = 100)
-    response = requests.get(url)
 
-    return response
+    return HttpResponseRedirect(url)
 
 
 

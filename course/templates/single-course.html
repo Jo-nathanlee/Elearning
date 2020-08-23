@@ -85,18 +85,18 @@ $(document).ready(function(){
                             {% comment %} <img src="https://i.imgur.com/U0aMXu4.jpg"> {% endcomment %}
 
                             <div class="author-wrap">
-                                <label class="m-0">Teacher</label>
+                                <label class="m-0">教師</label>
                                 <div class="author-name">{{teacher.name}}</div>
                             </div><!-- .author-wrap -->
                         </div><!-- .course-author -->
 
                         <div class="course-cats mt-3">
-                            <label class="m-0">Categories</label>
+                            <label class="m-0">程式語言</label>
                             <div class="author-name"><a href="#">{{course.category}}</a></div>
                         </div><!-- .course-cats -->
 
                         <div class="course-students mt-3">
-                            <label class="m-0">Student</label>
+                            <label class="m-0">學生</label>
                             <div class="author-name"><a href="#" id="student_count">{{user_course.count}}</a></div>
                         </div><!-- .course-students -->
 
@@ -110,7 +110,7 @@ $(document).ready(function(){
                     </div><!-- .course-info -->
 
                     <div class="single-course-cont-section">
-                        <h2>Introduction</h2>
+                        <h2>課程介紹</h2>
 
                        
                         <p>{{course.course_introduction}}</p>
@@ -118,7 +118,7 @@ $(document).ready(function(){
 
                     <div class="single-course-accordion-cont mt-3">
                         <header class="entry-header flex flex-wrap justify-content-between align-items-center">
-                            <h2>What You'll Learn</h2>
+                            <h2>教材</h2>
                         </header><!-- .entry-header -->
 
                         <div class="entry-contents">
@@ -134,7 +134,7 @@ $(document).ready(function(){
 
                     <div class="instructors-info mt-5">
                         <header class="entry-heading">
-                            <h2 class="entry-title">Instructors</h2>
+                            <h2 class="entry-title">教師</h2>
                         </header><!-- .entry-heading -->
 
                         <div class="instructor-short-info flex flex-wrap">
@@ -143,10 +143,8 @@ $(document).ready(function(){
 
                                 <ul class="p-0 m-0 mt-3" style="color: #383749;">
                                    <li><i class="fa fa-star"></i> {{teacher_rating}}</li>
-                                    <li><i class="fa fa-user"></i> {% if teacher_student_count|to_int > 1 %}{{teacher_student_count}} Students
-                                                                   {% else %}{{teacher_student_count}} Student{% endif %}</li>
-                                    <li><i class="fa fa-play-circle"></i> {% if teacher_course_count|to_int > 1 %}{{teacher_course_count}} Courses
-                                                                   {% else %}{{teacher_course_count}} Course{% endif %}</li>
+                                    <li><i class="fa fa-user"></i> {{teacher_student_count}} 個學生</li>
+                                    <li><i class="fa fa-play-circle"></i>{{teacher_course_count}} 門課程</li>
                                 </ul>
                             </div><!-- .instructors-stats -->
 
@@ -160,7 +158,7 @@ $(document).ready(function(){
                                 <h2 class="entry-title mt-3">{{course.course_name}}</h2>
 
                                 <div class="course-teacher mt-3">
-                                    Teacher: <span>{{teacher.name}}</span>
+                                    教師: <span>{{teacher.name}}</span>
                                 </div><!-- .course-teacher -->
 
                                 <div class="entry-content mt-3">
@@ -175,7 +173,7 @@ $(document).ready(function(){
                     <div class="instructors-info mt-5">
                         <div class="comments-form">
                             <div class="comment-respond">
-                                <h3 class="comment-reply-title">Review</h3>
+                                <h3 class="comment-reply-title">評論</h3>
                                 {% if if_review == 0  %}
                                 <input type="number" name="course_rating" id="course_rating" class="rating" data-empty-value="0" data-icon-lib="" data-active-icon="fas fa-star" data-inactive-icon="far fa-star" value="0"/>  
                                 <form action="{% url 'review' %}" method="post" class="comment-form">

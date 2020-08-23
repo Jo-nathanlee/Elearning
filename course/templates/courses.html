@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-12">
                         <header class="entry-header">
-                            <h1>Courses</h1>
+                            <h1>課程總覽</h1>
                         </header><!-- .entry-header -->
                     </div><!-- .col -->
                 </div><!-- .row -->
@@ -109,13 +109,13 @@
                     <div class="search-widget">
                         <form action="/course/" method="POST" class="flex flex-wrap align-items-center">
                         {% csrf_token %}
-                            <input type="search" name="keyword" placeholder="Search...">
+                            <input type="search" name="keyword" placeholder="搜尋...">
                             <button type="submit" class="flex justify-content-center align-items-center"><i class="fa fa-search"></i></button>
                         </form><!-- .flex -->
                     </div><!-- .search-widget -->
 
                     <div class="cat-links">
-                        <h2>Categories</h2>
+                        <h2>程式語言</h2>
 
                         <ul class="p-0 m-0">
                         {% for c in category %}
@@ -125,7 +125,7 @@
                     </div><!-- .cat-links -->
 
                     <div class="latest-courses">
-                        <h2>Latest Courses</h2>
+                        <h2>最新課程</h2>
 
                         <ul class="p-0 m-0">
                             {% for c in latest_course %}

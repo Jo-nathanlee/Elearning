@@ -16,6 +16,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.db.models import Avg
 from distutils.util import strtobool
+import botocore
 
 # Get programming language categories
 def get_language():
@@ -677,12 +678,16 @@ def download_homework(request):
 
 
 
-    bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-    key = settings.AWS_SECRET_ACCESS_KEY
 
-    wrapper = HttpResponse(open(homework.homework.name))
-    response = HttpResponse(wrapper, content_type='application/force-download')
-    # response['Content-disposition'] = 'attachment;filename="%s"'%
-    response['Content-Length'] = os.path.getsize(homework.homework.name)
-    return response
 
+    filepath = homework.homework.url
+    response_headers = {
+        'response-content-type': 'application/force-download',
+        'response-content-disposition':'attachment;filename="%s"'%homework.homework.name
+        }
+    url = s3.generate_url(60, 'GET',
+                    bucket=settings.AWS_STORAGE_BUCKET_NAME,
+                    key=filepath,
+                    response_headers=response_headers,
+                    force_http=True)
+    return http.HttpResponseRedirect(url)

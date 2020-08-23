@@ -687,3 +687,12 @@ def download_homework(request):
                     force_http=True)
     return http.HttpResponseRedirect(url)
 
+    bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+    key = settings.AWS_SECRET_ACCESS_KEY
+
+    wrapper = HttpResponse(file(dfilename))
+    response = HttpResponse(wrapper, content_type='application/force-download')
+    response['Content-disposition'] = 'attachment;filename="%s"'%homework.homework.name
+    response['Content-Length'] = os.path.getsize(homework.homework.name)
+    return response
+

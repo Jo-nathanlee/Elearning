@@ -68,12 +68,13 @@ def new_course(request):
 
 # course index page
 def course_index(request):
+    # default
+    all_course = models.Course.objects.all().order_by('-created_at')
     # search by keyword
     if request.method == 'POST':
         keyword = request.POST['keyword']
         all_course = models.Course.objects.filter(course_name__icontains=keyword).order_by('-created_at')
-    # default
-    all_course = models.Course.objects.all().order_by('-created_at')
+
     
 
     paginator = Paginator(all_course, 6)

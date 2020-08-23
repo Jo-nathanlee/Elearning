@@ -675,7 +675,7 @@ def download_homework(request):
     homework_id = request.GET['id']
     homework = models.Homework.objects.get(id=homework_id)
 
-    filepath = settings.MEDIA_DIRECTORY + homework.homework.name
+    filepath = homework.homework.url
     response_headers = {
         'response-content-type': 'application/force-download',
         'response-content-disposition':'attachment;filename="%s"'%homework.homework.name

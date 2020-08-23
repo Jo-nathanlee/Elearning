@@ -332,8 +332,6 @@ $(document).ready(function(){
         });    
     });
     
-    var delay = 3000;
-window.setTimeout(function(){$('#downloadLink')[0].click();},delay);
         
   
     
@@ -450,8 +448,7 @@ window.setTimeout(function(){$('#downloadLink')[0].click();},delay);
                             <tr>
                                 <th scope="row">{{ hw.student.name }}</th>
                                 <td>{% if hw.homework != None and hw.homework != '' %} 
-                                    <a id="downloadLink" href="{{ hw.homework.url }}" target="_blank" 
-                                    type="application/octet-stream" download="{{ hw.homework.name }}">{{ hw.homework|to_str }}</a>
+                                    <a href="/course/download_homework?id={{ hw.id }}">{{ hw.homework|to_str }}</a>
                                     {% endif %}
                                 </td>
                                 <td>{% if hw.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>

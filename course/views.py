@@ -18,6 +18,9 @@ from django.db.models import Avg
 from distutils.util import strtobool
 import botocore
 import boto3
+import requests
+from wsgiref.util import FileWrapper
+from django.http import Http404, HttpResponse
 
 # Get programming language categories
 def get_language():
@@ -685,7 +688,20 @@ def download_homework(request):
     bucket_name = settings.AWS_STORAGE_BUCKET_NAME
     url = s3.generate_presigned_url('get_object', Params = {'Bucket': bucket_name, 'Key': homework.homework.name}, ExpiresIn = 100)
 
-    return HttpResponse()
 
 
+    request = requests.get(url, stream=True)
+
+    # Was the request OK?
+    if request.status_code != requests.codes.ok:
+        return HttpResponse(status=400)
+
+    wrapper = FileWrapper(request.raw)
+    content_type = request.headers['content-type']
+    content_len = request.headers['content-length']
+
+    response = HttpResponse(wrapper, content_type=content_type)
+    response['Content-Length'] = content_len
+    response['Content-Disposition'] = "attachment; filename="+homework.homework.name
+    return response 
 

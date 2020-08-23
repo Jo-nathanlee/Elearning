@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import permission_required
 from django.db.models import Avg
 from distutils.util import strtobool
 import botocore
+import boto3
 
 # Get programming language categories
 def get_language():
@@ -676,7 +677,7 @@ def download_homework(request):
     homework_id = request.GET['id']
     homework = models.Homework.objects.get(id=homework_id)
 
-
+    s3 = boto3.resource('s3')
 
 
 

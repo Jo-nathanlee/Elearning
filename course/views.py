@@ -677,6 +677,7 @@ def download_homework(request):
     homework_id = request.GET['id']
     homework = models.Homework.objects.get(id=homework_id)
 
+    s3 = boto3.resource('s3')
     s3 = boto3.client('s3')
     bucket_name = settings.AWS_STORAGE_BUCKET_NAME
     s3.download_file(bucket_name, homework.homework.name, homework.homework.name)

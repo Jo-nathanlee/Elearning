@@ -677,18 +677,7 @@ def download_homework(request):
     homework_id = request.GET['id']
     homework = models.Homework.objects.get(id=homework_id)
 
-    s3 = boto3.resource('s3')
+    s3 = boto3.client('s3')
+    bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+    s3.download_file(bucket_name, homework.homework.name, homework.homework.name)
 
-
-
-    filepath = homework.homework.url
-    response_headers = {
-        'response-content-type': 'application/force-download',
-        'response-content-disposition':'attachment;filename="%s"'%homework.homework.name
-        }
-    url = s3.generate_url(60, 'GET',
-                    bucket=settings.AWS_STORAGE_BUCKET_NAME,
-                    key=filepath,
-                    response_headers=response_headers,
-                    force_http=True)
-    return http.HttpResponseRedirect(url)

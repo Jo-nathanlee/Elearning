@@ -448,7 +448,7 @@ $(document).ready(function(){
                             <tr>
                                 <th scope="row">{{ hw.student.name }}</th>
                                 <td>{% if hw.homework != None and hw.homework != '' %} 
-                                    <a href="{{ hw.homework.url }}" download>{{ hw.homework|to_str }}</a>
+                                    <a href="/course/download_homework?id={{ hw.id }}">{{ hw.homework|to_str }}</a>
                                     {% endif %}
                                 </td>
                                 <td>{% if hw.homework_url != "" %}<a href="{{ hw.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>
@@ -460,7 +460,7 @@ $(document).ready(function(){
                             <tr>
                                 <th scope="row">{{ hw.homework.0.student.name }}</th>
                                 <td>{% if hw.homework.0.homework != None and hw.homework.0.homework != '' %} 
-                                    <a href="{{ hw.homework.0.homework.url }}" download>{{ hw.homework.0.homework|to_str }}</a>
+                                    <a href="/course/download_homework?id={{ hw.homework.0.id }}">{{ hw.homework.0.homework|to_str }}</a>
                                     {% endif %}
                                 </td>
                                 <td>{% if hw.homework.0.homework_url != "" %}<a href="{{ hw.homework.0.homework_url }}" target="_blank">作業連結</a>{% endif %}</td>

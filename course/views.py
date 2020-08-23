@@ -669,5 +669,21 @@ def review(request):
         )
 
     messages.add_message(request, messages.INFO, '已評論')
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])   
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])  
+    
+def download_homework(request):
+    homewwork_id = request.GET['id']
+    homework = models.Homework.objects.get(homewwork_id=id)
+
+    filepath = settings.MEDIA_DIRECTORY + homework.homework.name
+    response_headers = {
+        'response-content-type': 'application/force-download',
+        'response-content-disposition':'attachment;filename="%s"'%homework.homework.name
+        }
+    url = s3.generate_url(60, 'GET',
+                    bucket=settings.AWS_STORAGE_BUCKET_NAME,
+                    key=filepath,
+                    response_headers=response_headers,
+                    force_http=True)
+    return http.HttpResponseRedirect(url)
 

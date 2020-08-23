@@ -22,4 +22,6 @@ urlpatterns = [
     path('upload_pic', views.upload_pic,name='upload_pic'),
     path('update_note/', views.update_note,name='update_note'),
     path('review/', views.review,name='review'),
+    path('download_homework/', views.download_homework,name='download_homework'),
+    
 ]

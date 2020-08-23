@@ -672,8 +672,8 @@ def review(request):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])  
     
 def download_homework(request):
-    homewwork_id = request.GET['id']
-    homework = models.Homework.objects.get(homewwork_id=id)
+    homework_id = request.GET['id']
+    homework = models.Homework.objects.get(id=homework_id)
 
     filepath = settings.MEDIA_DIRECTORY + homework.homework.name
     response_headers = {

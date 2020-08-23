@@ -683,7 +683,10 @@ def download_homework(request):
         region_name=settings.AWS_S3_REGION_NAME
     )
     bucket_name = settings.AWS_STORAGE_BUCKET_NAME
-    file = s3.download_file(bucket_name, homework.homework.name, homework.homework.name)
+    url = s3.generate_presigned_url('get_object', Params = {'Bucket': bucket_name, 'Key': homework.homework.name}, ExpiresIn = 100)
 
-    return HttpResponse(file)
+
+    return HttpResponse(url)
+
+
 

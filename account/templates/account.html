@@ -219,7 +219,7 @@ $(document).ready(function(){
                         <th scope="row">{{ hw.created_at|date:'Y-m-d' }}</th>
                         <td>{{ hw.lesson.homework_title }}</td>
                         <td>{{ hw.lesson.homework_description|safe  }}</td>
-                        <td><a href="{{ hw.homework.url }}" download>{{ hw.homework|to_str }}</a></td>
+                        <td><a href="/course/download_homework?id={{ hw.id }}" download>{{ hw.homework|to_str }}</a></td>
                       </tr>
                     {% endfor %}
                     </tbody>

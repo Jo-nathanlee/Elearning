@@ -189,3 +189,32 @@ def upload_project(request):
         return JsonResponse(data,safe=False)
     except Exception as e:
         pass
+
+def download_project(request):
+    group_id = request.GET['id']
+    group = models.Group.objects.get(id=group_id)
+
+    s3= boto3.client('s3', 
+        aws_access_key_id=settings.AWS_ACCESS_KEY_ID, 
+        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, 
+        region_name=settings.AWS_S3_REGION_NAME
+    )
+    bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+    url = s3.generate_presigned_url('get_object', Params = {'Bucket': bucket_name, 'Key': group.project.name}, ExpiresIn = 100)
+
+
+
+    request = requests.get(url, stream=True)
+
+    # Was the request OK?
+    if request.status_code != requests.codes.ok:
+        return HttpResponse(status=400)
+
+    wrapper = FileWrapper(request.raw)
+    content_type = request.headers['content-type']
+    content_len = request.headers['content-length']
+
+    response = HttpResponse(wrapper, content_type=content_type)
+    response['Content-Length'] = content_len
+    response['Content-Disposition'] = "attachment; filename="+group.project.name
+    return response 

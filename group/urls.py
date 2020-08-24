@@ -13,4 +13,5 @@ urlpatterns = [
     path('post/<int:post_id>/', views.post), 
     path('comment', views.comment,name='forum_comment'), 
     path('upload_project', views.upload_project,name='upload_project'), 
+    path('download_project', views.download_project,name='download_project'), 
 ]

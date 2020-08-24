@@ -101,7 +101,7 @@ $(document).ready(function(){
                 </div>    
                 <div class="col-1 col-lg-1 text-right offset-lg-3 pt-4" >
                     {% if group.project != None and group.project != '' %} 
-                    <a href="{{ group.project.url }}" download><i class="fa fa-download" style="font-size: 26px;"></i></a>
+                    <a href="/group/download_project?id={{ group.id }}"><i class="fa fa-download" style="font-size: 26px;"></i></a>
                     {% endif %}
                 </div> 
                 <div class="col-6 col-lg-6 offset-lg-1">

@@ -12,6 +12,7 @@ import boto3
 import requests
 from wsgiref.util import FileWrapper
 from django.http import Http404, HttpResponse
+from django.conf import settings
 
 # Create your views here.
 # create a new group

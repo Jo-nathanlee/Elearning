@@ -13,7 +13,7 @@ from django.core.files.base import ContentFile
 import os
 from django.conf import settings
 from django.core.cache import cache
-
+import requests
 
 # Create your views here.
 # get programming language categories
@@ -121,6 +121,16 @@ def login(request):
         password = request.POST['password']
         next = request.POST['next']
         user = auth.authenticate(email=email,password=password)
+
+        url = 'https://elearning-chat.herokuapp.com/login'
+        # ... your code ...
+
+        postdata = {
+            'email': email,
+            'password': password,
+        }
+
+        r = requests.post(url, data=postdata)
 
         if user is not None:
             auth.login(request,user)

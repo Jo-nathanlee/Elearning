@@ -127,8 +127,7 @@ def login(request):
 
         postdata = {
             'email': email,
-            'password': password,
-            'csrf_token':django.middleware.csrf.get_token(request),
+            'password': password
         }
 
         r = requests.post(url, data=postdata)

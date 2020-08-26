@@ -122,15 +122,15 @@ def login(request):
         next = request.POST['next']
         user = auth.authenticate(email=email,password=password)
 
-        url = 'https://elearning-chat.herokuapp.com/login'
-        # ... your code ...
+        # url = 'https://elearning-chat.herokuapp.com/login'
+        # # ... your code ...
 
-        postdata = {
-            'email': email,
-            'password': password
-        }
+        # postdata = {
+        #     'email': email,
+        #     'password': password
+        # }
 
-        r = requests.post(url, data=postdata)
+        # r = requests.post(url, data=postdata)
 
         if user is not None:
             auth.login(request,user)

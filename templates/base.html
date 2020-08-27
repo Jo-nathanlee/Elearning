@@ -84,7 +84,7 @@
             {% endif %}
         });
         
-        function getCookie(name) {
+        function get_Cookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
                 var cookies = document.cookie.split(';');
@@ -99,7 +99,7 @@
             }
             return cookieValue;
         }
-        var csrftoken = getCookie('csrftoken');
+        var csrftoken = get_Cookie('csrftoken');
 
         function csrfSafeMethod(method) {
             // 这些HTTP方法不要求CSRF包含

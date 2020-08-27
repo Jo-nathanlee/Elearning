@@ -18,6 +18,7 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 from index import views as index_views  # new
+from django.views.generic import TemplateView
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 urlpatterns = [

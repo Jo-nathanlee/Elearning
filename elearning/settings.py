@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'course',
     'storages',
     'group',
+    'chat',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +152,12 @@ AWS_S3_REGION_NAME = 'ap-southeast-1'
 
 
 
+ASGI_APPLICATION = "elearning.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}

@@ -25,6 +25,7 @@ urlpatterns = [
     path('course/', include('course.urls')),
     path('index/', include('index.urls')),
     path('group/', include('group.urls')),
+    path('chat/', include('chat.urls')),
     path('', index_views.index),
    
 ]

@@ -18,8 +18,6 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 from index import views as index_views  # new
-from django.views.generic import TemplateView
-from django.views.decorators.clickjacking import xframe_options_exempt
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
@@ -28,10 +26,7 @@ urlpatterns = [
     path('index/', include('index.urls')),
     path('group/', include('group.urls')),
     path('', index_views.index),
-    path('other_domain/',
-        xframe_options_exempt(TemplateView.as_view(template_name='account/otherdomain.html')),
-        name='other_domain',
-    ),
+   
 ]
 
 

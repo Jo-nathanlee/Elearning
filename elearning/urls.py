@@ -18,8 +18,6 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 from index import views as index_views  # new
-import shared_session
-from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),  
@@ -28,7 +26,6 @@ urlpatterns = [
     path('index/', include('index.urls')),
     path('group/', include('group.urls')),
     path('', index_views.index),
-    url(r'^shared-session/', shared_session.urls), 
 ]
 
 

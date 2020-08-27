@@ -139,6 +139,8 @@ def login(request):
             next_url = cache.get('next')
             if next_url:
                 cache.delete('next')
+                if 'elearning-chat' in next_url:
+                    return HttpResponseRedirect(next_url)
                 return redirect(next_url,locals())
             return redirect('/index/',locals())
         else:

@@ -150,6 +150,3 @@ AWS_S3_REGION_NAME = 'ap-southeast-1'
 
 SESSION_COOKIE_DOMAIN = ".herokuapp.com"
 
-SESSION_COOKIE_NAME = "onlinecourses_chat"
-
-SECRET_KEY="onlinecourses_chat" 

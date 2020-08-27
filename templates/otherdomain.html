@@ -25,6 +25,7 @@
       return;
     }
     var sessionID = e.data;
+    console.log(sessionID);
     // you can probably get your cookie expiry from your django view, so all of your cookie expires at the same time
     setCookie("sessionid", sessionID, 365);
   }, false);

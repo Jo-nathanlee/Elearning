@@ -4,6 +4,11 @@
 <!doctype html>
 <html>
     <head>
+        <style>
+            .invisible {
+              display:none;
+            }
+          </style>
         {{ domains|json_script:"domains" }}
         {{ other_domain_path|json_script:"other-domain-path"}}
         <title>E-Learning</title>

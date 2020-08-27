@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from django.http import FileResponse,JsonResponse
+from django.http import FileResponse,JsonResponse,HttpResponseRedirect
 from account import models, forms
 from course.models import Homework,Category
 from django.contrib.auth import authenticate
@@ -14,7 +14,6 @@ import os
 from django.conf import settings
 from django.core.cache import cache
 import requests
-
 # Create your views here.
 # get programming language categories
 def get_language():

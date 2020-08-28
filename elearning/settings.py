@@ -138,7 +138,7 @@ LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'^/user/login/$', 
     r'^/user/logout/$',
     r'^/user/register/$',   #^代表Regular Expression開始$代表結束
-    # r'/index/$',
+    r'(ws/chat/.*)',
 )
 LOGIN_URL = '/user/login/'
 

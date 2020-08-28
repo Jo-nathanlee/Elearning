@@ -132,7 +132,7 @@ STATIC_ROOT = 'staticfiles'
 
 #LOGIN_REQUIRED
 LOGIN_REQUIRED_URLS = (
-    r'(.*)',
+    #r'(.*)',
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'^/user/login/$', 

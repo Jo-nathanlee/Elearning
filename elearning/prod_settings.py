@@ -34,3 +34,11 @@ AWS_STORAGE_BUCKET_NAME = 'elearning-upload-heroku'
 AWS_S3_REGION_NAME = 'ap-southeast-1'
 
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": ["os.environ.get('REDIS_URL', 'redis://localhost:6379')"],
+        },
+    },
+}

@@ -116,13 +116,13 @@
 </body>
 
 </html>
-<script type="text/javascript" src='{% static "js/reconnecting-websocket.min.js" %}'></script>
+<!-- <script type="text/javascript" src='{% static "js/reconnecting-websocket.min.js" %}'></script> -->
 <script>
     $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
     var group_id = '{{ group_id }}';
     var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
     var websocket_str= ws_scheme+'://' + window.location.host + '/ws/chat/' + group_id + '/';
-    var chatSocket = new ReconnectingWebSocket(websocket_str);
+    var chatSocket = new WebSocket(websocket_str);
 
     chatSocket.onmessage = function (e) {
         var data = JSON.parse(e.data);

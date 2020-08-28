@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
                             
@@ -82,10 +82,7 @@ WSGI_APPLICATION = 'elearning.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default':dj_database_url.config()
 }
 
 
@@ -131,6 +128,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
+STATIC_ROOT = 'staticfiles' 
 
 #LOGIN_REQUIRED
 LOGIN_REQUIRED_URLS = (
@@ -150,7 +148,8 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_STORAGE_BUCKET_NAME = 'elearning-upload-heroku'
 AWS_S3_REGION_NAME = 'ap-southeast-1'
 
-
+# Honor the 'X-Forwarded-Proto' header for request.is_secure().
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ASGI_APPLICATION = "elearning.routing.application"
 CHANNEL_LAYERS = {
@@ -161,3 +160,4 @@ CHANNEL_LAYERS = {
         },
     },
 }
+

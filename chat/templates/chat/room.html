@@ -1,162 +1,54 @@
-
-{% load static %}
+<!-- chat/templates/chat/room.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
     <title>Chat Room</title>
-    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 </head>
 <body>
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        
-    </div>
-</nav>
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-5">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-comment"></span> 第{{ group_id }}組聊天室
-                </div>
-                <div class="panel-body" id="all_messages">
-                    <ul class="chat">
-                        {% if chat_messages %}
-                            {% for message in chat_messages %}
-
-                                <li class="right clearfix"><span class="chat-img pull-right">
-                                    <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle"/>
-                                </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>{{message.timestamp|date:"H:i"}}
-                                            </small>
-                                          
-                                        </div>
-                                        <p>
-                                            {{ message.message|safe }}
-                                        </p>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        {% endif %}    
-
-                        {% if user.is_authenticated %}
-                            {% if chat_messages %}
-                                {% for message in chat_messages %}
-                                    {% if message.user == user %}
-                                    <li class="right clearfix"><span class="chat-img pull-right">
-                                        <img src="{{message.user.pic.url}}" alt="User Avatar" class="img-circle"/>
-                                    </span>
-                                        <div class="chat-body clearfix">
-                                            <div class="header">
-                                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>{{message.timestamp|date:"H:i"}}
-                                                </small>
-                                                <strong class="pull-right primary-font">{{ message.user.name }}</strong>
-                                            </div>
-                                            <p>
-                                                {{ message.message|safe }}
-                                            </p>
-                                        </div>
-                                    </li>
-                                    {% else %}
-                                    <li class="left clearfix"><span class="chat-img pull-left">
-                                        <img src="{{message.user.pic.url}}" alt="User Avatar" class="img-circle"/>
-                                    </span>
-                                        <div class="chat-body clearfix">
-                                            <div class="header">
-                                                <strong class="primary-font">{{ message.user.name }}</strong>
-                                                <small class="pull-right text-muted">
-                                                    <span class="glyphicon glyphicon-time"></span>{{message.timestamp|date:"H:i"}}
-                                                </small>
-                                            </div>
-                                            <p>
-                                                {{ message.message|safe }}
-                                            </p>
-                                        </div>
-                                    </li>
-                                    {% endif %}
-                                {% empty %}
-
-                                {% endfor %}
-                            {% endif %}
-                        {% endif %}                
-
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-sm"
-                               placeholder="輸入訊息..."/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-warning btn-sm" id="btn-chat">
-                                    傳送</button>
-                            </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
+    <input id="chat-message-input" type="text" size="100"/><br/>
+    <input id="chat-message-submit" type="button" value="Send"/>
 </body>
-
-</html>
-<!-- <script type="text/javascript" src='{% static "js/reconnecting-websocket.min.js" %}'></script> -->
 <script>
-    $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
-    var group_id = '{{ group_id }}';
-    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-    var websocket_str= ws_scheme+'://' + window.location.host + '/ws/chat/' + group_id + '/';
-    var chatSocket = new WebSocket(websocket_str);
+    var roomName = {{ group_id }};
 
-    chatSocket.onmessage = function (e) {
+    var protocol = '';
+    if (window.location.protocol === 'https:') {
+        protocol = 'wss:';
+    } else {
+        protocol = 'ws:';
+    }
+
+    var chatSocket = new WebSocket(
+        protocol + '//' + window.location.host +
+        '/ws/chat/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var message = data['message'];
-        var now_time = data['now_time'];
-        var receive_user = data['user'];
-        var pic_url = data['pic_url'];
-        var user = "{{user}}";
-        if (receive_user === user) {
-            $('<li class="right clearfix"><span class="chat-img pull-right"><img src="{{user.pic.url}}" alt="User Avatar" class="img-circle"/></span><div class="chat-body clearfix"><div class="header"><small class=" text-muted"><span class="glyphicon glyphicon-time"></span>'+now_time+'</small><strong class="pull-right primary-font">'+user+'</strong></div><p>'+message+'</p></div></li>').appendTo($('.chat'))
+        document.querySelector('#chat-log').value += (message + '\n');
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
         }
-        else{
-            $('<li class="left clearfix"><span class="chat-img pull-left"><img src="'+pic_url+'" alt="User Avatar" class="img-circle"/></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">'+ receive_user+ '</strong><small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>'+now_time+'</small></div><p>'+message+'</p></div></li>').appendTo($('.chat'))
-        }
-        $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
-        };
+    };
 
-        chatSocket.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
 
-        $("#btn-input").focus();
-        $("#btn-input").keyup(function(e){
-          if (e.keyCode === 13) {  // enter, return
-                $("#btn-chat").click();
-            }
-        });
-
-        $("#btn-chat").click(function() {
-          var message = $('#btn-input').val();
-          chatSocket.send(JSON.stringify({
-                'message': message
-          }));
-          $('#btn-input').val('');
-
-        });
+        messageInputDom.value = '';
+    };
 </script>
+</html>

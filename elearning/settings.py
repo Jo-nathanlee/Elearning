@@ -132,13 +132,13 @@ STATIC_ROOT = 'staticfiles'
 
 #LOGIN_REQUIRED
 LOGIN_REQUIRED_URLS = (
-    r'(.*)',
+    # r'(.*)',
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'^/user/login/$', 
     r'^/user/logout/$',
     r'^/user/register/$',   #^代表Regular Expression開始$代表結束
-    r'(ws/chat/.*)',
+    # r'/index/$',
 )
 LOGIN_URL = '/user/login/'
 

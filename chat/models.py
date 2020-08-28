@@ -6,11 +6,11 @@ from django.utils import timezone
 
 class Message(models.Model):
     group = models.ForeignKey(
-        'Group',
+        'group.Group',
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        'User',
+        'account.User',
         on_delete=models.CASCADE
     )
     message = models.TextField()

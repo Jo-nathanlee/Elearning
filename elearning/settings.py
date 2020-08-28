@@ -132,7 +132,7 @@ STATIC_ROOT = 'staticfiles'
 
 #LOGIN_REQUIRED
 LOGIN_REQUIRED_URLS = (
-    # r'(.*)',
+    r'(.*)',
 )
 LOGIN_REQUIRED_URLS_EXCEPTIONS = (
     r'^/user/login/$', 
@@ -156,7 +156,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [("localhost", 6379)],
+            "hosts": [os.environ.get('REDISTOGO_URL',('redis', 6379))],
         },
     },
 }

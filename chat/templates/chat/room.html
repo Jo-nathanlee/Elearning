@@ -120,7 +120,7 @@
 <script>
     $('#all_messages').scrollTop($('#all_messages')[0].scrollHeight);
     var group_id = '{{ group_id }}';
-    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var ws_scheme = window.location.protocol == "https:" ? "ws" : "ws";
     var websocket_str= ws_scheme+'://' + window.location.host + '/ws/chat/' + group_id + '/';
     var chatSocket = new WebSocket(websocket_str);
 

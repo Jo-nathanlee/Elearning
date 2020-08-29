@@ -5,6 +5,7 @@ import json
 from .models import Message
 from group.models import Group
 from account.models import User
+import datetime
 
 
 class ChatConsumer(WebsocketConsumer):

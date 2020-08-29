@@ -21,7 +21,10 @@
 {
     margin-right: 60px;
 }
-
+.img-circle {
+    height: 50px;
+    width: 50px;
+}
 
 .chat li .chat-body p
 {

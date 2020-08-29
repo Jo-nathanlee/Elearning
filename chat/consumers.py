@@ -38,8 +38,8 @@ class ChatConsumer(WebsocketConsumer):
         message = text_data_json['message']
         user = self.scope['user']
         pic_url = user.pic
-        now_time = datetime.datetime.now().strftime(settings.DATETIME_FORMAT)
-
+        now_time = datetime.datetime.now().strftime("%H:%M")
+        user_name = user.name
         group = Group.objects.get(id=self.group_id)
         Message.objects.create( message=message, group=group, user=self.scope["user"])
 
@@ -51,6 +51,7 @@ class ChatConsumer(WebsocketConsumer):
                 'message': message,
                 'user': str(user),
                 'pic_url':pic_url,
+                'user_name':user_name,
                 'now_time': now_time
             }
         )
@@ -61,10 +62,12 @@ class ChatConsumer(WebsocketConsumer):
         now_time = event['now_time']
         user = event['user']
         pic_url = event['pic_url']
+        user_name = event['user_name']
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'message': message,
             'user': user,
+            'user_name':user_name,
             'now_time': now_time,
             'pic_url':pic_url,
         }))

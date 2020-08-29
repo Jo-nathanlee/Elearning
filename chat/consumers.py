@@ -6,6 +6,7 @@ from .models import Message
 from group.models import Group
 from account.models import User
 import datetime
+from django.conf import settings
 
 
 class ChatConsumer(WebsocketConsumer):

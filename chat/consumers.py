@@ -35,9 +35,7 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         user = self.scope['user']
-        user_email = user.email
-        user_object = User.objects.get(email=user_email)
-        pic_url = user_object.pic.url
+        pic_url = user.pic
         now_time = datetime.datetime.now().strftime(settings.DATETIME_FORMAT)
 
         group = Group.objects.get(id=self.group_id)

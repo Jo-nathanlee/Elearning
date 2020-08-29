@@ -1,3 +1,2 @@
-web: gunicorn --pythonpath elearning elearning.wsgi
-
-channelsworker: python manage.py runworker -v2
+worker: gunicorn --pythonpath elearning elearning.wsgi
+web: daphne elearning.asgi:application --port $PORT --bind 0.0.0.0

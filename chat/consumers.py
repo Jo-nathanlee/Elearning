@@ -4,6 +4,7 @@ from channels.generic.websocket import WebsocketConsumer
 import json
 from .models import Message
 from group.models import Group
+from account.models import User
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -34,7 +35,9 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         user = self.scope['user']
-        pic_url = user.pic.url
+        user_email = user.email
+        user_object = User.objects.get(email=user_email)
+        pic_url = user_object.pic.url
         now_time = datetime.datetime.now().strftime(settings.DATETIME_FORMAT)
 
         group = Group.objects.get(id=self.group_id)

@@ -22,16 +22,13 @@
     }
     .panel-heading{
         height:5%;
+        background-color: rgb(49, 49, 49);
     }
     .panel-body{
         height: 87%;
     }
     .panel-footer{
         height: 8%;
-    }
-    .btn-left{
-        position: absolute;
-        left: 5px;
     }
 
 </style>
@@ -43,14 +40,16 @@
     <div class="panel panel-primary">
         <div class="panel-heading ">
             <div class="container-fluid panel-container">
-                <div class="col-md-3 text-left">
-                    <a href="/group/{{ group_id }}/"><button class="btn btn-warning btn-sm btn-left" id="btn-chat">
-                        離開</button></a>
-                </div>
-                <div class="col-md-6 text-center ">
-                    <span class="glyphicon glyphicon-comment"></span> 第{{ group_id }}組聊天室
-                </div>
-                <div class="col-md-3 text-right ">
+                <div class="row">
+                    <div class="col-md-3 text-left">
+                        <a href="/group/{{ group_id }}/"><button type="button" class="btn btn-edit">
+                            離開</button></a>
+                    </div>
+                    <div class="col-md-6 text-center ">
+                        <span class="glyphicon glyphicon-comment"></span> 第{{ group_id }}組聊天室
+                    </div>
+                    <div class="col-md-3 text-right ">
+                    </div>
                 </div>
             </div>    
         </div>
@@ -104,7 +103,7 @@
                 <input id="btn-input" type="text" class="form-control input-sm"
                         placeholder="輸入訊息..."/>
                     <span class="input-group-btn">
-                        <button class="btn btn-warning btn-sm" id="btn-chat">
+                        <button class="btn btn-warning btn-sm" style="background-color: #19c880;" id="btn-chat">
                             傳送</button>
                     </span>
             </div>

@@ -20,7 +20,7 @@
     .panel{
         height: 100vh;
     }
-    .panel-primary .panel-heading{
+    .panel-primary > .panel-custom-heading{
         height:5%;
         background: rgb(49, 49, 49);
     }
@@ -36,7 +36,12 @@
     .panel-footer{
         background: rgb(49, 49, 49);
     }
-
+    .panel-primary {
+        border-color: white;
+    }
+    .panel {
+        border-radius: 0px;
+    }
 
 </style>
 </head>
@@ -45,7 +50,7 @@
 
 <div class="chatroom">
     <div class="panel panel-primary">
-        <div class="panel-heading ">
+        <div class="panel-custom-heading ">
             <div class="container-fluid panel-container">
                 <div class="row">
                     <div class="col-md-3 text-left">

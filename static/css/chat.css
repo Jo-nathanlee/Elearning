@@ -67,6 +67,7 @@
     width: 100%;
     top:0;
     left:0;
+    overflow-y: hidden;
 }
 .btn-edit{
     background: #19c880;

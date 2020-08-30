@@ -16,15 +16,43 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<style>
+    .panel{
+        height: 100vh;
+    }
+    .panel-heading{
+        height:5%;
+    }
+    .panel-body{
+        height: 87%;
+    }
+    .panel-footer{
+        height: 8%;
+    }
+    .btn-left{
+        position: absolute;
+        left: 5px;
+    }
 
+</style>
 </head>
 <body>
 
 
 <div class="chatroom">
     <div class="panel panel-primary">
-        <div class="panel-heading">
-            <span class="glyphicon glyphicon-comment"></span> 第{{ group_id }}組聊天室
+        <div class="panel-heading ">
+            <div class="container-fluid panel-container">
+                <div class="col-md-3 text-left">
+                    <a href="/group/{{ group_id }}/"><button class="btn btn-warning btn-sm btn-left" id="btn-chat">
+                        離開</button></a>
+                </div>
+                <div class="col-md-6 text-center ">
+                    <span class="glyphicon glyphicon-comment"></span> 第{{ group_id }}組聊天室
+                </div>
+                <div class="col-md-3 text-right ">
+                </div>
+            </div>    
         </div>
         <div class="panel-body" id="all_messages">
             <ul class="chat">

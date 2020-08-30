@@ -16,7 +16,7 @@ def room(request, group_id):
     group = Group.objects.get(id=group_id)
     user = User.objects.get(email=request.user.email)
     
-    if request.user in group.member.all():
+    if request.user in group.member.all() or request.user == group.teacher:
         chat_messages = Message.objects.filter(group=group_id).order_by("timestamp")
         return render(request, 'chat/room.html', {
             'chat_messages': chat_messages,

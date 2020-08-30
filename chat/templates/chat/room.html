@@ -31,7 +31,10 @@
         height: 8%;
     }
     .btn-warning {
-        background-color: #19c880;
+        background: #19c880;
+    }
+    .panel-footer{
+        background: rgb(49, 49, 49);
     }
 
 
@@ -46,8 +49,6 @@
             <div class="container-fluid panel-container">
                 <div class="row">
                     <div class="col-md-3 text-left">
-                        <a href="/group/{{ group_id }}/"><button type="button" class=" btn-edit">
-                            離開</button></a>
                     </div>
                     <div class="col-md-6 text-center ">
                         <span class="glyphicon glyphicon-comment"></span> 第{{ group_id }}組聊天室
@@ -104,6 +105,10 @@
         </div>
         <div class="panel-footer">
             <div class="input-group">
+                <span class="input-group-btn">
+                    <a href="/group/{{ group_id }}/"></a><button class="btn btn-warning btn-sm">
+                        離開</button></a>
+                </span>
                 <input id="btn-input" type="text" class="form-control input-sm"
                         placeholder="輸入訊息..."/>
                     <span class="input-group-btn">

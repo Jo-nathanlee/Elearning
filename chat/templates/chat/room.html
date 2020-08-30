@@ -20,7 +20,7 @@
     .panel{
         height: 100vh;
     }
-    .panel-heading{
+    .panel-primary .panel-heading{
         height:5%;
         background-color: rgb(49, 49, 49);
     }
@@ -29,6 +29,9 @@
     }
     .panel-footer{
         height: 8%;
+    }
+    .btn-warning {
+        background-color: #19c880;
     }
 
 </style>
@@ -103,7 +106,7 @@
                 <input id="btn-input" type="text" class="form-control input-sm"
                         placeholder="輸入訊息..."/>
                     <span class="input-group-btn">
-                        <button class="btn btn-warning btn-sm" style="background-color: #19c880;" id="btn-chat">
+                        <button class="btn btn-warning btn-sm" id="btn-chat">
                             傳送</button>
                     </span>
             </div>

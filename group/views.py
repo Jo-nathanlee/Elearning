@@ -24,7 +24,7 @@ def new(request,course_id):
             members = request.POST.getlist('members')
             teacher = User.objects.get(email=request.user.email) 
             course = Course.objects.get(course_id=course_id)
-            course_group = Group.objects.filter(course=course).order_by('-created_at')
+            course_group = models.Group.objects.filter(course=course).order_by('-created_at')
             group_num = 1
             if course_group != None:
                 group_num = (course_group[0].group_num)+1

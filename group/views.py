@@ -18,12 +18,12 @@ from django.conf import settings
 # create a new group
 @permission_required('course.can_access', raise_exception = True )
 def new(request,course_id):
+    course = Course.objects.get(course_id=course_id)
     # creating
     if request.method == "POST":
         try:
             members = request.POST.getlist('members')
             teacher = User.objects.get(email=request.user.email) 
-            course = Course.objects.get(course_id=course_id)
             course_group = Course.objects.filter(course=course).order_by('-created_at')
             group_num = 1
             if course_group != None:

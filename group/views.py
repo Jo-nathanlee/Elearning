@@ -26,7 +26,7 @@ def new(request,course_id):
             course = Course.objects.get(course_id=course_id)
             course_group = models.Group.objects.filter(course=course).order_by('-created_at')
             group_num = 1
-            if course_group != None:
+            if course_group.count() > 0:
                 group_num = (course_group[0].group_num)+1
 
             new_group = models.Group.objects.create(

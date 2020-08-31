@@ -56,7 +56,7 @@ def new(request,course_id):
 def edit(request,group_id):
     group = models.Group.objects.get(id=group_id)
     if request.method == "POST":
-        #try:
+        try:
             members = request.POST.getlist('members')
             
             group.member.clear()
@@ -64,9 +64,9 @@ def edit(request,group_id):
                 group.member.add(int(member_id))
 
             messages.add_message(request, messages.INFO, '編輯成功！')
-            return HttpResponseRedirect('/group/')
-        #except Exception as e:
-            #messages.add_message(request, messages.ERROR, '編輯失敗！')
+            return HttpResponseRedirect('/group/'+course_id)
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '編輯失敗！')
     group_members = group.member.all()
     #showing edit page
     courses = Course.objects.distinct('teacher')
@@ -83,7 +83,7 @@ def delete(request,group_id):
         messages.add_message(request, messages.INFO, '刪除成功！')
     except Exception as e:
         messages.add_message(request, messages.ERROR, '刪除失敗！')
-    return HttpResponseRedirect('/group/')
+    return HttpResponseRedirect('/group/'+course_id)
 
 @permission_required('course.can_access', raise_exception = True )
 def admin(request,course_id):
@@ -116,7 +116,7 @@ def new_post(request,group_id):
             model_post.save()
 
             messages.add_message(request, messages.INFO, '新增成功！')
-            return HttpResponseRedirect('/group/'+group_id )
+            return HttpResponseRedirect('/group/forum/'+group_id )
         #except Exception as e:
             #messages.add_message(request, messages.ERROR, '新增失敗！')
 
@@ -150,7 +150,7 @@ def delete_post(request,post_id):
         messages.add_message(request, messages.INFO, '刪除成功！')
     except Exception as e:
         messages.add_message(request, messages.ERROR, '刪除失敗！')
-    return HttpResponseRedirect('/group/{{ group_id }}')
+    return HttpResponseRedirect('/group/forum/{{ group_id }}')
 
 def post(request,post_id):
     post = models.GroupPost.objects.get(id=post_id)

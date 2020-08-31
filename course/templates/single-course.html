@@ -198,12 +198,12 @@ $(document).ready(function(){
                                                         <div class="comment-author">
                                                             <span class="comment-meta d-block">
                                                             {% language 'en-GB' %}
-                                                                <a href="#">{{r.created_at|date:'d-M-Y'}}</a>
+                                                                <span>{{r.created_at|date:'d-M-Y'}}</span>
                                                             {% endlanguage %}
                                                             </span><!-- .comment-meta -->
 
                                                             <span class="fn">
-                                                                <a href="#">{{r.reviewer.name}}</a>
+                                                                {{r.reviewer.name}}
                                                             </span><!-- .fn -->
                                                         </div><!-- .comment-author -->
 

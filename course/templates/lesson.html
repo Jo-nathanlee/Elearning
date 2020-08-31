@@ -101,8 +101,7 @@ $(document).ready(function(){
                                                                     <span class="comment-meta d-block">\
                                                                         <span>'+DateFormat(data[index].created_at)+'</span>\
                                                                     </span>\
-                                                                    <span class="fn">\
-                                                                        <span>'+data[index].questioner__name+'</span>\
+                                                                    <span class="fn">'+data[index].questioner__name+'\
                                                                     </span>\
                                                                 </div>\
                                                                 <p>'+data[index].question_content+'</p>\
@@ -126,9 +125,8 @@ $(document).ready(function(){
                                                                         </figure>\
                                                                         <div class="comment-wrap">\
                                                                             <div class="comment-author">\
-                                                                                <span class="comment-meta d-block">'+DateFormat(answer[index].created_at)+  
-                                                                                '</span>\
-                                                                                <span class="fn">'+answer[index].answerer__name+'</span>\
+                                                                                <span>'+DateFormat(answer[index].created_at)+  
+                                                                                '</span>'+answer[index].answerer__name+'\
                                                                             </div>\
                                                                             <p>'+answer[index].answer_content+'</p>\
                                                                         </div>\
@@ -202,8 +200,7 @@ $(document).ready(function(){
                                                                     <span class="comment-meta d-block">\
                                                                         <span>'+DateFormat(data[index].created_at)+'</span>\
                                                                     </span>\
-                                                                    <span class="fn">\
-                                                                        <span>'+data[index].questioner__name+'</span>\
+                                                                    <span class="fn">'+data[index].questioner__name+'\
                                                                     </span>\
                                                                 </div>\
                                                                 <p>'+data[index].question_content+'</p>\
@@ -227,9 +224,8 @@ $(document).ready(function(){
                                                                         </figure>\
                                                                         <div class="comment-wrap">\
                                                                             <div class="comment-author">\
-                                                                                <span class="comment-meta d-block">'+DateFormat(answer[index].created_at)+  
-                                                                                '</span>\
-                                                                                <span class="fn">'+answer[index].answerer__name+'</span>\
+                                                                                <span>'+DateFormat(answer[index].created_at)+  
+                                                                                '</span>'+answer[index].answerer__name+'\
                                                                             </div>\
                                                                             <p>'+answer[index].answer_content+'</p>\
                                                                         </div>\
@@ -499,12 +495,12 @@ $(document).ready(function(){
                                             <div class="comment-author">
                                                 <span class="comment-meta d-block">
                                                 {% language 'en-GB' %}
-                                                    {{question.created_at|date:'d-M-Y'}}
+                                                    <span>{{question.created_at|date:'d-M-Y'}}</span>
                                                 {% endlanguage %}
                                                 </span><!-- .comment-meta -->
 
                                                 <span class="fn">
-                                                    <span>{{question.questioner__name}}</span>
+                                                    {{question.questioner__name}}
                                                 </span><!-- .fn -->
                                             </div><!-- .comment-author -->
 

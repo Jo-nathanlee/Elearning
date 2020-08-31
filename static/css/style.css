@@ -2712,6 +2712,13 @@ ul.author-social-profile li:hover .fa {
     color: #19c880;
 }
 
+.comment-wrap .comment-author span {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #19c880;
+}
+
 .post-comments-wrap p {
     color: #757686;
 }

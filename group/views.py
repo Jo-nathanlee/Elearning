@@ -20,7 +20,7 @@ from django.conf import settings
 def new(request,course_id):
     # creating
     if request.method == "POST":
-        # try:
+        try:
             members = request.POST.getlist('members')
             teacher = User.objects.get(email=request.user.email) 
             course = Course.objects.get(course_id=course_id)
@@ -39,9 +39,9 @@ def new(request,course_id):
                 new_group.member.add(int(member_id))
 
             messages.add_message(request, messages.INFO, '建立成功！')
-            return HttpResponseRedirect('/group/')
-        # except Exception as e:
-        #     messages.add_message(request, messages.ERROR, '建立失敗！')
+            return HttpResponseRedirect('/group/'+course_id)
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '建立失敗！')
 
         
 

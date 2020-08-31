@@ -116,7 +116,7 @@ def new_post(request,group_id):
             model_post.save()
 
             messages.add_message(request, messages.INFO, '新增成功！')
-            return HttpResponseRedirect('/group/forum/'+group_id )
+            return HttpResponseRedirect('/group/forum/'+str(group_id) )
         #except Exception as e:
             #messages.add_message(request, messages.ERROR, '新增失敗！')
 

@@ -17,15 +17,22 @@ from django.conf import settings
 # Create your views here.
 # create a new group
 @permission_required('course.can_access', raise_exception = True )
-def new(request):
+def new(request,course_id):
     # creating
     if request.method == "POST":
         try:
             members = request.POST.getlist('members')
             teacher = User.objects.get(email=request.user.email) 
+            course = Course.objects.get(course_id=course_id)
+            course_group = Course.objects.filter(course=course).order_by('-created_at')
+            group_num = 1
+            if course_group != None:
+                group_num = (course_group[0].group_num)+1
 
             new_group = models.Group.objects.create(
                 teacher=teacher,
+                course=course,
+                group_num=group_num,
             )
             new_group.save()
             for member_id in members:
@@ -39,7 +46,7 @@ def new(request):
         
 
     #showing creating page
-    courses = Course.objects.distinct('teacher')
+    courses = Course.objects.filter(course=course).distinct('teacher')
     groups = models.Group.objects.all()
     all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses])
     all_users = all_users.exclude(id__in=[group.member.values_list('id', flat=True) for group in groups])
@@ -79,9 +86,10 @@ def delete(request,group_id):
     return HttpResponseRedirect('/group/')
 
 @permission_required('course.can_access', raise_exception = True )
-def index(request):
+def admin(request,course_id):
     teacher = User.objects.get(email=request.user.email)
-    groups = models.Group.objects.all().order_by('-created_at')
+    course = Course.objects.get(course_id=course_id)
+    groups = models.Group.objects.filter(course=course).order_by('-created_at')
     return render(request, 'group-admin.html',locals())
 
 def forum(request,group_id):
@@ -147,6 +155,7 @@ def delete_post(request,post_id):
 def post(request,post_id):
     post = models.GroupPost.objects.get(id=post_id)
     group_id = post.group.id
+    group_num = post.group.group_num
     comments = models.GroupComment.objects.filter(post_id=post_id)
 
     return render(request, 'post.html',locals())

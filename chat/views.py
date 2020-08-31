@@ -15,6 +15,7 @@ from django.http import HttpResponseForbidden
 def room(request, group_id):
     group = Group.objects.get(id=group_id)
     user = User.objects.get(email=request.user.email)
+    group_num = group.group_num
     
     if request.user in group.member.all() or request.user == group.teacher:
         chat_messages = Message.objects.filter(group=group_id).order_by("timestamp")

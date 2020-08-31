@@ -94,7 +94,7 @@ $(document).ready(function(){
                                 {% endif %}
                                 {% has_group as group_id %}
                                 {% if group_id is not None %}
-                                <li class="li-group"><a href="/group/{{ group_id }}">小組討論區</a></li>
+                                <li class="li-group"><a href="/group/forum/{{ group_id }}">小組討論區</a></li>
                                 {% endif %}
                                 <li><a href="{% url 'my_course' %}">我的課程</a></li>
                             </ul> 

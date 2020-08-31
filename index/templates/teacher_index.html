@@ -67,7 +67,6 @@ $(document).ready(function(){
                     </div>
                 </div>
                 <div class="offset-lg-3 col-lg-2 text-right">
-                    <a href="/group/"><button type="button" class="btn  btn-edit">分組</button></a>
                     <a href="/course/new"><button type="button" class="btn  btn-new">新課程</button></a>
                 </div>
             </div>
@@ -87,6 +86,7 @@ $(document).ready(function(){
                                         <div class="col my-auto"> <small>Size : M</small></div>
                                         <div class="col my-auto"> <small>Qty : 1</small></div> -->
                                         <div class="col my-auto">
+                                            <a href="/group/{{ c.course_id }}"><button type="button" class="btn  btn-grouping">分組</button></a>
                                             <a href="/course/edit/{{ c.course_id }}"><button type="button" class="btn btn-edit">編輯</button></a>
                                             <a href="#"><button type="button" class="btn btn-dark" url="/course/delete/{{ c.course_id }}">刪除</button></a>
                                         </div>

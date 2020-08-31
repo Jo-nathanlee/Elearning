@@ -3209,6 +3209,8 @@ p.footer-copyright {
     color:white;
 }
 
+
+
 .btn-enter{
     background: #108655;
     border-color: #108655;
@@ -3242,14 +3244,14 @@ p.footer-copyright {
     border-color: #1970afdc;
 }
 .btn-grouping{
-    background: #50575c;
-    border-color: #50575c;
+    background: rgba(241, 170, 37, 0.877);
+    border-color: rgba(241, 170, 37, 0.877);
     color:white;
 }
 
 .btn-grouping:hover{
-    background: #50575c33;
-    border-color: #50575c9a;
+    background: rgba(241, 170, 37, 0.877);
+    border-color: rgba(241, 170, 37, 0.877);
 }
 
 

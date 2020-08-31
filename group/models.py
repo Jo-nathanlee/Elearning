@@ -7,6 +7,11 @@ class Group(models.Model):
         'account.User',
         on_delete=models.CASCADE,related_name='group_teacher'
     )
+    course = models.ForeignKey(
+        'course.Course',
+        on_delete=models.CASCADE,null=True
+    )
+    group_num = models.IntegerField(null=True)
     project = models.FileField(null=True,blank=True)
     project_url = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)

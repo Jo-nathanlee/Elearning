@@ -21,6 +21,7 @@ def room(request, group_id):
         chat_messages = Message.objects.filter(group=group_id).order_by("timestamp")
         return render(request, 'chat/room.html', {
             'chat_messages': chat_messages,
+            'group_num':group_num,
             'group_id': group_id
         })
     else:   

@@ -2002,7 +2002,7 @@ ul.black-doted {
 }
 
 .instructors-details {
-    width: calc(100% - 230px);
+    width: 100%;
 }
 
 .instructors-details .ratings {

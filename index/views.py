@@ -22,9 +22,9 @@ def teacher(request):
     teacher_course_count = Course.objects.filter(teacher=teacher).count()
     teacher_student_count = UserCourse.objects.filter(course__teacher=teacher).count()
     teacher_rating = Review.objects.filter(course__teacher=teacher).aggregate(Avg('rating'))
-    if teacher_rating != None:
-        teacher_rating = teacher_rating['rating__avg']
-    else:
+    teacher_rating = teacher_rating['rating__avg']
+
+    if teacher_rating == None or teacher_rating == 'None':
         teacher_rating = ''
     
 

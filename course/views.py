@@ -219,9 +219,10 @@ def course_page(request,course_id):
     if_review = models.Review.objects.filter(reviewer=user,course=course).count()
     review = models.Review.objects.filter(course=course)
     teacher_rating = models.Review.objects.filter(course__teacher=course.teacher).aggregate(Avg('rating'))
-    teacher_rating = format(teacher_rating['rating__avg'], '.1f')
 
-    if teacher_rating['rating__avg'] != None or teacher_rating == 'None':
+    if teacher_rating['rating__avg'] != None or teacher_rating != 'None':
+        teacher_rating = format(teacher_rating['rating__avg'], '.1f')
+    else:
         teacher_rating = ''
     course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
     if course_rating['rating__avg'] != None :

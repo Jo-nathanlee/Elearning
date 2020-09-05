@@ -10,6 +10,14 @@ def get_language():
 
 def index(request):
     all_course = Course.objects.all().order_by('-created_at')
+    for c in all_course:
+        course = models.Course.objects.get(course_id=c.course_id)
+        course_rating = models.Review.objects.filter(course=course).aggregate(Avg('rating'))
+        if course_rating['rating__avg'] != None:
+            rating = int(course_rating['rating__avg'])
+            c.rating = range(rating) 
+        else:
+            c.rating = None
     category = get_language()
     return render(request, 'index.html',locals())
 

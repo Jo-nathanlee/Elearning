@@ -151,12 +151,11 @@ $(document).ready(function(){
                         <div class="course-content-wrap">
                             <header class="entry-header">
                                 <div class="course-ratings flex align-items-center">
+                                    {% if c.rating != None %}
+                                    {% for i in c.rating %}
                                     <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-
-                                    <span class="course-ratings-count"></span>
+                                    {% endfor %}
+                                    {% endif %}
                                 </div><!-- .course-ratings -->
 
                                 <h2 class="entry-title"><a href="/course/{{ c.course_id }}">{{ c.course_name }}</a></h2>

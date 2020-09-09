@@ -56,7 +56,7 @@ def new(request,course_id):
 def edit(request,group_id):
     group = models.Group.objects.get(id=group_id)
     if request.method == "POST":
-        try:
+        # try:
             members = request.POST.getlist('members')
             
             group.member.clear()
@@ -65,8 +65,8 @@ def edit(request,group_id):
 
             messages.add_message(request, messages.INFO, '編輯成功！')
             return HttpResponseRedirect('/group/'+course_id)
-        except Exception as e:
-            messages.add_message(request, messages.ERROR, '編輯失敗！')
+        # except Exception as e:
+        #     messages.add_message(request, messages.ERROR, '編輯失敗！')
     group_members = group.member.all()
     #showing edit page
     courses = Course.objects.distinct('teacher')

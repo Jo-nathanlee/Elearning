@@ -39,7 +39,7 @@ def new(request,course_id):
                 new_group.member.add(int(member_id))
 
             messages.add_message(request, messages.INFO, '建立成功！')
-            return HttpResponseRedirect('/group/'+course_id)
+            return HttpResponseRedirect('/group/'+str(course_id))
         except Exception as e:
             messages.add_message(request, messages.ERROR, '建立失敗！')
 
@@ -83,7 +83,7 @@ def delete(request,group_id):
         messages.add_message(request, messages.INFO, '刪除成功！')
     except Exception as e:
         messages.add_message(request, messages.ERROR, '刪除失敗！')
-    return HttpResponseRedirect('/group/'+course_id)
+    return HttpResponseRedirect('/group/'+str(group.course.course_id))
 
 @permission_required('course.can_access', raise_exception = True )
 def admin(request,course_id):

@@ -118,6 +118,25 @@ $(document).ready(function(){
                     <input type="submit" id="project_submit" class="btn homework_submit" value="繳交">  
                 </div>
             </div>
+
+            <div class="row mt-4">
+                <div class="offset-lg-1 col-lg-3 pt-2 text-left">
+                    <h3><b>成員</b></h3>
+                </div>
+                <div class="offset-lg-5 col-lg-2 text-right">
+                </div>
+            </div>
+            <ul class="row mt-2">
+                {% for member in group.member.all %}
+                <li class="col-12 col-md-6 col-lg-3">
+                    <div class="cnt-block equal-hight" style="height: 349px;">
+                      <figure><img src="{{ member.pic }}" class="img-responsive" alt=""></figure>
+                      <h3>{{ member.name }}</h3>
+                    </div>
+                </li>
+                {% endfor %}
+                
+            </ul>
         </div>
     </div>
 </div>

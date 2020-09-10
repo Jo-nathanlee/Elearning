@@ -78,7 +78,9 @@ $(document).ready(function(){
                         {% if is_teacher or registered %}
                             <button class="btn btn-register" disabled>註冊</button>
                         {% else %}
-                            <a class="btn btn-register" href="/course/register/{{ course_id }}">註冊</a>
+                            <a href="/course/register/{{ course_id }}">
+                                <button type="button" class="btn btn-register">註冊</button>
+                            </a>
                         {% endif %}
                         </div><!-- .buy-course -->
 

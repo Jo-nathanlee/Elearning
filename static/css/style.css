@@ -1952,6 +1952,7 @@ ul.black-doted {
 
 .teacher-content {
     margin-top: 50px;
+    min-height: 40px;
 }
 
 

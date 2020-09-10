@@ -35,7 +35,7 @@ def account(request):
                 'name':name,
                 'department':department,
                 'language_learnt':language_learnt,
-                'self_introduction':self_introduction
+                'self_introduction':self_introduction,
             }
             model_user = models.User.objects.get(email=email)
             model_user.__dict__.update(**data)

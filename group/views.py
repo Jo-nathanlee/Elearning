@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from . import models
-from course.models import Course
+from course.models import Course,UserCourse
 from account.models import User
 from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
@@ -46,9 +46,11 @@ def new(request,course_id):
         
 
     #showing creating page
-    courses = Course.objects.filter(course_id=course_id).distinct('teacher')
+    course = Course.objects.get(course_id=course_id)
+    user_courses = UserCourse.objects.filter(course = course)
     groups = models.Group.objects.all()
-    all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses])
+    all_users = User.objects.exclude(id=request.user.id )
+    all_users = all_users.filter(id__in=[user_course.user.id for user_course in user_courses])
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -68,9 +70,9 @@ def edit(request,group_id):
             messages.add_message(request, messages.ERROR, '編輯失敗！')
     group_members = group.member.all()
     #showing edit page
-    courses = Course.objects.distinct('teacher')
-    groups = models.Group.objects.all()
-    other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses])
+    course = Course.objects.get(course_id=course_id)
+    user_courses = UserCourse.objects.filter(course = course)    groups = models.Group.objects.all()
+    other_users = User.objects.exclude(id__in=group_members).exclude(id=request.user.id ).filter(id__in=[user_course.user.id for user_course in user_courses])
     return render(request, 'edit-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )

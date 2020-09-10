@@ -29,7 +29,10 @@ def account(request):
             name = request.POST['name']
             department = request.POST['department']
             language_learnt = request.POST['language_learnt']
-            self_introduction = request.POST['self_introduction']
+            self_introduction = ''
+            if request.user.has_perm('course.can_access'):
+                self_introduction = request.POST['self_introduction']
+
 
             data = {
                 'name':name,

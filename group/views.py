@@ -70,7 +70,7 @@ def edit(request,group_id):
             messages.add_message(request, messages.ERROR, '編輯失敗！')
     group_members = group.member.all()
     #showing edit page
-    course = Course.objects.get(course_id=course_id)
+    course = Course.objects.get(course_id=group.course.course_id)
     user_courses = UserCourse.objects.filter(course = course)
     other_users = User.objects.exclude(id__in=group_members).exclude(id=request.user.id ).filter(id__in=[user_course.user.id for user_course in user_courses])
     return render(request, 'edit-group.html',locals())

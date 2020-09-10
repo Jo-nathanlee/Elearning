@@ -38,7 +38,7 @@ class User(AbstractUser):
     department = models.CharField(null=True,max_length=255,default='' )
     language_learnt = models.CharField(max_length=100,default='',null=True,blank=True)
     pic = models.TextField(blank=True,null=True,default='https://www.pinclipart.com/picdir/middle/8-82428_profile-clipart-generic-user-gender-neutral-head-icon.png')
-    self_introduction = models.TextField(default='')
+    self_introduction = models.TextField(default='',null=True,blank=True)
 
     
     USERNAME_FIELD = 'email' 

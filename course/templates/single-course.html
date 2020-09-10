@@ -74,7 +74,7 @@ $(document).ready(function(){
                             <div class="author-name"><a href="#" id="student_count">{{user_course.count}}</a></div>
                         </div><!-- .course-students -->
 
-                        <div class="buy-course col-1 m-0">
+                        <div class="buy-course col-3 m-0">
                         {% if is_teacher or registered %}
                             <button class="btn btn-register" disabled>註冊</button>
                         {% else %}
@@ -84,7 +84,7 @@ $(document).ready(function(){
                         {% endif %}
                         </div><!-- .buy-course -->
 
-                        <div class="buy-course col-4 m-0 p-0">
+                        <div class="buy-course col-2 m-0 p-0">
                             <a href="/group/mygroup/{{ course_id }}" class="float-right">
                                 <button type="button" class="btn btn-edit float-right">討論區</button>
                             </a>                        

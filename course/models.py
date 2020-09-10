@@ -95,7 +95,7 @@ class Homework(models.Model):
     )
     if_share = models.BooleanField(default=False)
     homework = models.FileField(null=True,blank=True)
-    homework_url = models.TextField(default='')
+    homework_url = models.TextField(default='',null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

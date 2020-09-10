@@ -13,7 +13,7 @@ class Group(models.Model):
     )
     group_num = models.IntegerField(null=True)
     project = models.FileField(null=True,blank=True)
-    project_url = models.TextField(default='')
+    project_url = models.TextField(default='',null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -3228,6 +3228,7 @@ p.footer-copyright {
 }
 
 .btn-register {
+    padding:12px 24px;
     color: #383749;
     background: white;
     border: 2px solid #34d986;
@@ -3238,7 +3239,11 @@ p.footer-copyright {
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
-
+.btn-register:hover {
+    background: #34d986;
+    border-color: #34d986;
+    color:white;
+}
 
 
 
@@ -3248,7 +3253,7 @@ p.footer-copyright {
     color:white;
 }
 
-.btn-register:hover{
+.btn-edite:hover{
     background: #14a569;
     color:white;
     border-color: #14a569;

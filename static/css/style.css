@@ -777,7 +777,7 @@ a.btn-sort:hover {
 }
 
 a.btn {
-    padding: 16px 48px;
+    padding: 12px 24px;
     border: 2px solid #34d986;
     border-radius: 0;
     font-size: 13px;
@@ -792,7 +792,7 @@ a.btn {
 a.btn:hover {
     color: #fff;
     background: #34d986;
-    padding: 16px 48px;
+    padding: 12px 24px;
     border: 2px solid #34d986;
     border-radius: 0;
     font-size: 13px;
@@ -806,7 +806,7 @@ a.btn:hover {
 .btn-register:active {
     color: #fff;
     background: #34d986;
-    padding: 16px 48px;
+    padding: 12px 24px;
     border: 2px solid #34d986;
     border-radius: 0;
     font-size: 13px;

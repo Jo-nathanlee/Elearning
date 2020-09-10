@@ -24,10 +24,10 @@ def new(request,course_id):
             members = request.POST.getlist('members')
             teacher = User.objects.get(email=request.user.email) 
             course = Course.objects.get(course_id=course_id)
-            course_group = models.Group.objects.filter(course=course).order_by('-created_at')
+            course_group = models.Group.objects.filter(course=course)
             group_num = 1
             if course_group.count() > 0:
-                group_num = (course_group[0].group_num)+1
+                group_num = (course_group.count())+1
 
             new_group = models.Group.objects.create(
                 teacher=teacher,
@@ -49,7 +49,6 @@ def new(request,course_id):
     courses = Course.objects.filter(course_id=course_id).distinct('teacher')
     groups = models.Group.objects.all()
     all_users = User.objects.exclude(id__in=[course.teacher.id for course in courses])
-    all_users = all_users.exclude(id__in=[group.member.values_list('id', flat=True) for group in groups])
     return render(request, 'new-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -72,7 +71,6 @@ def edit(request,group_id):
     courses = Course.objects.distinct('teacher')
     groups = models.Group.objects.all()
     other_users = User.objects.exclude(id__in=group_members).exclude(id__in=[course.teacher.id for course in courses])
-    other_users = other_users.exclude(id__in=[group.member.values_list('id', flat=True) for group in groups])
     return render(request, 'edit-group.html',locals())
 
 @permission_required('course.can_access', raise_exception = True )
@@ -98,6 +96,13 @@ def forum(request,group_id):
     posts = models.GroupPost.objects.filter(group=group_id)
 
     return render(request, 'group-forum.html',locals())
+
+def mygroup(request,course_id):
+    course = Course.objects.get(course_id=course_id)
+    course_group = models.Group.objects.filter(course=course)
+    mygroup = course_group.filter(member__email=request.user.email)
+
+    return render(request, 'mygroup.html',locals())
 
 def new_post(request,group_id):
     # creating

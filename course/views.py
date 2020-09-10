@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import models
 from account.models import User
+from group.models import Group
 from django.contrib import messages
 import json
 import math

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% load tag_library %}
+
+<body class="contact-page">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <header class="entry-header">
+                        <h1>小組討論區</h1>
+                    </header><!-- .entry-header -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header-overlay -->
+    </div><!-- .page-header -->
+
+    <div class="teacher-content">
+        <div class="container-fluid my-5 justify-content-center">
+            {% for group in mygroup %}
+            <div class="row mt-2">
+                <div class="col-10 offset-lg-1 col-lg-10">
+                    <div class="card card-2">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="sq align-self-center teacher-index">  </div>
+                                <div class="media-body my-auto text-right">
+                                    <div class="row my-auto flex-column flex-md-row">
+                                        <div class="col my-auto text-left">
+                                            <a style="text-decoration:none;" href="/group/forum/{{ group.id }}"><h5 class="mb-0">第{{group.group_num}}組</h5></a>
+                                        </div>
+                                        <!-- <div class="col-auto my-auto"> <small>Golden Rim </small></div>
+                                        <div class="col my-auto"> <small>Size : M</small></div>
+                                        <div class="col my-auto"> <small>Qty : 1</small></div> -->
+                                        <div class="col my-auto">
+                                            <a href="/group/forum/{{ group.id }}"><button type="button" class="btn btn-edit">進入討論區</button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+    
+    
+    

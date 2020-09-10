@@ -537,24 +537,25 @@ def reply(request):
         data = list(questions) 
         return JsonResponse(data,safe=False)
 # register course
-def register(request):
-    if request.method =='POST':
-        try:
-            course_id = request.POST['course_id']
+def register(request,course_id):
+    try:
+        course_id = course_id
 
-            course = models.Course.objects.get(course_id=course_id)
-            user_course = models.UserCourse.objects.update_or_create(
-                user=request.user,
-                course=course,
-                defaults={'user': request.user},
-            )
+        course = models.Course.objects.get(course_id=course_id)
+        user_course = models.UserCourse.objects.update_or_create(
+            user=request.user,
+            course=course,
+            defaults={'user': request.user},
+        )
 
-            student_count = models.UserCourse.objects.filter(course=course).count()
-            
-            data = {'success':True,'student_count':student_count}
-        except Exception as e:
-            data = {'success':False}
-        return JsonResponse(data,safe=False)
+        student_count = models.UserCourse.objects.filter(course=course).count()
+        messages.add_message(request, messages.INFO, '註冊成功！')
+
+        
+    except Exception as e:
+        messages.add_message(request, messages.ERROR, '編輯失敗！')
+    
+    return HttpResponseRedirect('/course/'+str(course_id))
 
 # upload homework in lesson page
 def upload_homework(request):

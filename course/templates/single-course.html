@@ -4,32 +4,6 @@
 {% load tag_library %}
 <script>
 $(document).ready(function(){
-    $(".btn-register").click(function() { 
-        $.LoadingOverlay("show");
-        $.ajax({
-            url: "{% url 'course_register' %}",
-            type: 'POST',
-            data: { course_id:{{course_id}} },
-            dataType: 'json',
-            success: function(data) {
-                $.LoadingOverlay("hide");
-                if(data.success){
-                    $("#student_count").html(data.student_count);
-                    $('.btn-register').attr('disabled', true);
-                    alertify.success('註冊成功！');
-                    setTimeout(function(){// wait for 5 secs(2)
-                        location.reload(); // then reload the page.(3)
-                    }, 3000); 
-                }else{
-                    alertify.error('註冊失敗！');
-                }
-            },
-            error: function(XMLHttpRequest, status, error) {
-                //console.log(XMLHttpRequest.responseText);
-            }
-        });
-    });
-
     $('#course_rating').on('change', function(){
         $('#rating_value').val($(this).val());
     });
@@ -104,7 +78,7 @@ $(document).ready(function(){
                         {% if is_teacher or registered %}
                             <button class="btn btn-register" disabled>註冊</button>
                         {% else %}
-                            <a class="btn btn-register" href="">註冊</a>
+                            <a class="btn btn-register" href="/course/register/{{ course_id }}">註冊</a>
                         {% endif %}
                         </div><!-- .buy-course -->
 

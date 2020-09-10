@@ -24,7 +24,7 @@ def get_language():
 def account(request):
     # POST = updating
     if request.method == "POST":
-        # try:
+        try:
             email= request.user.email
             name = request.POST['name']
             department = request.POST['department']
@@ -45,9 +45,9 @@ def account(request):
             model_user.save()
             messages.add_message(request, messages.INFO, '更新成功！')
 
-        # except Exception as e:
-        #     messages.add_message(request, messages.ERROR, '更新失敗！')
-        #     pass
+        except Exception as e:
+            messages.add_message(request, messages.ERROR, '更新失敗！')
+            pass
 
 
     # Entering index page

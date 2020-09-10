@@ -73,15 +73,11 @@ $(document).ready(function(){
         </div><!-- .row -->
 
         <div class="row">
-            <div class="col-12 offset-lg-1 col-lg-1">
-                <div class="post-share">
-                </div><!-- .post-share -->
-            </div><!-- .col -->
 
             <div class="col-12 col-lg-8">
                 <div class="single-course-wrap">
                     <div class="course-info flex flex-wrap align-items-center">
-                        <div class="course-author flex flex-wrap align-items-center mt-3">
+                        <div class="course-author flex flex-wrap align-items-center col-3 p-0 m-0">
                             <img src="{{teacher.pic}}" alt="">
                             {% comment %} <img src="https://i.imgur.com/U0aMXu4.jpg"> {% endcomment %}
 
@@ -91,17 +87,17 @@ $(document).ready(function(){
                             </div><!-- .author-wrap -->
                         </div><!-- .course-author -->
 
-                        <div class="course-cats mt-3">
+                        <div class="course-cats col-2 m-0">
                             <label class="m-0">程式語言</label>
                             <div class="author-name"><a href="#">{{course.category}}</a></div>
                         </div><!-- .course-cats -->
 
-                        <div class="course-students mt-3">
+                        <div class="course-students col-2 m-0">
                             <label class="m-0">學生</label>
                             <div class="author-name"><a href="#" id="student_count">{{user_course.count}}</a></div>
                         </div><!-- .course-students -->
 
-                        <div class="buy-course mt-3">
+                        <div class="buy-course col-1 m-0">
                         {% if is_teacher or registered %}
                             <button class="btn btn-register" disabled>註冊</button>
                         {% else %}
@@ -109,9 +105,9 @@ $(document).ready(function(){
                         {% endif %}
                         </div><!-- .buy-course -->
 
-                        <div class="buy-course mt-3">
-                            <a href="/group/mygroup/{{ course_id }}">
-                                <button type="button" class="btn btn-edit">進入討論區</button>
+                        <div class="buy-course mt-3 col-4 m-0 p-0">
+                            <a href="/group/mygroup/{{ course_id }}" class="float-right">
+                                <button type="button" class="btn btn-edit float-right">進入討論區</button>
                             </a>                        
                         </div><!-- .buy-course -->
                     </div><!-- .course-info -->

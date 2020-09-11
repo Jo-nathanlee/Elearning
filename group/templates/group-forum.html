@@ -25,7 +25,7 @@ $(document).ready(function(){
                 alertify.success('繳交成功！');
             },
             error: function(XMLHttpRequest, status, error) {
-                alertify.success('繳交失敗！');
+                alertify.error('繳交失敗！');
                 $.LoadingOverlay("hide");
                 console.log(XMLHttpRequest.responseText);
             }

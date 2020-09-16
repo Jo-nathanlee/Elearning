@@ -75,7 +75,8 @@ $(document).ready(function(){
                         </div><!-- .course-students -->
 
                         <div class="buy-course col-3 m-0">
-                        {% if is_teacher or registered %}
+                        {% if is_teacher  %}
+                        {% elif registered %}
                             <button class="btn " disabled>已註冊</button>
                         {% else %}
                             <a href="/course/register/{{ course_id }}">
@@ -85,9 +86,15 @@ $(document).ready(function(){
                         </div><!-- .buy-course -->
 
                         <div class="buy-course col-2 m-0 p-0">
+                        {% if is_teacher %}
                             <a href="/group/mygroup/{{ course_id }}" class="float-right">
                                 <button type="button" class="btn btn-edit float-right">討論區</button>
-                            </a>                        
+                            </a>      
+                        {% else %}
+                            <a href="/group/{{ course_id }}" class="float-right">
+                                <button type="button" class="btn btn-edit float-right">討論區</button>
+                            </a>  
+                        {% endif %}                  
                         </div><!-- .buy-course -->
                     </div><!-- .course-info -->
 

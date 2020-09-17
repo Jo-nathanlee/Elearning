@@ -66,12 +66,12 @@ $(document).ready(function(){
 
                         <div class="course-cats col-2 m-0">
                             <label class="m-0">程式語言</label>
-                            <div class="author-name"><a href="#">{{course.category}}</a></div>
+                            <div class="author-name">{{course.category}}</div>
                         </div><!-- .course-cats -->
 
                         <div class="course-students col-2 m-0">
                             <label class="m-0">學生</label>
-                            <div class="author-name"><a href="#" id="student_count">{{user_course.count}}</a></div>
+                            <div class="author-name">{{user_course.count}}</div>
                         </div><!-- .course-students -->
 
                         <div class="buy-course col-3 m-0">
@@ -87,11 +87,11 @@ $(document).ready(function(){
 
                         <div class="buy-course col-2 m-0 p-0">
                         {% if is_teacher %}
-                            <a href="/group/mygroup/{{ course_id }}" class="float-right">
+                            <a href="/group/{{ course_id }}" class="float-right">
                                 <button type="button" class="btn btn-edit float-right">討論區</button>
                             </a>      
                         {% else %}
-                            <a href="/group/{{ course_id }}" class="float-right">
+                            <a href="/group/mygroup/{{ course_id }}" class="float-right">
                                 <button type="button" class="btn btn-edit float-right">討論區</button>
                             </a>  
                         {% endif %}                  

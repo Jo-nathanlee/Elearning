@@ -42,3 +42,12 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "https://elearning-upload-heroku.s3.amazonaws.com",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+]
+
+CORS_ALLOW_ALL_ORIGINS = True

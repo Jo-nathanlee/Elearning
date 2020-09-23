@@ -626,7 +626,9 @@ $(document).ready(function(){
             <div style="max-width: 50em;" class="mt-2">
                 <label>作業繳交區</label>
                     <input type="file" class="filepond input_homework" name="filepond" data-max-file-size="50MB"/>  
-                
+                    {% if homework.homework != None and homework.homework != '' %} 
+                    <a href="/course/download_homework?id={{ homework.id }}"><i class="fa fa-download" style="font-size: 26px;"></i></a>
+                    {% endif %}
             </div>
             <div>
                 <label>作業連結</label>

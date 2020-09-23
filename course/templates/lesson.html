@@ -653,6 +653,7 @@ $(document).ready(function(){
     {% endblock %}
 
     {% block footer %}
+    <script src="{% static 'js/filepond-plugin-get-file.js' %}"></script>
     <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
@@ -723,6 +724,7 @@ $(document).ready(function(){
 
 
     FilePond.registerPlugin(
+        FilePondPluginGetFile,
 	  // encodes the file as base64 data
         FilePondPluginFileEncode,
         

@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'group',
     'chat',
     'channels',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -164,3 +166,12 @@ CHANNEL_LAYERS = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800
+
+CORS_ALLOWED_ORIGINS = [
+    "https://elearning-upload-heroku.s3.amazonaws.com",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+]
+
+CORS_ALLOW_ALL_ORIGINS = False

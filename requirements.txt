@@ -36,4 +36,4 @@ gunicorn==20.0.4
 Twisted==18.9.0
 txaio==18.8.1
 whitenoise==5.0.1 
-
+django-cors-headers==3.5.0

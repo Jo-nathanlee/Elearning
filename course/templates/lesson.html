@@ -788,9 +788,6 @@ $(document).ready(function(){
     );
 
     const pond2 = document.querySelector('.input_homework');
-    pond2.filepond('addFile', 'https://elearning-upload-heroku.s3.amazonaws.com/tests.py?AWSAccessKeyId=AKIAYVUJYZ5X53HOSM55&Signature=3qmWsn7TOLsvAajpgm3oeEcFhE8%3D&Expires=1600869521').then(function(file){
-        console.log('file added', file);
-    });
     pond2.addEventListener('FilePond:removefile', e => {
             pond.server = null;
             pond.files = null;

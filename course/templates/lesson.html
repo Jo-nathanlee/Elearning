@@ -759,7 +759,7 @@ $(document).ready(function(){
              {% if homework.homework != None and homework.homework != '' %} 
                 files: [
                     {
-                        source: '{{ homework.homework.url }}',
+                        source: '{{ homework.homework }}',
                         options: {
                             type: 'local',
                         
@@ -786,6 +786,10 @@ $(document).ready(function(){
 
         }
     );
+
+    $('.input_homework').filepond('addFile', '{{ homework.homework.url }}').then(function(file){
+        console.log('file added', file);
+    });
 
     const pond2 = document.querySelector('.input_homework');
     pond2.addEventListener('FilePond:removefile', e => {

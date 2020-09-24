@@ -218,9 +218,9 @@ $(document).ready(function(){
                 ],
                 server: {
                     load: (source, load, error, progress, abort, headers) => {
-                        console.log(source);
                         var myRequest = new Request(source);
                         fetch(myRequest).then(function(response) {
+                            console.log(response);
                         response.blob().then(function(myBlob) {
                             load(myBlob);
                         });

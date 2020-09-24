@@ -124,7 +124,7 @@ $(document).ready(function(){
                     </div>
                 </div>    
                 <div class="col-10 col-lg-10 offset-lg-1">
-                    <input class="form-control" name="project_url" placeholder="輸入您的專案連結url" type="text" autofocus value="{{ group.project_url }}" style="max-width: 50em;"/>     
+                    <input class="form-control" name="project_url" placeholder="輸入您的專案連結url" type="text" autofocus value="{{ group.project_url }}"/>     
                     <input type="submit" id="project_submit" class="btn homework_submit" value="繳交">  
                 </div>
             </div>
@@ -169,6 +169,8 @@ $(document).ready(function(){
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.min.js"></script> 
+    <script src="https://unpkg.com/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
     
     
     <script>
@@ -196,7 +198,8 @@ $(document).ready(function(){
         FilePondPluginImageResize,
 
         // applies crop and resize information on the client
-        FilePondPluginImageTransform
+        FilePondPluginImageTransform,
+        FilePondPluginFileRename
     );
     
     // Select the file input and use create() to turn it into a pond
@@ -232,6 +235,13 @@ $(document).ready(function(){
 
         }
     );
+    {% if group.project != None and group.project != '' %} 
+    FilePond.setOptions({
+        fileRenameFunction: (file) => {
+            return `{{ group.project }}`;
+        }
+    })
+    {% endif %}
 
     const pond2 = document.querySelector('.input_homework');
     pond2.addEventListener('FilePond:removefile', e => {

@@ -1,7 +1,4 @@
 *.pyc
 __pycache__
 staticfiles
-elearning/settings.py
-elearning/prod_settings.py
-requirements.txt
-Procfile
+

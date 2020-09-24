@@ -226,13 +226,14 @@ $(document).ready(function(){
                         });         
                     },
                     process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                        console.log(fieldName);
+                        console.log(file);
+                        console.log(metadata);
                         load();
                     },
                     revert: null,
                 },
-                fileRenameFunction: (file) => {
-                    return `my_new_name${file.extension}`;
-                },
+
              {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
 

@@ -164,7 +164,6 @@ $(document).ready(function(){
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script> 
-    <script src="https://unpkg.com/filepond-plugin-file-rename/dist/filepond-plugin-file-rename.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script> 
     <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.min.js"></script> 
@@ -199,7 +198,6 @@ $(document).ready(function(){
 
         // applies crop and resize information on the client
         FilePondPluginImageTransform,
-        FilePondPluginFileRename
     );
     
     // Select the file input and use create() to turn it into a pond
@@ -218,7 +216,7 @@ $(document).ready(function(){
                 ],
                 server: {
                     load: (source, load, error, progress, abort, headers) => {
-                        options = {credentials: 'include', headers: {'Content-Type': 'application/json; charset=utf-8'}, }
+                        options = {credentials: 'include', headers: {'Content-Type': 'application/json; charset=big-5'}, }
                         var myRequest = new Request(source);
                         fetch(myRequest,options).then(function(response) {
                         response.blob().then(function(myBlob) {

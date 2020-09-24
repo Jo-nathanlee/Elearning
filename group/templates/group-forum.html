@@ -218,6 +218,7 @@ $(document).ready(function(){
                 ],
                 server: {
                     load: (source, load, error, progress, abort, headers) => {
+                        console.log(source);
                         var myRequest = new Request(source);
                         fetch(myRequest).then(function(response) {
                         response.blob().then(function(myBlob) {
@@ -226,9 +227,6 @@ $(document).ready(function(){
                         });         
                     },
                     process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
-                        console.log(fieldName);
-                        console.log(file);
-                        console.log(metadata);
                         load();
                     },
                     revert: null,

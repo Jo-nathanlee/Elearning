@@ -218,9 +218,9 @@ $(document).ready(function(){
                 ],
                 server: {
                     load: (source, load, error, progress, abort, headers) => {
+                        options = {credentials: 'include', headers: {'Content-Type': 'application/json; charset=utf-8'}, }
                         var myRequest = new Request(source);
-                        fetch(myRequest).then(function(response) {
-                            console.log(response);
+                        fetch(myRequest,options).then(function(response) {
                         response.blob().then(function(myBlob) {
                             load(myBlob);
                         });

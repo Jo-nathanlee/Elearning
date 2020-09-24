@@ -230,18 +230,14 @@ $(document).ready(function(){
                     },
                     revert: null,
                 },
+                fileRenameFunction: (file) => {
+                    return `{{ group.project }}`;
+                }
              {% endif %}
             labelIdle: `請將檔案拖曳至此或 <span class="filepond--label-action">瀏覽</span>`,
 
         }
     );
-    {% if group.project != None and group.project != '' %} 
-    FilePond.setOptions({
-        fileRenameFunction: (file) => {
-            return `{{ group.project }}`;
-        }
-    })
-    {% endif %}
 
     const pond2 = document.querySelector('.input_homework');
     pond2.addEventListener('FilePond:removefile', e => {
